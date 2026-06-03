@@ -1,0 +1,9 @@
+# Cloudflare Workers — assets estáticos (site Astro em dist/).
+# O painel Git unificado usa: build `npm run build` + deploy `npx wrangler deploy`.
+# Ver DEPLOY.md
+
+name = "hostlogic-site"
+compatibility_date = "2025-06-03"
+
+[assets]
+directory = "./dist"

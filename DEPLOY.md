@@ -28,29 +28,31 @@ git push -u origin main
 
 (Se usar HTTPS: `https://github.com/SysNapse-ai/hostlogic-site.git`.)
 
-## Passo B — Cloudflare Pages
+## Passo B — Cloudflare (Git → Workers & Pages unificado)
 
-1. [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → aba **Pages**.
-2. **Create** → **Connect to Git** → GitHub → autorizar → repo **`hostlogic-site`**.
-3. **Build settings:**
+O painel pode mostrar **"Configure your Worker project"** com `npx wrangler deploy` — isso é normal em 2026.
+O repo inclui `wrangler.toml` com `[assets] directory = "./dist"` (site Astro estático).
+
+1. **Workers & Pages** → **Create** → **Connect to Git** → repo **`hostlogic-site`**.
+2. **Set up your application:**
 
    | Campo | Valor |
    |-------|--------|
-   | Framework preset | Astro |
-   | Build command | `npm run build` |
-   | Build output directory | `dist` |
-   | Root directory | `/` (raiz do repo) |
+   | Nome do projeto | `hostlogic-site` |
+   | Comando da build | `npm run build` |
+   | Comando de implantação | `npx wrangler deploy` |
+   | Caminho (avançado) | vazio (raiz do repo) |
 
-4. **Environment variables** (Settings → Environment variables → Production):
+3. **Variáveis de ambiente** (avançado / Production):
 
    | Nome | Valor |
    |------|--------|
    | `NODE_VERSION` | `22` |
 
-   (Alternativa: o ficheiro `.node-version` na raiz do repo.)
+4. **Implantar** — aguardar build verde.
+5. URL: `https://hostlogic-site.<subdomínio-workers>.workers.dev` ou o host indicado no painel.
 
-5. **Save and Deploy** — aguardar build verde.
-6. Anotar a URL temporária: `https://<projeto>.pages.dev` — abrir no browser e validar a home.
+> Se no futuro o painel oferecer **Pages** com campo "Build output directory" = `dist`, também funciona sem `wrangler deploy`.
 
 ## Passo C — Domínios customizados (Pages)
 
