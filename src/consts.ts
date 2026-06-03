@@ -11,7 +11,7 @@ export const SITE = {
   url: 'https://hostlogic.com.br',
   tagline: 'Gestão de propriedades para hospedagem',
   description:
-    'HostLogic — gestão de propriedades, reservas, faxinas, portal do hóspede e operação de hospedagem, com segurança e LGPD.',
+    'HostLogic — reservas, calendário, faxinas e portal do hóspede com check-in digital (fotos, acompanhantes e convite por WhatsApp), com LGPD.',
 } as const;
 
 /** URL do produto (painel/login). App de produção, desacoplado do site. */
@@ -38,6 +38,7 @@ export const CONTACT = {
 /** Navegação simples (stubs preparados para evolução). */
 export const NAV = [
   { label: 'Início', href: '/' },
+  { label: 'Portal do hóspede', href: '/#portal-hospede' },
   { label: 'Lista de espera', href: '/#inscreva-se' },
   { label: 'Demonstração', href: '/demo' },
   { label: 'Blog', href: '/blog' },

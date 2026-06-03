@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy:cf": "npm run build && wrangler deploy"
+    "deploy:cf": "npm run build && wrangler deploy",
+    "release:bump-patch": "node scripts/bump-patch-version.mjs"
   },
   "engines": {
     "node": ">=20.19.0"

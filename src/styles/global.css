@@ -455,6 +455,62 @@ section.block p.sub {
   font-weight: 800;
   color: #86efac;
 }
+.early-form__success-lead {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--hl-text-muted);
+  line-height: 1.5;
+}
+.early-form__email-inline {
+  color: var(--hl-text);
+  font-weight: 700;
+}
+.early-form__preview {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--hl-border);
+  background: rgba(15, 23, 42, 0.5);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--hl-text-muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.early-form__success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.early-form__mailto-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  border-radius: var(--hl-radius);
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid var(--hl-border);
+  background: transparent;
+  color: var(--hl-text);
+  cursor: pointer;
+}
+.early-form__mailto-btn:hover {
+  border-color: var(--hl-primary);
+}
+.early-form__success-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--hl-text-muted);
+  line-height: 1.45;
+}
+.early-form__success-hint[role='status']:not([hidden]) {
+  color: #86efac;
+  margin-bottom: 8px;
+}
 .early-form__success p {
   margin: 0;
   font-size: 13px;
@@ -467,4 +523,56 @@ section.block p.sub {
   font-size: 12px;
   color: var(--hl-text-muted);
   text-align: center;
+}
+
+/* Portal do hóspede — destaque na home */
+.portal-spotlight__grid {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+@media (min-width: 800px) {
+  .portal-spotlight__grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+.portal-steps {
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: var(--hl-text);
+  font-size: 15px;
+}
+.portal-steps li {
+  padding-left: 4px;
+}
+.portal-steps strong {
+  color: #fff;
+}
+.portal-note {
+  margin: 18px 0 0;
+  font-size: 13px;
+  color: var(--hl-text-muted);
+}
+.portal-flow__label {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hl-primary);
+}
+.portal-flow__list {
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--hl-text-muted);
+}
+.portal-flow__list li::marker {
+  color: var(--hl-primary);
 }

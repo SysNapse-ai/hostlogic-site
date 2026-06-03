@@ -11,9 +11,9 @@ const propertyOptions = [
 ];
 
 const waitlistPoints = [
-  'Prioridade no onboarding com a equipa HostLogic',
-  'Acesso às novas funcionalidades antes do lançamento público',
-  'Sem compromisso — só pedimos os dados para contactar',
+  'Portal do hóspede com check-in digital, fotos e convite de acompanhantes por WhatsApp',
+  'Prioridade no onboarding com a equipe HostLogic',
+  'Sem compromisso — só pedimos os dados para contato',
 ];
 ---
 
@@ -25,8 +25,8 @@ const waitlistPoints = [
         Entre na fila de <span class="early-access__accent">acesso antecipado</span>
       </h2>
       <p class="early-access__lead">
-        Estamos abrindo vagas para anfitriões e gestores que querem operar reservas, faxinas e
-        check-in num só painel. Deixe seus dados e respondemos por e-mail.
+        Estamos abrindo vagas para anfitriões que querem reservas, faxinas e check-in digital dos
+        hóspedes (titular + acompanhantes) num só painel. Deixe seus dados e respondemos por e-mail.
       </p>
       <ul class="early-access__list">
         {waitlistPoints.map((point) => (
@@ -37,7 +37,10 @@ const waitlistPoints = [
 
     <div class="early-access__panel">
       <p class="early-form__panel-title">Cadastro rápido</p>
-      <p class="early-form__panel-sub">Leva menos de 1 minuto. Sem telefone nesta etapa.</p>
+      <p class="early-form__panel-sub">
+        Leva menos de 1 minuto. Ao enviar, copie a mensagem ou abra seu e-mail — o site ainda não
+        dispara e-mail automaticamente.
+      </p>
 
       <form class="early-form" id="early-access-form" novalidate>
         <div class="early-form__stack">
@@ -90,7 +93,7 @@ const waitlistPoints = [
         <label class="early-form__consent">
           <input type="checkbox" name="consent" required />
           <span>
-            Aceito ser contactado pela HostLogic sobre o programa de acesso antecipado e li a{' '}
+            Aceito ser contatado pela HostLogic sobre o programa de acesso antecipado e li a{' '}
             <a href={LEGAL.privacy} target="_blank" rel="noopener noreferrer">política de privacidade</a>.
           </span>
         </label>
@@ -101,10 +104,24 @@ const waitlistPoints = [
       </form>
 
       <div class="early-form__success" id="early-form-success" hidden>
-        <p class="early-form__success-title">Interesse registrado</p>
-        <p>
-          Obrigado. Em breve falamos no e-mail indicado. Dúvidas?{' '}
-          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        <p class="early-form__success-title">Quase lá — avise a equipe HostLogic</p>
+        <p class="early-form__success-lead">
+          Seus dados foram validados. Para entrar na lista de espera, envie a mensagem abaixo para{' '}
+          <span class="early-form__email-inline">{CONTACT.email}</span> (copiar ou abrir o e-mail).
+        </p>
+        <pre class="early-form__preview" id="early-form-preview" aria-label="Texto do pedido"></pre>
+        <div class="early-form__success-actions">
+          <button type="button" class="early-form__submit" id="early-form-copy">
+            Copiar mensagem
+          </button>
+          <button type="button" class="early-form__mailto-btn" id="early-form-mailto">
+            Abrir no meu e-mail
+          </button>
+        </div>
+        <p class="early-form__success-hint" id="early-form-copy-feedback" role="status" hidden></p>
+        <p class="early-form__success-hint">
+          Se o Windows pedir um aplicativo de e-mail, escolha Outlook, Gmail ou outro — ou use só
+          «Copiar mensagem» e cole manualmente.
         </p>
       </div>
 
@@ -119,14 +136,35 @@ const waitlistPoints = [
   const form = document.getElementById('early-access-form');
   const success = document.getElementById('early-form-success');
   const errorEl = document.getElementById('early-form-error');
+  const previewEl = document.getElementById('early-form-preview');
+  const copyBtn = document.getElementById('early-form-copy');
+  const mailtoBtn = document.getElementById('early-form-mailto');
+  const copyFeedback = document.getElementById('early-form-copy-feedback');
 
-  if (!form || !success || !errorEl) {
-    // noop
-  } else {
+  let pendingMailto = '';
+
+  function buildLeadMessage(name, email, location, properties) {
+    return [
+      'Lista de espera — HostLogic',
+      '',
+      `Nome: ${name}`,
+      `E-mail: ${email}`,
+      location ? `Localização: ${location}` : 'Localização: (não informado)',
+      `Imóveis geridos: ${properties}`,
+      '',
+      `Enviado em: ${new Date().toISOString()}`,
+    ].join('\n');
+  }
+
+  if (form && success && errorEl && previewEl && copyBtn && mailtoBtn) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       errorEl.hidden = true;
       errorEl.textContent = '';
+      if (copyFeedback) {
+        copyFeedback.hidden = true;
+        copyFeedback.textContent = '';
+      }
 
       const fd = new FormData(form);
       const name = String(fd.get('name') || '').trim();
@@ -146,23 +184,37 @@ const waitlistPoints = [
         return;
       }
 
-      const lines = [
-        'Lista de espera — HostLogic',
-        '',
-        `Nome: ${name}`,
-        `E-mail: ${email}`,
-        location ? `Localização: ${location}` : 'Localização: (não informado)',
-        `Imóveis geridos: ${properties}`,
-        '',
-        `Enviado em: ${new Date().toISOString()}`,
-      ];
+      const plainBody = buildLeadMessage(name, email, location, properties);
+      previewEl.textContent = plainBody;
       const subject = encodeURIComponent('HostLogic — Lista de espera');
-      const body = encodeURIComponent(lines.join('\n'));
-      const mailto = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+      const body = encodeURIComponent(plainBody);
+      pendingMailto = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
 
-      window.location.href = mailto;
       form.hidden = true;
       success.hidden = false;
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const text = previewEl.textContent || '';
+      try {
+        await navigator.clipboard.writeText(
+          `Para: ${contactEmail}\nAssunto: HostLogic — Lista de espera\n\n${text}`,
+        );
+        if (copyFeedback) {
+          copyFeedback.textContent = 'Mensagem copiada. Cole no seu e-mail e envie.';
+          copyFeedback.hidden = false;
+        }
+      } catch {
+        if (copyFeedback) {
+          copyFeedback.textContent =
+            'Não foi possível copiar automaticamente. Selecione o texto acima e copie (Ctrl+C).';
+          copyFeedback.hidden = false;
+        }
+      }
+    });
+
+    mailtoBtn.addEventListener('click', () => {
+      if (pendingMailto) window.location.href = pendingMailto;
     });
   }
 </script>

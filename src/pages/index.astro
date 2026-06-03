@@ -11,7 +11,10 @@ const features = [
   { title: 'Reservas capturadas', desc: 'Captura por iCal e e-mail coletor (Airbnb), sem digitação manual.' },
   { title: 'Calendário multi-imóvel', desc: 'Check-ins, check-outs e ocupação de todas as propriedades num só lugar.' },
   { title: 'Faxinas e equipe', desc: 'Limpeza por checkout, gestão da equipe e auditoria por fotos de itens sorteados na faxina.' },
-  { title: 'Portal do hóspede', desc: 'Check-in digital, guia da propriedade e consentimento LGPD.' },
+  {
+    title: 'Portal do hóspede',
+    desc: 'Check-in digital com documento e selfie; titular cadastra acompanhantes ou envia link por WhatsApp para cada um.',
+  },
   { title: 'Automação de cadastro', desc: 'Integração com sistemas de condomínio/portaria e automações.' },
   { title: 'Segurança e LGPD', desc: 'Multi-tenant com RLS, mascaramento de PII e retenção de dados.' },
 ];
@@ -23,8 +26,8 @@ const features = [
       <span class="badge">Versão de teste do site</span>
       <h1>Operação de hospedagem, do jeito profissional.</h1>
       <p class="lead">
-        O HostLogic centraliza reservas, calendário, faxinas, portal do hóspede e automações —
-        com segurança e conformidade LGPD. Esta é uma página inicial de teste; o conteúdo comercial
+        Reservas, calendário, faxinas e um portal do hóspede que coleta dados e fotos para check-in —
+        com LGPD e automações de condomínio. Esta é uma página inicial de teste; o conteúdo comercial
         completo chega em breve.
       </p>
       <div class="cta">
@@ -45,6 +48,46 @@ const features = [
             <p>{f.desc}</p>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="block portal-spotlight" id="portal-hospede">
+    <div class="container portal-spotlight__grid">
+      <div>
+        <h2>Portal do hóspede — check-in digital completo</h2>
+        <p class="sub">
+          O hóspede titular recebe o link (mensagem automática do Airbnb ou envio seu) e conclui o
+          cadastro no celular, com fotos e consentimento LGPD.
+        </p>
+        <ul class="portal-steps">
+          <li>
+            <strong>Titular da reserva</strong> preenche dados pessoais, documento com foto e selfie
+            de verificação no fluxo guiado.
+          </li>
+          <li>
+            <strong>Acompanhantes</strong> podem ser cadastrados pelo titular no mesmo link ou receber
+            um <strong>convite individual</strong> — você copia o link ou envia direto pelo
+            <strong>WhatsApp</strong> para cada adulto/criança com vaga na reserva.
+          </li>
+          <li>
+            Depois do envio, o hóspede vê o <strong>guia do imóvel</strong> (regras, Wi‑Fi, acesso) e
+            você acompanha o status em <strong>Reservas capturadas</strong> no painel.
+          </li>
+        </ul>
+        <p class="portal-note">
+          Bebês e vagas sem convite seguem as regras da reserva; o titular pode completar o que faltar
+          no portal.
+        </p>
+      </div>
+      <div class="portal-flow card" aria-hidden="true">
+        <p class="portal-flow__label">Fluxo resumido</p>
+        <ol class="portal-flow__list">
+          <li>Link da reserva → portal seguro</li>
+          <li>Titular: documento + selfie</li>
+          <li>Acompanhantes: no portal ou link próprio</li>
+          <li>Dados prontos para portaria / operação</li>
+        </ol>
       </div>
     </div>
   </section>
