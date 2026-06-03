@@ -10,12 +10,29 @@ import { APP_URL } from '../consts';
 const features = [
   { title: 'Reservas capturadas', desc: 'Captura por iCal e e-mail coletor (Airbnb), sem digitação manual.' },
   { title: 'Calendário multi-imóvel', desc: 'Check-ins, check-outs e ocupação de todas as propriedades num só lugar.' },
-  { title: 'Faxinas e equipe', desc: 'Limpeza por checkout, gestão da equipe e auditoria por fotos de itens sorteados na faxina.' },
+  {
+    title: 'Equipe e acessos',
+    desc: 'Cadastro de colaboradores por cargo, login no painel e faxinas atribuídas — cada um vê só o que precisa.',
+  },
+  { title: 'Faxinas', desc: 'Limpeza por checkout, atribuição à equipe e auditoria por fotos de itens sorteados na faxina.' },
   {
     title: 'Portal do hóspede',
-    desc: 'Check-in digital com documento e selfie; titular cadastra acompanhantes ou envia link por WhatsApp para cada um.',
+    desc: 'Check-in digital com fotos, acompanhantes por link/WhatsApp e Anfitri-IA para dúvidas sobre o imóvel.',
+  },
+  {
+    title: 'Anfitri-IA',
+    desc: 'Assistente de IA no portal (hóspede) e no painel (você): guia do imóvel, operação e histórico de conversas.',
+  },
+  {
+    title: 'Financeiro',
+    desc: 'Receita, repasses Airbnb, custos por imóvel, comissão de proprietários e exportação — ligado às reservas capturadas.',
   },
   { title: 'Automação de cadastro', desc: 'Integração com sistemas de condomínio/portaria e automações.' },
+  {
+    title: 'WhatsApp',
+    desc: 'Em breve: integração direta no painel — mensagens ao hóspede, equipe e alertas sem configurar tudo à mão.',
+    soon: true,
+  },
   { title: 'Segurança e LGPD', desc: 'Multi-tenant com RLS, mascaramento de PII e retenção de dados.' },
 ];
 ---
@@ -26,9 +43,9 @@ const features = [
       <span class="badge">Versão de teste do site</span>
       <h1>Operação de hospedagem, do jeito profissional.</h1>
       <p class="lead">
-        Reservas, calendário, faxinas e um portal do hóspede que coleta dados e fotos para check-in —
-        com LGPD e automações de condomínio. Esta é uma página inicial de teste; o conteúdo comercial
-        completo chega em breve.
+        Reservas, calendário, faxinas, portal do hóspede com check-in digital e a <strong>Anfitri-IA</strong>
+        — no celular do hóspede e no seu painel de gestão. LGPD e automações de condomínio. Esta é uma
+        página inicial de teste; o conteúdo comercial completo chega em breve.
       </p>
       <div class="cta">
         <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
@@ -43,7 +60,8 @@ const features = [
       <p class="sub">Resumo das áreas do sistema (apresentação comercial detalhada virá depois).</p>
       <div class="grid">
         {features.map((f) => (
-          <div class="card">
+          <div class={`card${f.soon ? ' card--soon' : ''}`}>
+            {f.soon ? <span class="card__soon-badge">Em breve</span> : null}
             <h3>{f.title}</h3>
             <p>{f.desc}</p>
           </div>
@@ -71,8 +89,12 @@ const features = [
             <strong>WhatsApp</strong> para cada adulto/criança com vaga na reserva.
           </li>
           <li>
-            Depois do envio, o hóspede vê o <strong>guia do imóvel</strong> (regras, Wi‑Fi, acesso) e
-            você acompanha o status em <strong>Reservas capturadas</strong> no painel.
+            Depois do envio, o hóspede vê o <strong>guia do imóvel</strong> (regras, Wi‑Fi, acesso) e pode
+            falar com a <strong>Anfitri-IA</strong> sobre a estadia — com base no texto que você cadastrou
+            no imóvel.
+          </li>
+          <li>
+            Você acompanha check-in e conversas em <strong>Reservas capturadas</strong> no painel.
           </li>
         </ul>
         <p class="portal-note">
@@ -89,6 +111,239 @@ const features = [
           <li>Dados prontos para portaria / operação</li>
         </ol>
       </div>
+    </div>
+  </section>
+
+  <section class="block anfitri-ia-spotlight" id="anfitri-ia">
+    <div class="container">
+      <h2>Anfitri-IA — inteligência no imóvel e na operação</h2>
+      <p class="sub">
+        A mesma marca, dois papéis: <strong>hospitalidade</strong> para quem está hospedado e
+        <strong>gestão</strong> para quem administra os imóveis. Sem inventar regras — respostas ancoradas
+        no guia e nos dados da reserva.
+      </p>
+      <div class="anfitri-ia-grid">
+        <article class="card anfitri-ia-card">
+          <p class="anfitri-ia-card__badge">Portal do hóspede · por imóvel</p>
+          <h3>Assistente para o hóspede</h3>
+          <ul class="portal-steps anfitri-ia-card__list">
+            <li>
+              Durante o check-in digital, o hóspede abre o chat <strong>Anfitri-IA</strong> no celular
+              (atalho «Fale com a Anfitri-IA»).
+            </li>
+            <li>
+              Responde com base no <strong>guia do imóvel</strong> que você treinou: Wi‑Fi, regras,
+              horários, inventário e procedimentos de uso.
+            </li>
+            <li>
+              Informa sobre a <strong>própria estadia</strong> (datas, check-in/out quando disponíveis).
+              Não decide por você — em urgência orienta contato com o anfitrião.
+            </li>
+            <li>
+              Reduz mensagens repetitivas no Airbnb/WhatsApp sobre «qual a senha do Wi‑Fi?» ou «onde é o
+              lixo?».
+            </li>
+          </ul>
+        </article>
+        <article class="card anfitri-ia-card anfitri-ia-card--host">
+          <p class="anfitri-ia-card__badge">Painel HostLogic · gestão</p>
+          <h3>Consultora para o anfitrião</h3>
+          <ul class="portal-steps anfitri-ia-card__list">
+            <li>
+              No painel, converse com a <strong>Anfitri-IA estratégica</strong>: ocupação, pendências,
+              faxinas e visão das reservas — tom direto para decisão rápida.
+            </li>
+            <li>
+              Em <strong>Meus imóveis</strong>, o treinamento da Anfitri-IA alimenta o portal: guia pós
+              check-in, inventário, troubleshooting e sugestões de texto com IA.
+            </li>
+            <li>
+              Veja o <strong>histórico de conversas</strong> entre hóspede e Anfitri-IA por reserva; monitore
+              falhas e limites no módulo de agentes.
+            </li>
+            <li>
+              Apoio a <strong>precificação e estratégia</strong> (sugestões — você aprova o que for sensível).
+              O hóspede não vê dados financeiros nem outras reservas.
+            </li>
+          </ul>
+        </article>
+      </div>
+      <p class="portal-note">
+        LGPD: o núcleo hóspede é informativo; dados sensíveis ficam no fluxo de check-in e nas políticas
+        do produto. Você controla o conteúdo de treinamento por unidade.
+      </p>
+    </div>
+  </section>
+
+  <section class="block finance-spotlight" id="financeiro">
+    <div class="container">
+      <h2>Financeiro — repasses, custos e lucro por imóvel</h2>
+      <p class="sub">Visão mensal e anual sem planilha paralela.</p>
+      <div class="finance-grid">
+        <article class="card finance-card">
+          <p class="finance-card__badge">Visão geral</p>
+          <h3>Painel do mês</h3>
+          <ul class="portal-steps finance-card__list">
+            <li>
+              <strong>Líquido do mês</strong>, recebido, a receber e acumulado do ano — com comparativo em relação
+              ao mês anterior.
+            </li>
+            <li>
+              Filtre por <strong>mês/ano</strong>, imóvel ou grupo de <strong>proprietários</strong> (comissão
+              configurável por dono).
+            </li>
+            <li>
+              Gráfico de <strong>receita prevista × recebido × custos × lucro</strong> (histórico e projeção dos
+              próximos meses no critério Airbnb-like).
+            </li>
+            <li>
+              Tabela por imóvel com reservas e repasses pagos; exporte o mês em <strong>CSV</strong> para sua
+              contabilidade.
+            </li>
+            <li>
+              <strong>Ocultar valores</strong> na tela quando estiver em frente à equipe ou em reunião.
+            </li>
+          </ul>
+        </article>
+        <article class="card finance-card finance-card--payout">
+          <p class="finance-card__badge">Repasses Airbnb</p>
+          <h3>Previsão e pagamento real</h3>
+          <ul class="portal-steps finance-card__list">
+            <li>
+              A previsão usa as reservas confirmadas; o <strong>repasse recebido</strong> entra quando o coletor
+              processa o e-mail de pagamento da Airbnb.
+            </li>
+            <li>
+              Em <strong>Reservas capturadas</strong>, abra o financeiro a partir do badge de repasse pendente ou
+              pago — sem procurar código de reserva à mão.
+            </li>
+            <li>
+              Se o valor do repasse <strong>divergir</strong> do total do anfitrião na confirmação (alteração,
+              taxa, ajuste), o sistema sinaliza para você <strong>reconciliar</strong> ou colar o detalhe da tela
+              Airbnb após alteração.
+            </li>
+            <li>
+              Cancelamentos e alterações alimentam o histórico financeiro da reserva para conferência, não só a
+              confirmação inicial.
+            </li>
+          </ul>
+        </article>
+        <article class="card finance-card finance-card--costs">
+          <p class="finance-card__badge">Custos e precificação</p>
+          <h3>Despesas e sugestões</h3>
+          <ul class="portal-steps finance-card__list">
+            <li>
+              Cadastre <strong>despesas por imóvel</strong>: faxina, condomínio, luz, água, internet, manutenção,
+              impostos e outros — com previsão e baixa quando pago.
+            </li>
+            <li>
+              Gráfico de <strong>distribuição de custos</strong> no mês para enxergar onde o dinheiro está indo.
+            </li>
+            <li>
+              Aba <strong>Proprietários</strong>: repasses e comissões por dono do imóvel, quando você administra
+              para terceiros.
+            </li>
+            <li>
+              Aba <strong>Precificação</strong>: sugestões de tarifa e ocupação (IA) — você decide o que aplicar na
+              Airbnb.
+            </li>
+          </ul>
+        </article>
+      </div>
+      <p class="portal-note">
+        O módulo Financeiro é para administradores da conta. A Anfitri-IA do hóspede não exibe valores nem outras
+        reservas — apenas o que você autoriza no guia operacional.
+      </p>
+    </div>
+  </section>
+
+  <section class="block team-spotlight" id="equipe">
+    <div class="container team-spotlight__grid">
+      <div>
+        <h2>Equipe — cadastro e login por perfil</h2>
+        <p class="sub">
+          Você centraliza quem acessa o HostLogic. Colaboradores entram com <strong>e-mail e senha</strong> no mesmo
+          painel — com permissões diferentes conforme o cargo.
+        </p>
+        <ul class="portal-steps">
+          <li>
+            Em <strong>Equipe</strong>, o administrador (ou gerente) cadastra nome, e-mail, WhatsApp, CPF, foto e
+            <strong>cargo</strong>: faxineira, manutenção, funcionário, gerente ou administrador (até dois
+            administradores por conta).
+          </li>
+          <li>
+            Na criação ou no reset de senha, o sistema pode gerar um <strong>link seguro de convite</strong> para o
+            colaborador definir a senha — sem expor credencial em grupo de WhatsApp.
+          </li>
+          <li>
+            No primeiro acesso, quem precisar <strong>troca a senha</strong> antes de usar o painel (política de
+            senha forte).
+          </li>
+          <li>
+            <strong>Faxineiras</strong> veem o módulo de faxinas com as tarefas atribuídas a elas; gerentes e
+            administradores enxergam toda a operação, financeiro e configurações conforme o perfil.
+          </li>
+          <li>
+            Membros arquivados saem do acesso ativo; histórico fica sob controle do administrador (LGPD e
+            multi-tenant por conta).
+          </li>
+        </ul>
+        <div class="team-cta">
+          <a class="btn btn-primary" href={APP_URL}>Entrar no painel</a>
+        </div>
+      </div>
+      <div class="team-flow card" aria-hidden="true">
+        <p class="portal-flow__label">Login e papéis</p>
+        <ol class="portal-flow__list">
+          <li>Admin cadastra colaborador em Equipe</li>
+          <li>Convite seguro ou senha inicial</li>
+          <li>Login em app.hostlogic.com.br</li>
+          <li>Menu conforme cargo (faxina, gestão…)</li>
+        </ol>
+        <p class="team-flow__roles">Cargos: Administrador · Gerente · Faxineira · Manutenção · Funcionário</p>
+      </div>
+    </div>
+    <div class="container">
+      <p class="portal-note">
+        Recuperação de senha por e-mail (Supabase). O portal do hóspede é outro fluxo — link da reserva, sem login da
+        equipe. Hóspedes não acessam o painel de gestão.
+      </p>
+    </div>
+  </section>
+
+  <section class="block whatsapp-spotlight" id="whatsapp">
+    <div class="container whatsapp-spotlight__inner">
+      <span class="coming-soon-badge">Em breve</span>
+      <h2>Integração direta com WhatsApp</h2>
+      <p class="sub">
+        Conecte o canal no painel e automatize a conversa operacional — hoje você já pode enviar
+        <strong>links do portal</strong> e convites de acompanhante pelo WhatsApp; a integração nativa
+        simplifica o restante.
+      </p>
+      <ul class="portal-steps whatsapp-spotlight__list">
+        <li>
+          <strong>Hóspede</strong> — boas-vindas, link de check-in digital, lembretes de pré-check-in e
+          regras da estadia (templates editáveis por conta).
+        </li>
+        <li>
+          <strong>Equipe</strong> — avisos de faxina e checkout (ex.: lembrete no dia anterior e antes do
+          horário de saída).
+        </li>
+        <li>
+          <strong>Anfitrião</strong> — alertas operacionais importantes no mesmo número que você já usa
+          para a operação.
+        </li>
+        <li>
+          O hóspede informa o telefone no portal; quando o número bate com a mensagem recebida, o
+          HostLogic associa a conversa à <strong>reserva certa</strong> (sem misturar hóspedes).
+        </li>
+      </ul>
+      <p class="portal-note">
+        A integração direta (configuração guiada no produto) está em desenvolvimento. Clientes em
+        lista de espera serão avisados quando abrir para novas contas. LGPD: consentimento e limites de
+        envio conforme política do canal.
+      </p>
+      <a class="btn btn-ghost" href="#inscreva-se">Avise-me na lista de espera</a>
     </div>
   </section>
 

@@ -58,11 +58,33 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 12px 0;
+  padding: 14px 0;
+}
+/* Logo navy em PNG transparente: no tema escuro fica ilegível sem superfície clara. */
+.site-header a.logo-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+  text-decoration: none;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f7 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 7px 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+}
+.site-header a.logo-link:hover {
+  text-decoration: none;
+  background: #ffffff;
+  box-shadow: 0 2px 14px rgba(0, 108, 228, 0.22);
 }
 .site-header img.logo {
-  height: 34px;
+  height: 36px;
+  width: auto;
+  max-width: min(200px, 46vw);
   object-fit: contain;
+  object-position: left center;
+  display: block;
 }
 .site-nav {
   display: flex;
@@ -575,4 +597,170 @@ section.block p.sub {
 }
 .portal-flow__list li::marker {
   color: var(--hl-primary);
+}
+
+/* Anfitri-IA — destaque duplo (hóspede + gestão) */
+.anfitri-ia-grid {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 800px) {
+  .anfitri-ia-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+.anfitri-ia-card h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+.anfitri-ia-card__badge {
+  display: inline-block;
+  margin: 0 0 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--hl-primary);
+  background: rgba(0, 108, 228, 0.12);
+  border: 1px solid rgba(0, 108, 228, 0.3);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.anfitri-ia-card--host .anfitri-ia-card__badge {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+.anfitri-ia-card__list {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Financeiro — destaque na home */
+.finance-grid {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 900px) {
+  .finance-grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+  }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .finance-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .finance-grid .finance-card:first-child {
+    grid-column: 1 / -1;
+  }
+}
+.finance-card h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+.finance-card__badge {
+  display: inline-block;
+  margin: 0 0 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.finance-card--payout .finance-card__badge {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+.finance-card--costs .finance-card__badge {
+  color: #818cf8;
+  background: rgba(129, 140, 248, 0.1);
+  border-color: rgba(129, 140, 248, 0.35);
+}
+.finance-card__list {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Equipe — cadastro e login */
+.team-spotlight__grid {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+@media (min-width: 800px) {
+  .team-spotlight__grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+.team-cta {
+  margin-top: 20px;
+}
+.team-flow__roles {
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--hl-text-muted);
+}
+.team-spotlight > .container:last-child {
+  margin-top: 20px;
+}
+
+/* Cartão «Em breve» na grelha de funcionalidades */
+.card--soon {
+  position: relative;
+  border-style: dashed;
+  border-color: rgba(37, 211, 102, 0.35);
+}
+.card__soon-badge {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #25d366;
+  background: rgba(37, 211, 102, 0.1);
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+/* WhatsApp — em breve */
+.whatsapp-spotlight__inner {
+  max-width: 720px;
+}
+.whatsapp-spotlight {
+  border-top: 1px solid var(--hl-border);
+  border-bottom: 1px solid var(--hl-border);
+  background: linear-gradient(
+    135deg,
+    rgba(37, 211, 102, 0.06) 0%,
+    transparent 55%
+  );
+}
+.coming-soon-badge {
+  display: inline-block;
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #25d366;
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid rgba(37, 211, 102, 0.4);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+.whatsapp-spotlight__list {
+  margin: 0 0 16px;
+}
+.whatsapp-spotlight .btn-ghost {
+  margin-top: 8px;
 }

@@ -40,8 +40,13 @@ const year = new Date().getFullYear();
   <body>
     <header class="site-header">
       <div class="container bar">
-        <a href="/" aria-label="HostLogic — início">
-          <img class="logo" src="/assets/Logo_HostLogic_Horizontal_Transparent.png" alt="HostLogic" />
+        <a href="/" class="logo-link" aria-label="HostLogic — início">
+          <img
+            class="logo"
+            src="/assets/Logo_HostLogic_Horizontal_Transparent.png?v=6"
+            alt="HostLogic"
+            decoding="async"
+          />
         </a>
         <nav class="site-nav">
           {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
