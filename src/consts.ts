@@ -38,7 +38,7 @@ export const CONTACT = {
 /** Navegação simples (stubs preparados para evolução). */
 export const NAV = [
   { label: 'Início', href: '/' },
-  { label: 'Acesso antecipado', href: '/#inscreva-se' },
+  { label: 'Lista de espera', href: '/#inscreva-se' },
   { label: 'Demonstração', href: '/demo' },
   { label: 'Blog', href: '/blog' },
 ] as const;

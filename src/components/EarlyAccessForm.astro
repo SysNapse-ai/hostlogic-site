@@ -9,90 +9,109 @@ const propertyOptions = [
   { value: '11-20', label: '11 a 20 imóveis' },
   { value: '20+', label: 'Mais de 20 imóveis' },
 ];
+
+const waitlistPoints = [
+  'Prioridade no onboarding com a equipa HostLogic',
+  'Acesso às novas funcionalidades antes do lançamento público',
+  'Sem compromisso — só pedimos os dados para contactar',
+];
 ---
 
 <section class="early-access" id="inscreva-se" aria-labelledby="early-access-title">
-  <div class="container early-access__inner">
-    <p class="early-access__kicker">Inscreva-se</p>
-    <h2 id="early-access-title" class="early-access__title">Quero acesso antecipado.</h2>
-    <p class="early-access__lead">
-      Seja um dos primeiros a usar o HostLogic. Preencha o formulário e entraremos em contato.
-    </p>
-
-    <form class="early-form" id="early-access-form" novalidate>
-      <div class="early-form__grid">
-        <div class="early-form__field">
-          <label for="ea-name">Nome <span aria-hidden="true">*</span></label>
-          <input
-            id="ea-name"
-            name="name"
-            type="text"
-            autocomplete="name"
-            required
-            placeholder="Seu nome completo"
-          />
-        </div>
-        <div class="early-form__field">
-          <label for="ea-email">E-mail <span aria-hidden="true">*</span></label>
-          <input
-            id="ea-email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-            placeholder="seu@email.com"
-          />
-        </div>
-        <div class="early-form__field early-form__field--full">
-          <label for="ea-location">Localização <span class="early-form__optional">(opcional)</span></label>
-          <input
-            id="ea-location"
-            name="location"
-            type="text"
-            autocomplete="address-level2"
-            placeholder="Cidade, Estado, CEP"
-          />
-        </div>
-        <div class="early-form__field early-form__field--full">
-          <label for="ea-properties">Quantos imóveis você gerencia?</label>
-          <select id="ea-properties" name="properties" required>
-            {propertyOptions.map((opt) => (
-              <option value={opt.value} disabled={opt.value === ''} selected={opt.value === ''}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <label class="early-form__consent">
-        <input type="checkbox" name="consent" required />
-        <span>
-          Autorizo o contacto da HostLogic pelo e-mail informado para falar sobre o acesso antecipado.
-          Li a{' '}
-          <a href={LEGAL.privacy} target="_blank" rel="noopener noreferrer">política de privacidade</a>.
-        </span>
-      </label>
-
-      <button type="submit" class="early-form__submit">
-        Quero acesso antecipado <span aria-hidden="true">→</span>
-      </button>
-
-      <p class="early-form__error" id="early-form-error" role="alert" hidden></p>
-    </form>
-
-    <div class="early-form__success" id="early-form-success" hidden>
-      <p class="early-form__success-title">Pedido recebido</p>
-      <p>
-        Obrigado pelo interesse. Entraremos em contacto em breve no e-mail que indicou.
-        Se preferir, escreva também para{' '}
-        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+  <div class="container early-access__shell">
+    <div class="early-access__intro">
+      <span class="early-access__badge">Lista de espera</span>
+      <h2 id="early-access-title" class="early-access__title">
+        Entre na fila de <span class="early-access__accent">acesso antecipado</span>
+      </h2>
+      <p class="early-access__lead">
+        Estamos abrindo vagas para anfitriões e gestores que querem operar reservas, faxinas e
+        check-in num só painel. Deixe seus dados e respondemos por e-mail.
       </p>
+      <ul class="early-access__list">
+        {waitlistPoints.map((point) => (
+          <li>{point}</li>
+        ))}
+      </ul>
     </div>
 
-    <p class="early-access__footnote">
-      Já é cliente? <a href="https://app.hostlogic.com.br">Acessar o sistema</a>.
-    </p>
+    <div class="early-access__panel">
+      <p class="early-form__panel-title">Cadastro rápido</p>
+      <p class="early-form__panel-sub">Leva menos de 1 minuto. Sem telefone nesta etapa.</p>
+
+      <form class="early-form" id="early-access-form" novalidate>
+        <div class="early-form__stack">
+          <div class="early-form__field">
+            <label for="ea-name">Nome completo</label>
+            <input
+              id="ea-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              placeholder="Como devemos te chamar?"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="ea-email">E-mail profissional</label>
+            <input
+              id="ea-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              placeholder="voce@empresa.com.br"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="ea-location">
+              Cidade ou região <span class="early-form__optional">opcional</span>
+            </label>
+            <input
+              id="ea-location"
+              name="location"
+              type="text"
+              autocomplete="address-level2"
+              placeholder="Ex.: Curitiba, PR"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="ea-properties">Portfólio de imóveis</label>
+            <select id="ea-properties" name="properties" required>
+              {propertyOptions.map((opt) => (
+                <option value={opt.value} disabled={opt.value === ''} selected={opt.value === ''}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <label class="early-form__consent">
+          <input type="checkbox" name="consent" required />
+          <span>
+            Aceito ser contactado pela HostLogic sobre o programa de acesso antecipado e li a{' '}
+            <a href={LEGAL.privacy} target="_blank" rel="noopener noreferrer">política de privacidade</a>.
+          </span>
+        </label>
+
+        <button type="submit" class="early-form__submit">Enviar interesse</button>
+
+        <p class="early-form__error" id="early-form-error" role="alert" hidden></p>
+      </form>
+
+      <div class="early-form__success" id="early-form-success" hidden>
+        <p class="early-form__success-title">Interesse registrado</p>
+        <p>
+          Obrigado. Em breve falamos no e-mail indicado. Dúvidas?{' '}
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        </p>
+      </div>
+
+      <p class="early-access__footnote">
+        Já utiliza o painel? <a href="https://app.hostlogic.com.br">Ir para o login</a>
+      </p>
+    </div>
   </div>
 </section>
 
@@ -117,18 +136,18 @@ const propertyOptions = [
       const consent = fd.get('consent');
 
       if (!name || !email || !properties) {
-        errorEl.textContent = 'Preencha nome, e-mail e quantidade de imóveis.';
+        errorEl.textContent = 'Preencha nome, e-mail e portfólio de imóveis.';
         errorEl.hidden = false;
         return;
       }
       if (!consent) {
-        errorEl.textContent = 'É necessário aceitar o contacto conforme a política de privacidade.';
+        errorEl.textContent = 'Marque o consentimento para continuar.';
         errorEl.hidden = false;
         return;
       }
 
       const lines = [
-        'Pedido de acesso antecipado — HostLogic',
+        'Lista de espera — HostLogic',
         '',
         `Nome: ${name}`,
         `E-mail: ${email}`,
@@ -137,7 +156,7 @@ const propertyOptions = [
         '',
         `Enviado em: ${new Date().toISOString()}`,
       ];
-      const subject = encodeURIComponent('HostLogic — Acesso antecipado');
+      const subject = encodeURIComponent('HostLogic — Lista de espera');
       const body = encodeURIComponent(lines.join('\n'));
       const mailto = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
 
