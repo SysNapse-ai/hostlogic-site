@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT } from '../consts';
+
+// STUB preparado para a página de demonstração em vídeo.
+// Futuro: embed (YouTube não listado / Cloudflare Stream / R2). Ver docs/SITE_FUTURE_INTEGRATIONS.md.
+---
+
+<BaseLayout
+  title="Demonstração"
+  description="Demonstração em vídeo do HostLogic — em breve."
+>
+  <div class="container page-head">
+    <h1>Demonstração em vídeo</h1>
+    <p>Veja o HostLogic em uso: reservas capturadas, calendário, portal do hóspede e faxinas.</p>
+  </div>
+  <div class="container" style="padding-bottom:48px">
+    <div class="video-frame">Vídeo de demonstração a publicar em breve.</div>
+    <div class="stub-note">
+      Página preparada para receber o vídeo. Enquanto isso, fale com a equipe:
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+    </div>
+  </div>
+</BaseLayout>

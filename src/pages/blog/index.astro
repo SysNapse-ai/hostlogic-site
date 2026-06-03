@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CONTACT } from '../../consts';
+
+// STUB do blog. Futuro: Astro Content Collections em src/content/blog + rota [slug].
+// Ver docs/SITE_FUTURE_INTEGRATIONS.md.
+---
+
+<BaseLayout
+  title="Blog"
+  description="Blog do HostLogic — conteúdos sobre operação de hospedagem (em breve)."
+>
+  <div class="container page-head">
+    <h1>Blog HostLogic</h1>
+    <p>Conteúdos sobre operação de hospedagem, automação e gestão de propriedades. Em breve.</p>
+  </div>
+  <div class="container" style="padding-bottom:48px">
+    <div class="stub-note">
+      Estrutura preparada para artigos. Sugestões de tema? Escreva para
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT } from '../consts';
+
+// STUB preparado para a oferta de templates de adesivos com captura de lead.
+// FASE INICIAL: sem formulário/automação — apenas contato por e-mail/telefone.
+// Futuro: formulário (nome, e-mail, WhatsApp, consentimento LGPD) gravando em Supabase marketing
+// separado ou ferramenta de formulário. Ver docs/SITE_FUTURE_INTEGRATIONS.md.
+---
+
+<BaseLayout
+  title="Templates de adesivos"
+  description="Templates de adesivos para anfitriões HostLogic — em breve."
+>
+  <div class="container page-head">
+    <h1>Templates de adesivos</h1>
+    <p>
+      Em breve disponibilizaremos templates de adesivos para a sua propriedade. Esta página está
+      preparada para a captura de contatos quando o programa for lançado.
+    </p>
+  </div>
+  <div class="container" style="padding-bottom:48px">
+    <div class="stub-note">
+      Por enquanto, sem cadastro automático. Para receber os templates quando lançarmos, fale com a
+      equipe: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> ou
+      <a href={`tel:${CONTACT.phoneHref}`}>{CONTACT.phoneDisplay}</a>.
+    </div>
+  </div>
+</BaseLayout>

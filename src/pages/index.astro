@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EarlyAccessForm from '../components/EarlyAccessForm.astro';
+import { APP_URL } from '../consts';
+
+// HOME DE TESTE (BRUTA). Estrutura pronta para evoluir para marketing comercial completo
+// (todas as funções do sistema apresentadas comercialmente). Ver docs/SITE_FUTURE_INTEGRATIONS.md.
+// Fase inicial: contato SOMENTE por e-mail e telefone — sem formulário/automação.
+
+const features = [
+  { title: 'Reservas capturadas', desc: 'Captura por iCal e e-mail coletor (Airbnb/Booking), sem digitação manual.' },
+  { title: 'Calendário multi-imóvel', desc: 'Check-ins, check-outs e ocupação de todas as propriedades num só lugar.' },
+  { title: 'Faxinas e equipe', desc: 'Agendamento de limpeza por checkout e gestão da equipe operacional.' },
+  { title: 'Portal do hóspede', desc: 'Check-in digital, guia da propriedade e consentimento LGPD.' },
+  { title: 'Automação de cadastro', desc: 'Integração com sistemas de condomínio/portaria (VDS) e automações.' },
+  { title: 'Segurança e LGPD', desc: 'Multi-tenant com RLS, mascaramento de PII e retenção de dados.' },
+];
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="container">
+      <span class="badge">Versão de teste do site</span>
+      <h1>Operação de hospedagem, do jeito profissional.</h1>
+      <p class="lead">
+        O HostLogic centraliza reservas, calendário, faxinas, portal do hóspede e automações —
+        com segurança e conformidade LGPD. Esta é uma página inicial de teste; o conteúdo comercial
+        completo chega em breve.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
+        <a class="btn btn-ghost" href="#inscreva-se">Quero acesso antecipado</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="container">
+      <h2>O que o HostLogic faz</h2>
+      <p class="sub">Resumo das áreas do sistema (apresentação comercial detalhada virá depois).</p>
+      <div class="grid">
+        {features.map((f) => (
+          <div class="card">
+            <h3>{f.title}</h3>
+            <p>{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="demo">
+    <div class="container">
+      <h2>Demonstração em vídeo</h2>
+      <p class="sub">Em breve: um vídeo curto mostrando a utilização do sistema na prática.</p>
+      <div class="video-frame">Espaço reservado para o vídeo de demonstração (a publicar).</div>
+    </div>
+  </section>
+
+  <EarlyAccessForm />
+</BaseLayout>
