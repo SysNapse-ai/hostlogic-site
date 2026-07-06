@@ -48,8 +48,14 @@ O repo inclui `wrangler.toml` com `[assets] directory = "./dist"` (site Astro es
    | Nome | Valor |
    |------|--------|
    | `NODE_VERSION` | `22` |
+   | `GEMINI_API_KEY` | chave da Google AI Studio (modelo `gemini-2.5-flash`) — definir via `wrangler secret put GEMINI_API_KEY` ou **Settings → Variables → Encrypt** no painel |
 
-4. **Implantar** — aguardar build verde.
+   > A `GEMINI_API_KEY` é um **secret** (Encrypt). Nunca commitá-la nem pôr no `wrangler.toml`.
+   > Local: criar `.dev.vars` (já no `.gitignore`) com `GEMINI_API_KEY="..."` para `wrangler dev`.
+
+4. **Rate Limiting** (recomendado, anti-abuso/custo): no painel do projeto → **Security → WAF → Rate limiting rules**, criar regra para o path `/api/anfitri-ia` com limite de ~15 req/min por IP. O plano Free do Workers inclui 100k req/dia; os assets estáticos não contam (só o endpoint do chat invoca o Worker).
+
+5. **Implantar** — aguardar build verde.
 5. URL: `https://hostlogic-site.<subdomínio-workers>.workers.dev` ou o host indicado no painel.
 
 > Se no futuro o painel oferecer **Pages** com campo "Build output directory" = `dist`, também funciona sem `wrangler deploy`.
@@ -94,6 +100,7 @@ No browser:
 - Home com logo, cards, contato e-mail/telefone.
 - **Acessar o sistema** → `https://app.hostlogic.com.br`
 - Privacidade/Termos → app `/privacidade` e `/termos`
+- **Anfitri-IA (demonstração):** na home (`/#anfitri-ia`) e em `/demo`, faça uma pergunta ao widget. Resposta esperada dentro de alguns segundos. Sem `GEMINI_API_KEY` no ambiente, o widget mostra "Demonstração indisponível no momento" (503) — não é erro, é a guarda de falta de chave.
 
 ## Passo F — UptimeRobot (opcional, Fase 5)
 

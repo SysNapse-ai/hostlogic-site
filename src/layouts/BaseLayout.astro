@@ -10,9 +10,43 @@ interface Props {
 const { title, description } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
 const pageDesc = description ?? SITE.description;
-const ogImage = '/assets/Logo_HostLogic_Og_WhatsApp.png';
+const ogImage = new URL('/assets/HostLogic_AppIcon_256.png', SITE.url).href;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const year = new Date().getFullYear();
+
+const logoUrl = `${SITE.url}/assets/HostLogic_AppIcon_1024.png`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#organization`,
+      name: SITE.name,
+      url: SITE.url,
+      email: CONTACT.email,
+      logo: logoUrl,
+      description: SITE.description,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      name: SITE.name,
+      url: SITE.url,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${SITE.url}/#organization` },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: SITE.name,
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      url: SITE.url,
+      description: SITE.description,
+      publisher: { '@id': `${SITE.url}/#organization` },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'BRL' },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -23,35 +57,52 @@ const year = new Date().getFullYear();
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/assets/Logo_HostLogic_Transparent.png" />
+    <link rel="icon" href="/assets/HostLogic_AppIcon_512.png" />
+    <link rel="apple-touch-icon" href="/assets/HostLogic_AppIcon_512.png" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="1200" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image:width" content="256" />
+    <meta property="og:image:height" content="256" />
+    <meta property="og:image:type" content="image/png" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDesc} />
     <meta name="twitter:image" content={ogImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <header class="site-header">
       <div class="container bar">
         <a href="/" class="logo-link" aria-label="HostLogic — início">
           <img
-            class="logo"
-            src="/assets/Logo_HostLogic_Horizontal_Transparent.png?v=6"
-            alt="HostLogic"
+            class="logo-mark"
+            src="/assets/HostLogic_AppIcon_512.png?v=1"
+            alt=""
             decoding="async"
           />
+          <span class="logo-wordmark">HostLogic</span>
         </a>
-        <nav class="site-nav">
+        <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
           {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
-          <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
         </nav>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Abrir menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div class="container header-action-row">
+        <a class="btn btn-primary header-system-link" href={APP_URL}>Acessar o sistema</a>
       </div>
     </header>
 
@@ -71,5 +122,34 @@ const year = new Date().getFullYear();
         </span>
       </div>
     </footer>
+
+    <script is:inline>
+      (() => {
+        const header = document.querySelector('.site-header');
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.getElementById('site-nav');
+        if (!header || !toggle || !nav) return;
+        const setOpen = (open) => {
+          header.classList.toggle('is-open', open);
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+        };
+        toggle.addEventListener('click', () => {
+          setOpen(!header.classList.contains('is-open'));
+        });
+        // Fecha ao clicar num link
+        nav.addEventListener('click', (e) => {
+          if (e.target && e.target.tagName === 'A') setOpen(false);
+        });
+        // Fecha com Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') setOpen(false);
+        });
+        // Reset ao voltar para desktop
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 820) setOpen(false);
+        });
+      })();
+    </script>
   </body>
 </html>

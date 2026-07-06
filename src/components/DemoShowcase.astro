@@ -1,0 +1,167 @@
+---
+const phoneHighlights = [
+  'Cadastro do titular',
+  'Acompanhantes por link',
+  'Regras, Wi-Fi e localização',
+  'Chat Anfitri-IA',
+];
+---
+
+<section class="block demo-showcase" id="demo-valores">
+  <div class="container demo-showcase__head">
+    <span class="demo-showcase__eyebrow">Demonstração com dados fictícios</span>
+    <h2>Os prints que explicam por que o HostLogic vale para o anfitrião</h2>
+    <p class="sub">
+      A proposta é mostrar o produto em situações reais de operação: hóspede preenchendo o portal,
+      anfitrião acompanhando a reserva, financeiro conferindo repasse e equipe comprovando faxina.
+    </p>
+  </div>
+
+  <div class="container demo-stage">
+    <article class="demo-card demo-card--phone">
+      <div class="phone-frame" aria-label="Smartphone com portal do hóspede">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status">
+            <strong>Portal do hóspede</strong>
+            <span>Reserva HMA7Q2</span>
+          </div>
+          <div class="stay-card">
+            <p class="stay-card__label">Apartamento Centro</p>
+            <h3>Check-in 18 jul · 3 hóspedes</h3>
+            <span>Airbnb · link enviado na mensagem automática</span>
+          </div>
+          <div class="portal-progress">
+            {phoneHighlights.map((item, index) => (
+              <span class={index < 2 ? 'is-done' : ''}>{item}</span>
+            ))}
+          </div>
+          <div class="portal-panel">
+            <strong>Acompanhantes</strong>
+            <p>O titular pode preencher ou enviar um link individual.</p>
+            <button type="button">Copiar link do acompanhante</button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card__copy">
+        <span>Valor 01</span>
+        <h3>Portal completo no celular do hóspede</h3>
+        <p>
+          O mesmo link concentra cadastro, acompanhantes, regras, localização e instruções do imóvel.
+          Para condomínios, o valor é chegar com dados organizados antes da portaria pedir.
+        </p>
+      </div>
+    </article>
+
+    <article class="demo-card demo-card--phone demo-card--chat">
+      <div class="phone-frame phone-frame--chat" aria-label="Smartphone com chat Anfitri-IA">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen">
+          <div class="phone-status">
+            <strong>Anfitri-IA</strong>
+            <span>Guia do imóvel</span>
+          </div>
+          <div class="chat-bubble chat-bubble--guest">Qual é a senha do Wi-Fi?</div>
+          <div class="chat-bubble chat-bubble--ai">
+            A rede é HostLogic_Guest. A senha está no guia: Centro2026!.
+          </div>
+          <div class="chat-bubble chat-bubble--guest">Posso chegar às 22h?</div>
+          <div class="chat-bubble chat-bubble--ai">
+            Sim. O acesso é por fechadura eletrônica. Veja também as regras de silêncio do condomínio.
+          </div>
+          <div class="chat-history-chip">Histórico visível para o anfitrião</div>
+        </div>
+      </div>
+      <div class="demo-card__copy">
+        <span>Valor 02</span>
+        <h3>Anfitri-IA responde e deixa rastreio</h3>
+        <p>
+          O hóspede resolve dúvidas comuns sem depender do anfitrião online, e o painel mantém a
+          conversa por reserva para suporte, auditoria e alinhamento com condomínio.
+        </p>
+      </div>
+    </article>
+
+    <article class="demo-card demo-card--desktop demo-card--wide">
+      <div class="desktop-frame" aria-label="Painel de reservas com timeline">
+        <div class="desktop-topbar">
+          <span>Reservas capturadas</span>
+          <strong>Timeline operacional</strong>
+        </div>
+        <div class="reservation-row">
+          <div>
+            <strong>Marina Costa</strong>
+            <span>Airbnb · HMA7Q2 · 18-22 jul</span>
+          </div>
+          <em>Portal em andamento</em>
+        </div>
+        <ol class="timeline-demo">
+          <li class="is-complete"><strong>Reserva capturada</strong><span>iCal + sincronização automática</span></li>
+          <li class="is-complete"><strong>Portal enviado</strong><span>link na mensagem do Airbnb</span></li>
+          <li class="is-active"><strong>Acompanhantes</strong><span>1 cadastro pendente por link</span></li>
+          <li><strong>Faxina</strong><span>O.S. agendada para check-out</span></li>
+          <li><strong>Financeiro</strong><span>repasse a conferir</span></li>
+        </ol>
+      </div>
+      <div class="demo-card__copy">
+        <span>Valor 03</span>
+        <h3>Controle da reserva do começo ao fechamento</h3>
+        <p>
+          A timeline mostra onde a estadia está travada: portal, acompanhante, faxina ou repasse. O
+          anfitrião deixa de perseguir informação em conversas soltas.
+        </p>
+      </div>
+    </article>
+
+    <article class="demo-card demo-card--desktop">
+      <div class="desktop-frame desktop-frame--finance" aria-label="Painel financeiro com repasses">
+        <div class="desktop-topbar">
+          <span>Financeiro</span>
+          <strong>Julho/2026</strong>
+        </div>
+        <div class="money-grid">
+          <div><span>Previsto</span><strong>R$ 8.420</strong></div>
+          <div><span>Recebido</span><strong>R$ 7.980</strong></div>
+          <div class="is-warning"><span>Divergência</span><strong>R$ 440</strong></div>
+        </div>
+        <div class="finance-bar"><span style="width: 72%"></span></div>
+        <p class="finance-note">Reserva HMA7Q2 precisa de reconciliação do repasse Airbnb.</p>
+      </div>
+      <div class="demo-card__copy">
+        <span>Valor 04</span>
+        <h3>Financeiro sem surpresa no extrato</h3>
+        <p>
+          Previsão, recebido, custos e lucro por imóvel ficam no mesmo painel, com divergência de
+          repasse sinalizada antes de fechar o mês.
+        </p>
+      </div>
+    </article>
+
+    <article class="demo-card demo-card--desktop">
+      <div class="desktop-frame desktop-frame--cleaning" aria-label="Painel de faxina comprovada">
+        <div class="desktop-topbar">
+          <span>Faxina</span>
+          <strong>O.S. #142</strong>
+        </div>
+        <div class="cleaning-status">
+          <span class="is-live">Em andamento</span>
+          <strong>Chegada confirmada por GPS</strong>
+          <p>Fotos exigidas: banheiro, cozinha e roupa de cama.</p>
+        </div>
+        <div class="photo-grid-demo">
+          <span>Foto 1</span>
+          <span>Foto 2</span>
+          <span>Foto 3</span>
+        </div>
+      </div>
+      <div class="demo-card__copy">
+        <span>Valor 05</span>
+        <h3>Faxina comprovada antes do próximo check-in</h3>
+        <p>
+          A equipe trabalha com O.S., geofence e fotos mínimas. O anfitrião ganha prova operacional
+          sem precisar pedir confirmação por mensagem.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>

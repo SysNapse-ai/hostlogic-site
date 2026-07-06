@@ -2,11 +2,17 @@
 dist/
 # generated types
 .astro/
+# wrangler cache/state local — nunca commitar
+.wrangler/
+# token Cloudflare temporario para deploy (WSL2) — nunca commitar
+.cf-token
 # deps
 node_modules/
 # env
 .env
 .env.production
+# wrangler secrets locais (GEMINI_API_KEY etc.) — nunca commitar
+.dev.vars
 # logs
 *.log
 # os

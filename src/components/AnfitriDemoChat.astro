@@ -1,0 +1,222 @@
+---
+/**
+ * AnfitriDemoChat — widget de demonstração da Anfitri-IA no site institucional.
+ *
+ * - Conversa com POST /api/anfitri-ia (Cloudflare Worker -> gemini-2.5-flash).
+ * - Limite de 6 perguntas por sessão (contador; pergunta só conta em sucesso).
+ * - Renderização XSS-safe: resposta do modelo entra via textContent (nunca innerHTML).
+ * - LGPD: aviso "não insira dados pessoais; conversa não armazenada" + link /privacidade.
+ * - Fallback amigável quando o endpoint não existe (ex.: astro dev sem Worker).
+ */
+import { APP_URL, LEGAL } from '../consts';
+
+const MAX_QUESTIONS = 6;
+const SUGGESTIONS = [
+  'O que o HostLogic faz por mim?',
+  'Como funciona o portal do hóspede?',
+  'A Anfitri-IA responde no WhatsApp?',
+  'Como entra a reserva da Airbnb?',
+  'Tem financeiro com repasse reconciliado?',
+  'E a LGPD, como é tratada?',
+];
+---
+
+<aside class="ai-demo" id="anfitri-ia-demo" aria-label="Demonstração da Anfitri-IA">
+  <div class="ai-demo__head">
+    <div class="ai-demo__who">
+      <span class="ai-demo__avatar" aria-hidden="true">IA</span>
+      <div>
+        <p class="ai-demo__name">Anfitri-IA <span class="ai-demo__tag">demonstração</span></p>
+        <p class="ai-demo__status" data-ai-status>Pronta para conversar</p>
+      </div>
+    </div>
+    <p class="ai-demo__counter" data-ai-counter>Pergunta 0 de {MAX_QUESTIONS}</p>
+  </div>
+
+  <div class="ai-demo__log" data-ai-log aria-live="polite">
+    <div class="ai-demo__msg ai-demo__msg--model">
+      <p class="ai-demo__bubble">Oi! Sou a <strong>Anfitri-IA</strong> em demonstração. Posso te mostrar como o HostLogic ajuda anfitriões e administradores. Faça até {MAX_QUESTIONS} perguntas — respondo com base no que está no site.</p>
+    </div>
+  </div>
+
+  <div class="ai-demo__chips" data-ai-chips>
+    {SUGGESTIONS.map((s) => (
+      <button type="button" class="ai-demo__chip" data-ai-chip={s}>{s}</button>
+    ))}
+  </div>
+
+  <form class="ai-demo__form" data-ai-form>
+    <label class="ai-demo__label" for="ai-demo-input">Sua pergunta</label>
+    <div class="ai-demo__row">
+      <input
+        id="ai-demo-input"
+        class="ai-demo__input"
+        type="text"
+        name="question"
+        placeholder="Pergunte sobre o HostLogic…"
+        autocomplete="off"
+        maxlength="500"
+        aria-label="Digite sua pergunta"
+      />
+      <button class="ai-demo__send" type="submit" data-ai-send>Enviar</button>
+    </div>
+  </form>
+
+  <p class="ai-demo__legal">
+    Demonstração com IA — não insira dados pessoais ou sensíveis. As mensagens não são armazenadas.
+    <a href={LEGAL.privacy}>Privacidade</a> · <a href={APP_URL}>Acessar o sistema</a>
+  </p>
+</aside>
+
+<script is:inline define:vars={{ MAX_QUESTIONS }}>
+  (() => {
+    const root = document.getElementById('anfitri-ia-demo');
+    if (!root) return;
+    const log = root.querySelector('[data-ai-log]');
+    const form = root.querySelector('[data-ai-form]');
+    const input = root.querySelector('#ai-demo-input');
+    const sendBtn = root.querySelector('[data-ai-send]');
+    const counter = root.querySelector('[data-ai-counter]');
+    const status = root.querySelector('[data-ai-status]');
+    const chips = root.querySelectorAll('[data-ai-chip]');
+
+    let used = 0; // perguntas consumidas (só em sucesso)
+    let busy = false;
+    const history = []; // { role: 'user'|'model', text }
+
+    // Render XSS-safe: cria elemento com textContent (preserva quebras via CSS white-space).
+    function addMessage(role, text) {
+      const wrap = document.createElement('div');
+      wrap.className = 'ai-demo__msg ai-demo__msg--' + (role === 'user' ? 'user' : 'model');
+      const bubble = document.createElement('p');
+      bubble.className = 'ai-demo__bubble';
+      bubble.textContent = text; // nunca innerHTML
+      wrap.appendChild(bubble);
+      log.appendChild(wrap);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function setCounter() {
+      counter.textContent = 'Pergunta ' + used + ' de ' + MAX_QUESTIONS;
+    }
+
+    function setBusy(state) {
+      busy = state;
+      sendBtn.disabled = state || used >= MAX_QUESTIONS;
+      input.disabled = used >= MAX_QUESTIONS;
+      if (used >= MAX_QUESTIONS) {
+        input.placeholder = 'Você usou suas ' + MAX_QUESTIONS + ' perguntas. Fale com o time!';
+        status.textContent = 'Demonstração concluída';
+        chips.forEach((c) => (c.disabled = true));
+      } else if (state) {
+        status.textContent = 'Anfitri-IA está escrevendo…';
+      } else {
+        status.textContent = 'Pronta para conversar';
+      }
+    }
+
+    function showTyping() {
+      const wrap = document.createElement('div');
+      wrap.className = 'ai-demo__msg ai-demo__msg--model ai-demo__msg--typing';
+      wrap.setAttribute('data-ai-typing', '');
+      const bubble = document.createElement('p');
+      bubble.className = 'ai-demo__bubble ai-demo__typing';
+      const dots = document.createElement('span');
+      dots.className = 'ai-demo__dot';
+      const dots2 = document.createElement('span');
+      dots2.className = 'ai-demo__dot';
+      const dots3 = document.createElement('span');
+      dots3.className = 'ai-demo__dot';
+      bubble.append(dots, dots2, dots3);
+      wrap.appendChild(bubble);
+      log.appendChild(wrap);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = log.querySelector('[data-ai-typing]');
+      if (t) t.remove();
+    }
+
+    function lockFinished() {
+      // Mostra CTA final
+      const wrap = document.createElement('div');
+      wrap.className = 'ai-demo__msg ai-demo__msg--model';
+      const bubble = document.createElement('p');
+      bubble.className = 'ai-demo__bubble';
+      bubble.textContent = 'Gostou? Acesse o sistema ou entre na lista de espera para conversar com o nosso time.';
+      wrap.appendChild(bubble);
+      log.appendChild(wrap);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function sendQuestion(question) {
+      if (busy || used >= MAX_QUESTIONS) return;
+      const q = (question || '').trim();
+      if (!q) return;
+
+      addMessage('user', q);
+      history.push({ role: 'user', text: q });
+      input.value = '';
+      setBusy(true);
+      showTyping();
+
+      try {
+        const res = await fetch('/api/anfitri-ia', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history }),
+        });
+        const data = await res.json().catch(() => ({}));
+        removeTyping();
+
+        if (!res.ok || !data.reply) {
+          let fallback =
+            'Não consegui responder agora nesta demonstração. Você pode ver tudo em /funcionalidades ou falar com o time.';
+          // 429 = rate limit da Cloudflare (WAF/binding): o visitante disparou rápido demais.
+          if (res.status === 429) {
+            fallback =
+              'Você fez muitas perguntas rápido demais. Espere uns 10 segundos e tente de novo.';
+          }
+          addMessage('model', data.reply || fallback);
+          // Em erro, remover a pergunta do histórico: sem resposta do modelo, o próximo
+          // envio teria dois turnos 'user' seguidos e o Gemini rejeita (contents must
+          // alternate). Assim a próxima pergunta parte de um histórico válido.
+          history.pop();
+          setBusy(false);
+          return;
+        }
+
+        addMessage('model', data.reply);
+        history.push({ role: 'model', text: data.reply });
+        used++;
+        setCounter();
+        setBusy(false);
+        if (used >= MAX_QUESTIONS) lockFinished();
+      } catch (err) {
+        removeTyping();
+        addMessage(
+          'model',
+          'A demonstração não está disponível neste ambiente agora. Veja /funcionalidades ou fale com o nosso time.',
+        );
+        setBusy(false);
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      sendQuestion(input.value);
+    });
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        if (busy || used >= MAX_QUESTIONS) return;
+        input.value = chip.dataset.aiChip || '';
+        sendQuestion(chip.dataset.aiChip || '');
+      });
+    });
+
+    setCounter();
+    setBusy(false);
+  })();
+</script>

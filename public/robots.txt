@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://hostlogic.com.br/sitemap-index.xml

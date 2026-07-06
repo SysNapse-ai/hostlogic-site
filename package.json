@@ -10,15 +10,18 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy:cf": "npm run build && wrangler deploy",
+    "dev:worker": "npm run build && wrangler dev",
     "release:bump-patch": "node scripts/bump-patch-version.mjs"
   },
   "engines": {
     "node": ">=20.19.0"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^5.6.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250701.0",
     "wrangler": "^4.14.0"
   }
 }

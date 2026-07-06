@@ -1,71 +1,171 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DemoShowcase from '../components/DemoShowcase.astro';
 import EarlyAccessForm from '../components/EarlyAccessForm.astro';
+import AnfitriDemoChat from '../components/AnfitriDemoChat.astro';
 import { APP_URL } from '../consts';
+import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../data/features';
 
-// HOME DE TESTE (BRUTA). Estrutura pronta para evoluir para marketing comercial completo
-// (todas as funções do sistema apresentadas comercialmente). Ver docs/SITE_FUTURE_INTEGRATIONS.md.
-// Fase inicial: contato SOMENTE por e-mail e telefone — sem formulário/automação.
-
-const features = [
-  { title: 'Reservas capturadas', desc: 'Captura por iCal e e-mail coletor (Airbnb), sem digitação manual.' },
-  { title: 'Calendário multi-imóvel', desc: 'Check-ins, check-outs e ocupação de todas as propriedades num só lugar.' },
-  {
-    title: 'Equipe e acessos',
-    desc: 'Cadastro de colaboradores por cargo, login no painel e faxinas atribuídas — cada um vê só o que precisa.',
-  },
-  { title: 'Faxinas', desc: 'Limpeza por checkout, atribuição à equipe e auditoria por fotos de itens sorteados na faxina.' },
-  {
-    title: 'Portal do hóspede',
-    desc: 'Check-in digital com fotos, acompanhantes por link/WhatsApp e Anfitri-IA para dúvidas sobre o imóvel.',
-  },
-  {
-    title: 'Anfitri-IA',
-    desc: 'Assistente de IA no portal (hóspede) e no painel (você): guia do imóvel, operação e histórico de conversas.',
-  },
-  {
-    title: 'Financeiro',
-    desc: 'Receita, repasses Airbnb, custos por imóvel, comissão de proprietários e exportação — ligado às reservas capturadas.',
-  },
-  { title: 'Automação de cadastro', desc: 'Integração com sistemas de condomínio/portaria e automações.' },
-  {
-    title: 'WhatsApp',
-    desc: 'Em breve: integração direta no painel — mensagens ao hóspede, equipe e alertas sem configurar tudo à mão.',
-    soon: true,
-  },
-  { title: 'Segurança e LGPD', desc: 'Multi-tenant com RLS, mascaramento de PII e retenção de dados.' },
-];
+// Home institucional HostLogic. Estrutura pronta para evoluir para marketing comercial
+// completo (todas as funções do sistema apresentadas comercialmente). Ver docs/SITE_FUTURE_INTEGRATIONS.md.
+// Fase atual: contato por e-mail/telefone + lista de espera manual (mailto) — captura automática em fase posterior.
 ---
 
 <BaseLayout>
   <section class="hero">
-    <div class="container">
-      <span class="badge">Versão de teste do site</span>
-      <h1>Operação de hospedagem, do jeito profissional.</h1>
-      <p class="lead">
-        Reservas, calendário, faxinas, portal do hóspede com check-in digital e a <strong>Anfitri-IA</strong>
-        — no celular do hóspede e no seu painel de gestão. LGPD e automações de condomínio. Esta é uma
-        página inicial de teste; o conteúdo comercial completo chega em breve.
-      </p>
-      <div class="cta">
-        <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
-        <a class="btn btn-ghost" href="#inscreva-se">Lista de espera</a>
+    <div class="container hero-shell">
+      <div class="hero-copy">
+        <span class="badge">Airbnb agora · Booking.com em breve</span>
+        <h1>O sistema para o anfitrião que não quer administrar temporada em planilha.</h1>
+        <p class="lead">
+          O HostLogic transforma reserva, check-in, faxina, atendimento e repasse em uma operação
+          acompanhável. O que entra pelo Airbnb já alimenta calendário, equipe e financeiro — com
+          trilha para auditoria e LGPD.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
+          <a class="btn btn-ghost" href="/funcionalidades">Ver funcionalidades</a>
+        </div>
+        <div class="hero-proof">
+          <span><strong>{FEATURE_CATEGORY_COUNT} áreas</strong> · {FEATURE_COUNT} recursos no catálogo</span>
+          <span>RLS por conta, LGPD e dados sensíveis separados</span>
+          <span><a href="#plano-pago">Ver o que faz valer o plano pago</a></span>
+        </div>
+      </div>
+
+      <div class="hero-product" aria-label="Resumo visual do fluxo operacional HostLogic">
+        <div class="product-window">
+          <div class="product-window__bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="product-window__head">
+            <p>Painel HostLogic</p>
+            <strong>Hoje, 6 reservas ativas</strong>
+          </div>
+          <div class="ops-flow">
+            <div class="ops-step ops-step--active">
+              <span class="ops-step__tag">01</span>
+              <div>
+                <strong>Reserva capturada</strong>
+                <p>Airbnb por iCal e captura automática</p>
+              </div>
+            </div>
+            <div class="ops-step">
+              <span class="ops-step__tag">02</span>
+              <div>
+                <strong>Check-in digital</strong>
+                <p>Documento, selfie, acompanhantes e LGPD</p>
+              </div>
+            </div>
+            <div class="ops-step">
+              <span class="ops-step__tag">03</span>
+              <div>
+                <strong>Faxina comprovada</strong>
+                <p>Geofence, fotos sorteadas e vistoria</p>
+              </div>
+            </div>
+            <div class="ops-step ops-step--money">
+              <span class="ops-step__tag">04</span>
+              <div>
+                <strong>Repasse conferido</strong>
+                <p>Previsão × valor recebido no fechamento</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-note product-note--top">
+          <strong>Anfitri-IA</strong>
+          <span>responde com base no guia do imóvel</span>
+        </div>
+        <div class="product-note product-note--bottom">
+          <strong>Prova técnica</strong>
+          <span>data, GPS e hash SHA-256 nas fotos</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="block">
+  <section class="block value-band" id="plano-pago">
     <div class="container">
-      <h2>O que o HostLogic faz</h2>
-      <p class="sub">Resumo das áreas do sistema (apresentação comercial detalhada virá depois).</p>
-      <div class="grid">
-        {features.map((f) => (
-          <div class={`card${f.soon ? ' card--soon' : ''}`}>
-            {f.soon ? <span class="card__soon-badge">Em breve</span> : null}
-            <h3>{f.title}</h3>
-            <p>{f.desc}</p>
-          </div>
+      <span class="value-band__eyebrow">O valor está na operação</span>
+      <h2 class="value-band__title">Cinco controles que tiram risco do dia a dia do anfitrião</h2>
+      <p class="sub value-band__sub">
+        A assinatura faz sentido quando reduz retrabalho, melhora a prova operacional e evita perda no
+        fechamento. Estes são os pontos que o HostLogic entrega de forma concreta.
+      </p>
+      <ol class="value-cards">
+        <li class="value-card">
+          <span class="value-card__num">01</span>
+          <h3>Prove o dano e segure a cobrança</h3>
+          <p>
+            Cada foto da vistoria carrega <strong>data, GPS e hash SHA-256</strong>. Se o hóspede
+            contesta um dano, você apresenta evidência técnica para sustentar a cobrança no condomínio
+            ou na Airbnb — em vez da sua palavra contra a dele.
+          </p>
+        </li>
+        <li class="value-card">
+          <span class="value-card__num">02</span>
+          <h3>Feche o mês com o valor certo</h3>
+          <p>
+            O sistema compara o <strong>repasse pago pela Airbnb com a previsão</strong> da reserva.
+            Quando os valores divergem, ele sinaliza para você reconciliar — você não descobre o rombo
+            só na conferência do banco.
+          </p>
+        </li>
+        <li class="value-card">
+          <span class="value-card__num">03</span>
+          <h3>Deixe o hóspede se resolver no portal</h3>
+          <p>
+            O link do imóvel pode ir na mensagem automática do Airbnb. Ali o hóspede faz o cadastro,
+            vê regras e localização, fala com a <strong>Anfitri-IA</strong> e você acompanha o histórico
+            da conversa no painel.
+          </p>
+        </li>
+        <li class="value-card">
+          <span class="value-card__num">04</span>
+          <h3>Comprove que a faxina foi feita</h3>
+          <p>
+            A ordem de serviço começa sozinha quando a faxineira chega ao imóvel (<strong>geofence por
+            GPS</strong>) e só libera a unidade com <strong>3 fotos de itens sorteados</strong> pelo
+            sistema — prova antes de o próximo hóspede entrar.
+          </p>
+        </li>
+        <li class="value-card">
+          <span class="value-card__num">05</span>
+          <h3>Pare de digitar reserva</h3>
+          <p>
+            <strong>iCal e sincronização automática</strong> trazem as reservas da Airbnb
+            sozinhas (Booking em breve). Calendário, faxina e financeiro já nascem preenchidos — sem
+            lançamento manual.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <DemoShowcase />
+
+  <section class="block" id="areas">
+    <div class="container">
+      <h2>As 13 áreas do sistema</h2>
+      <p class="sub">
+        {FEATURE_CATEGORY_COUNT} áreas e {FEATURE_COUNT} recursos no catálogo — da captura da
+        reserva ao fechamento do mês. Abra o detalhe de cada área em{' '}
+        <a href="/funcionalidades">Funcionalidades</a>.
+      </p>
+      <div class="cat-grid">
+        {FEATURE_CATEGORIES.map((category) => (
+          <a class="cat-card" href={`/funcionalidades#${category.id}`}>
+            <h3>{category.title}</h3>
+            <p>{category.blurb}</p>
+            <span class="cat-card__count">{category.features.length} recursos &rarr;</span>
+          </a>
         ))}
+      </div>
+      <div class="cat-cta">
+        <a class="btn btn-ghost" href="/funcionalidades">Ver todas as funcionalidades</a>
       </div>
     </div>
   </section>
@@ -73,10 +173,11 @@ const features = [
   <section class="block portal-spotlight" id="portal-hospede">
     <div class="container portal-spotlight__grid">
       <div>
-        <h2>Portal do hóspede — check-in digital completo</h2>
+        <h2>Portal do hóspede — cadastro, regras e atendimento em um link</h2>
         <p class="sub">
-          O hóspede titular recebe o link (mensagem automática do Airbnb ou envio seu) e conclui o
-          cadastro no celular, com fotos e consentimento LGPD.
+          Mantenha o link do imóvel na mensagem automática do Airbnb. O hóspede acessa o portal,
+          preenche o próprio cadastro, registra acompanhantes, consulta regras, localização e instruções,
+          e ainda fala com a Anfitri-IA durante a estadia.
         </p>
         <ul class="portal-steps">
           <li>
@@ -84,31 +185,32 @@ const features = [
             de verificação no fluxo guiado.
           </li>
           <li>
-            <strong>Acompanhantes</strong> podem ser cadastrados pelo titular no mesmo link ou receber
-            um <strong>convite individual</strong> — você copia o link ou envia direto pelo
-            <strong>WhatsApp</strong> para cada adulto/criança com vaga na reserva.
+            <strong>Acompanhantes</strong> podem ser cadastrados pelo titular; se preferir, ele envia
+            um <strong>convite individual</strong> para cada pessoa se autocadastrar pelo próprio link.
           </li>
           <li>
-            Depois do envio, o hóspede vê o <strong>guia do imóvel</strong> (regras, Wi‑Fi, acesso) e pode
-            falar com a <strong>Anfitri-IA</strong> sobre a estadia — com base no texto que você cadastrou
-            no imóvel.
+            O <strong>guia do imóvel</strong> concentra regras, Wi‑Fi, acesso, localização e orientações
+            que costumam virar mensagem repetida no Airbnb ou WhatsApp.
           </li>
           <li>
-            Você acompanha check-in e conversas em <strong>Reservas capturadas</strong> no painel.
+            A <strong>Anfitri-IA</strong> responde dúvidas com base no guia cadastrado, e você acompanha
+            o histórico da conversa por reserva — útil para auditoria, suporte e relacionamento com
+            condomínios.
           </li>
         </ul>
         <p class="portal-note">
-          Bebês e vagas sem convite seguem as regras da reserva; o titular pode completar o que faltar
-          no portal.
+          Para condomínios, o valor é ter cadastro e comunicação organizados antes da chegada. A copy
+          pública foca no portal e na visibilidade operacional, sem divulgar detalhes de integrações
+          sensíveis de portaria.
         </p>
       </div>
       <div class="portal-flow card" aria-hidden="true">
         <p class="portal-flow__label">Fluxo resumido</p>
         <ol class="portal-flow__list">
-          <li>Link da reserva → portal seguro</li>
-          <li>Titular: documento + selfie</li>
-          <li>Acompanhantes: no portal ou link próprio</li>
-          <li>Dados prontos para portaria / operação</li>
+          <li>Mensagem do Airbnb → link do imóvel</li>
+          <li>Titular: cadastro, documento e selfie</li>
+          <li>Acompanhantes: cadastro pelo titular ou link próprio</li>
+          <li>Guia + Anfitri-IA + histórico visível no painel</li>
         </ol>
       </div>
     </div>
@@ -116,11 +218,11 @@ const features = [
 
   <section class="block anfitri-ia-spotlight" id="anfitri-ia">
     <div class="container">
-      <h2>Anfitri-IA — inteligência no imóvel e na operação</h2>
+      <h2>Anfitri-IA — atende o hóspede e apoia a gestão</h2>
       <p class="sub">
-        A mesma marca, dois papéis: <strong>hospitalidade</strong> para quem está hospedado e
-        <strong>gestão</strong> para quem administra os imóveis. Sem inventar regras — respostas ancoradas
-        no guia e nos dados da reserva.
+        Dois papéis na mesma marca: <strong>responde ao hóspede</strong> no portal do imóvel e
+        <strong>apoia você</strong> no painel. As respostas ficam ancoradas no guia cadastrado, e o
+        histórico da conversa fica visível por reserva.
       </p>
       <div class="anfitri-ia-grid">
         <article class="card anfitri-ia-card">
@@ -128,8 +230,8 @@ const features = [
           <h3>Assistente para o hóspede</h3>
           <ul class="portal-steps anfitri-ia-card__list">
             <li>
-              Durante o check-in digital, o hóspede abre o chat <strong>Anfitri-IA</strong> no celular
-              (atalho «Fale com a Anfitri-IA»).
+              Pelo link do imóvel, o hóspede abre o chat <strong>Anfitri-IA</strong> no celular
+              (atalho «Fale com a Anfitri-IA») sem instalar app.
             </li>
             <li>
               Responde com base no <strong>guia do imóvel</strong> que você treinou: Wi‑Fi, regras,
@@ -150,16 +252,16 @@ const features = [
           <h3>Consultora para o anfitrião</h3>
           <ul class="portal-steps anfitri-ia-card__list">
             <li>
-              No painel, converse com a <strong>Anfitri-IA estratégica</strong>: ocupação, pendências,
-              faxinas e visão das reservas — tom direto para decisão rápida.
+              No painel, pergunte à <strong>Anfitri-IA</strong> sobre ocupação, pendências, faxinas e o
+              estado das reservas — tom direto, com os números vindos do sistema.
             </li>
             <li>
               Em <strong>Meus imóveis</strong>, o treinamento da Anfitri-IA alimenta o portal: guia pós
               check-in, inventário, troubleshooting e sugestões de texto com IA.
             </li>
             <li>
-              Veja o <strong>histórico de conversas</strong> entre hóspede e Anfitri-IA por reserva; monitore
-              falhas e limites no módulo de agentes.
+              Veja o <strong>histórico de conversas</strong> entre hóspede e Anfitri-IA por reserva; isso dá
+              visibilidade ao que foi perguntado e respondido sem depender de print.
             </li>
             <li>
               Apoio a <strong>precificação e estratégia</strong> (sugestões — você aprova o que for sensível).
@@ -172,6 +274,13 @@ const features = [
         LGPD: o núcleo hóspede é informativo; dados sensíveis ficam no fluxo de check-in e nas políticas
         do produto. Você controla o conteúdo de treinamento por unidade.
       </p>
+
+      <div class="anfitri-ia-demo-wrap">
+        <p class="anfitri-ia-demo-wrap__title">
+          <strong>Experimente agora</strong> — faça uma pergunta à Anfitri-IA (demonstração):
+        </p>
+        <AnfitriDemoChat />
+      </div>
     </div>
   </section>
 
@@ -210,8 +319,8 @@ const features = [
           <h3>Previsão e pagamento real</h3>
           <ul class="portal-steps finance-card__list">
             <li>
-              A previsão usa as reservas confirmadas; o <strong>repasse recebido</strong> entra quando o coletor
-              processa o e-mail de pagamento da Airbnb.
+              A previsão usa as reservas confirmadas; o <strong>repasse recebido</strong> entra quando o
+              sistema registra o pagamento da Airbnb.
             </li>
             <li>
               Em <strong>Reservas capturadas</strong>, abra o financeiro a partir do badge de repasse pendente ou
@@ -350,7 +459,7 @@ const features = [
   <section class="block" id="demo">
     <div class="container">
       <h2>Demonstração em vídeo</h2>
-      <p class="sub">Em breve: um vídeo curto mostrando a utilização do sistema na prática.</p>
+      <p class="sub">Em breve: um vídeo curto mostrando o HostLogic na prática.</p>
       <div class="video-frame">Espaço reservado para o vídeo de demonstração (a publicar).</div>
     </div>
   </section>

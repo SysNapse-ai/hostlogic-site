@@ -1,9 +1,47 @@
-# Cloudflare Workers — assets estáticos (site Astro em dist/).
+# Cloudflare Workers — assets estáticos (site Astro em dist/) + endpoint /api/anfitri-ia.
 # O painel Git unificado usa: build `npm run build` + deploy `npx wrangler deploy`.
 # Ver DEPLOY.md
+#
+# Roteamento asset-first (padrão): só /api/anfitri-ia invoca o Worker; o resto é servido
+# direto dos assets (grátis). Ver worker/index.ts.
 
 name = "hostlogic-site"
+main = "worker/index.ts"
 compatibility_date = "2025-06-03"
+
+# URL de fallback/preview no workers.dev (o dominio customizado e a origem principal).
+# Pode ser desativado depois (false) se quiser servir somente pelo custom domain.
+workers_dev = true
+
+# Domínios customizados — o `wrangler deploy` cria/aponta os registros quando a zona
+# hostlogic.com.br está na mesma conta Cloudflare. Canonical = apex; www redireciona (ver worker/index.ts).
+routes = [
+  { pattern = "hostlogic.com.br", custom_domain = true },
+  { pattern = "www.hostlogic.com.br", custom_domain = true },
+]
 
 [assets]
 directory = "./dist"
+binding = "ASSETS"
+
+# GEMINI_API_KEY vem de `wrangler secret put GEMINI_API_KEY` (prod) ou .dev.vars (local).
+
+# Rate limiting por IP no endpoint /api/anfitri-ia (binding nativo da Cloudflare,
+# sem custo extra; disponível no plano gratuito). Defesa contra rapid-fire e
+# loop de refresh (6 perguntas + F5 + 6 + ...). Ver worker/index.ts (handleChat).
+#   - BURST:      5 req / 10s por IP  (clica/script rápido demais)
+#   - SUSTAINED: 20 req / 60s por IP (cap do total por minuto)
+# Um visitante honesto faz <=6 perguntas (frontend) e nunca bate no limite.
+[[ratelimits]]
+name = "ANFITRI_RL_BURST"
+namespace_id = "1001"
+  [ratelimits.simple]
+  limit = 5
+  period = 10
+
+[[ratelimits]]
+name = "ANFITRI_RL_SUSTAINED"
+namespace_id = "1002"
+  [ratelimits.simple]
+  limit = 20
+  period = 60

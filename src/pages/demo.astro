@@ -1,27 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { CONTACT } from '../consts';
+import DemoShowcase from '../components/DemoShowcase.astro';
+import AnfitriDemoChat from '../components/AnfitriDemoChat.astro';
 
-// STUB preparado para a página de demonstração em vídeo.
-// Futuro: embed (YouTube não listado / Cloudflare Stream / R2). Ver docs/SITE_FUTURE_INTEGRATIONS.md.
+// Demonstração visual com dados fictícios. Futuro: substituir/combinar com prints reais
+// capturados do app e vídeo (YouTube não listado / Cloudflare Stream / R2).
 ---
 
 <BaseLayout
   title="Demonstração"
-  description="Demonstração em vídeo do HostLogic — em breve."
+  description="Demonstração visual do HostLogic: portal do hóspede, Anfitri-IA, reservas, financeiro e faxina."
 >
   <div class="container page-head">
-    <h1>Demonstração em vídeo</h1>
+    <span class="badge">Demonstração do produto</span>
+    <h1>Como o HostLogic aparece na operação do anfitrião</h1>
     <p>
-      Veja o HostLogic em uso: reservas capturadas, calendário, portal do hóspede (check-in com fotos
-      e convites para acompanhantes) e faxinas.
+      Frames com dados fictícios para apresentar os principais valores: portal do hóspede completo,
+      Anfitri-IA, timeline de reservas, financeiro e faxina comprovada.
     </p>
   </div>
-  <div class="container" style="padding-bottom:48px">
-    <div class="video-frame">Vídeo de demonstração a publicar em breve.</div>
-    <div class="stub-note">
-      Página preparada para receber o vídeo. Enquanto isso, fale com a equipe:
-      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+
+  <DemoShowcase />
+
+  <section class="block" id="anfitri-ia-demo-section">
+    <div class="container">
+      <div class="page-head" style="margin-bottom: 0.5rem;">
+        <span class="badge">Anfitri-IA ao vivo</span>
+        <h2>Converse com a Anfitri-IA agora</h2>
+        <p>
+          Demonstração interativa: faça até 6 perguntas e veja como ela responde com base no site —
+          quando não encontra na base, avisa e responde de forma ilustrativa.
+        </p>
+      </div>
+      <AnfitriDemoChat />
     </div>
-  </div>
+  </section>
 </BaseLayout>

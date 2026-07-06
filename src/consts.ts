@@ -38,10 +38,10 @@ export const CONTACT = {
 /** Navegação simples (stubs preparados para evolução). */
 export const NAV = [
   { label: 'Início', href: '/' },
+  { label: 'Funcionalidades', href: '/funcionalidades' },
   { label: 'Portal do hóspede', href: '/#portal-hospede' },
   { label: 'Anfitri-IA', href: '/#anfitri-ia' },
   { label: 'Financeiro', href: '/#financeiro' },
-  { label: 'Equipe', href: '/#equipe' },
   { label: 'WhatsApp', href: '/#whatsapp' },
   { label: 'Lista de espera', href: '/#inscreva-se' },
   { label: 'Demonstração', href: '/demo' },

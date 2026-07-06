@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EarlyAccessForm from '../components/EarlyAccessForm.astro';
+import { APP_URL } from '../consts';
+import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../data/features';
+
+const description = `Funcionalidades do HostLogic — ${FEATURE_CATEGORY_COUNT} áreas e ${FEATURE_COUNT} recursos para anfitriões e administradores de hospedagem: reservas, portal do hóspede, Anfitri-IA, faxinas, financeiro, WhatsApp e LGPD.`;
+---
+
+<BaseLayout title="Funcionalidades" description={description}>
+  <div class="container page-head" id="top">
+    <span class="badge">Catálogo de funcionalidades</span>
+    <h1>Funcionalidades</h1>
+    <p>
+      {FEATURE_CATEGORY_COUNT} áreas e {FEATURE_COUNT} recursos no catálogo — da captura da reserva
+      ao fechamento do mês, com LGPD, portal do hóspede e rotinas de portaria organizadas. Itens
+      marcados como «Em breve» são roadmap, não promessa vaga.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
+      <a class="btn btn-ghost" href="#inscreva-se">Entrar na lista de espera</a>
+    </div>
+  </div>
+
+  <nav class="container cat-toc" aria-label="Índice de áreas">
+    <ul>
+      {FEATURE_CATEGORIES.map((category, index) => (
+        <li>
+          <a href={`#${category.id}`}>
+            <span class="cat-toc__num">{String(index + 1).padStart(2, '0')}</span>
+            {category.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  {FEATURE_CATEGORIES.map((category, index) => (
+    <section class="block feature-cat" id={category.id}>
+      <div class="container">
+        <div class="feature-cat__head">
+          <span class="feature-cat__num">{String(index + 1).padStart(2, '0')}</span>
+          <h2>{category.title}</h2>
+          <span class="feature-cat__count">{category.features.length} recursos</span>
+        </div>
+        <p class="sub">{category.blurb}</p>
+        <ul class="feature-list">
+          {category.features.map((feature) => (
+            <li class={`feature-item${feature.soon ? ' feature-item--soon' : ''}`}>
+              <div class="feature-item__head">
+                <h3>{feature.title}</h3>
+                {feature.soon ? <span class="feature-item__soon">Em breve</span> : null}
+              </div>
+              <p>{feature.desc}</p>
+            </li>
+          ))}
+        </ul>
+        <a class="back-to-top" href="#top">↑ Voltar ao índice</a>
+      </div>
+    </section>
+  ))}
+
+  <EarlyAccessForm />
+</BaseLayout>
