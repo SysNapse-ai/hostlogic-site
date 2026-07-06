@@ -133,8 +133,8 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Veja no painel o que o hóspede perguntou e o que a Anfitri-IA respondeu, sem pedir prints.',
       },
       {
-        title: 'Acesso pelo código Airbnb',
-        desc: 'O hóspede entra com o código de confirmação da reserva, sem link personalizado manual.',
+        title: 'Acesso pelo link ou código da reserva',
+        desc: 'O hóspede entra no portal pelo link exclusivo do imóvel, mantido na mensagem automática do Airbnb, ou pelo código de confirmação — sem app ou login manual.',
       },
       {
         title: 'Pré-visualização para o anfitrião',
@@ -171,10 +171,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       {
         title: 'Histórico de conversa por reserva',
         desc: 'Veja o que o hóspede perguntou e o que a Anfitri-IA respondeu — útil para auditoria, suporte e condomínios.',
-      },
-      {
-        title: 'Delegação de agentes configurável',
-        desc: 'Você define quais agentes a Anfitri-IA pode acionar (check-in, limpeza, compras, manutenção).',
       },
     ],
   },
