@@ -1,0 +1,316 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EarlyAccessForm from '../components/EarlyAccessForm.astro';
+import { APP_URL } from '../consts';
+
+const description =
+  'HostLogic para anfitriões de curta temporada: reservas, check-in digital, dados dos hóspedes, pendências e portaria em um fluxo simples. Validação guiada com até 4 imóveis.';
+
+const painPoints = [
+  'Reservas espalhadas entre e-mail, WhatsApp e planilha.',
+  'Hóspede chega sem dados completos ou documentos em dia.',
+  'Alterações e cancelamentos sem rastreio claro.',
+  'Retrabalho para liberar entrada e cumprir regras do imóvel/condomínio.',
+];
+
+const flowSteps = [
+  { title: 'Reserva entra', body: 'A reserva aparece organizada no painel, com datas, hóspedes e status.' },
+  {
+    title: 'Hóspede preenche',
+    body: 'Check-in digital com link seguro: dados, acompanhantes e documentos quando necessário.',
+  },
+  {
+    title: 'Você acompanha',
+    body: 'Timeline por reserva: o que está pronto, pendente, alterado ou cancelado.',
+  },
+  {
+    title: 'Operação segue',
+    body: 'Informações reunidas para liberação, portaria e próximos passos da estadia.',
+  },
+];
+
+const differentiators = [
+  'Portal do hóspede pensado para check-in real, não só formulário solto.',
+  'Anfitri-IA como apoio operacional: pendências, próximos check-ins e o que exige atenção.',
+  'Visão por imóvel e por reserva, útil para quem administra várias unidades.',
+  'Implantação guiada: começa pequeno, valida e expande com critério.',
+];
+
+const pilotBullets = [
+  '7 dias com até 4 imóveis, para testar o fluxo em operação real.',
+  'Sem compromisso longo no início.',
+  'Ao final, decidimos juntos: continuar, expandir ou encerrar.',
+  'Depois da validação: R$129 por imóvel ativo/mês.',
+];
+
+const limitsIncluded = [
+  'Reservas organizadas no painel.',
+  'Portal do hóspede e check-in digital.',
+  'Coleta de dados, documentos e status por reserva.',
+  'Apoio da Anfitri-IA na operação do dia a dia.',
+];
+
+const limitsDeferred = [
+  'PMS completo, financeiro oficial ou WhatsApp como produto maduro.',
+  'Processos específicos de condomínio ou portaria sob análise prévia.',
+  'Módulos avançados de limpeza, compras e manutenção em segunda fase.',
+];
+
+const faq = [
+  {
+    question: 'Preciso conectar API da Airbnb?',
+    answer:
+      'Não. O HostLogic centraliza as reservas que você já recebe e organiza tudo no painel, sem depender de integrações complexas.',
+  },
+  {
+    question: 'Funciona em condomínio?',
+    answer:
+      'Sim, para organizar check-in, dados dos hóspedes e status operacional. Regras de portaria variam por prédio — o HostLogic ajuda a manter tudo reunido e rastreável.',
+  },
+  {
+    question: 'Como começo?',
+    answer:
+      'O acesso é por convite durante o piloto comercial. Solicite acesso e nossa equipa configura o primeiro imóvel com você.',
+  },
+];
+---
+
+<BaseLayout title="Planos e validação" description={description}>
+  <section class="hero hero--compact">
+    <div class="container page-head">
+      <span class="badge">HostLogic para anfitriões</span>
+      <h1>Operação de hospedagem sem planilha espalhada.</h1>
+      <p class="lead">
+        Reservas, check-in digital, dados dos hóspedes, pendências e portaria em um fluxo simples
+        para anfitriões de curta temporada.
+      </p>
+      <p class="sub">
+        O HostLogic organiza a operação: reservas, check-in digital, dados dos hóspedes, pendências
+        e status — tudo em um só lugar.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#inscreva-se">Solicitar validação guiada</a>
+        <a class="btn btn-ghost" href={APP_URL}>Acessar o sistema</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="container commercial-grid">
+      <article class="card commercial-card">
+        <span class="value-band__eyebrow">Diagnóstico</span>
+        <h2>O que mais pesa hoje</h2>
+        <ul class="portal-steps">
+          {painPoints.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="card commercial-card commercial-card--wide">
+        <span class="value-band__eyebrow">Fluxo HostLogic</span>
+        <h2>Como funciona na prática</h2>
+        <div class="commercial-flow-grid">
+          {flowSteps.map((step, index) => (
+            <div class="commercial-flow-step">
+              <span class="commercial-flow-step__num">{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block value-band">
+    <div class="container">
+      <span class="value-band__eyebrow">Diferencial</span>
+      <h2 class="value-band__title">Por que não é só mais uma planilha</h2>
+      <div class="commercial-pill-grid">
+        {differentiators.map((item) => (
+          <div class="commercial-pill">{item}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="container commercial-grid">
+      <article class="card commercial-card commercial-card--pilot">
+        <span class="value-band__eyebrow">Começo controlado</span>
+        <h2>Validação guiada</h2>
+        <ul class="portal-steps">
+          {pilotBullets.map((bullet) => (
+            <li>{bullet}</li>
+          ))}
+        </ul>
+        <p class="portal-note commercial-pilot-cta">
+          Começamos pequeno, medimos valor e só então expandimos.
+        </p>
+      </article>
+
+      <article class="card commercial-card">
+        <h2>O que vendemos agora</h2>
+        <ul class="portal-steps">
+          {limitsIncluded.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="card commercial-card">
+        <h2>O que avaliamos com calma</h2>
+        <ul class="portal-steps">
+          {limitsDeferred.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="container">
+      <h2>Perguntas frequentes</h2>
+      <div class="commercial-faq-grid">
+        {faq.map((item) => (
+          <article class="card commercial-faq-card">
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </article>
+        ))}
+      </div>
+      <p class="portal-note">
+        Valores em BRL. Condições do piloto comercial — sujeitas a ajuste antes da disponibilidade
+        pública. Não substituem proposta ou contrato formal.
+      </p>
+    </div>
+  </section>
+
+  <EarlyAccessForm />
+</BaseLayout>
+
+<style>
+  .hero--compact {
+    padding-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+    padding-bottom: 0;
+  }
+
+  .commercial-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .commercial-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .commercial-card--wide {
+      grid-column: 1 / -1;
+    }
+
+    .commercial-card--pilot {
+      grid-row: span 2;
+    }
+  }
+
+  .commercial-card {
+    height: 100%;
+  }
+
+  .commercial-flow-grid {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 700px) {
+    .commercial-flow-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .commercial-flow-step {
+    border: 1px solid var(--hl-border);
+    border-radius: var(--hl-radius);
+    background: var(--hl-surface-2);
+    padding: 1rem 1.1rem;
+  }
+
+  .commercial-flow-step__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 999px;
+    background: var(--hl-primary);
+    color: #fff;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+  }
+
+  .commercial-flow-step h3 {
+    margin: 0.75rem 0 0.35rem;
+    font-size: var(--fs-h3);
+  }
+
+  .commercial-flow-step p {
+    margin: 0;
+    color: var(--hl-text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .commercial-pill-grid {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 700px) {
+    .commercial-pill-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .commercial-pill {
+    border-radius: var(--hl-radius);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(0, 108, 228, 0.12);
+    padding: 1rem 1.1rem;
+    color: var(--hl-text);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+  }
+
+  .commercial-pilot-cta {
+    margin-top: 1rem;
+    font-weight: var(--fw-bold);
+    color: var(--hl-text-strong);
+  }
+
+  .commercial-faq-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 800px) {
+    .commercial-faq-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .commercial-faq-card h3 {
+    margin-top: 0;
+    font-size: var(--fs-h3);
+  }
+
+  .commercial-faq-card p {
+    margin-bottom: 0;
+    color: var(--hl-text-muted);
+    font-size: var(--fs-sm);
+  }
+</style>
