@@ -34,11 +34,13 @@ const PROPERTY_LABELS: Record<string, string> = {
 const MAX_PAYLOAD_BYTES = 4096;
 const MAX_NAME = 120;
 const MAX_EMAIL = 160;
+const MAX_PHONE = 32;
 const MAX_LOCATION = 120;
 const REQUEST_TIMEOUT_MS = 15_000;
 const DEFAULT_FROM = 'HostLogic <noreply@hostlogic.com.br>';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_CHARS_RE = /^[\d\s()+.-]+$/;
 
 function json(body: unknown, status: number, extra: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {
@@ -83,8 +85,16 @@ function waitlistTo(env: WaitlistEnv): string {
 export interface WaitlistFields {
   name: string;
   email: string;
+  phone: string;
   location: string;
   properties: string;
+}
+
+function isValidOptionalPhone(phone: string): boolean {
+  if (phone.length === 0) return true;
+  if (phone.length > MAX_PHONE || !PHONE_CHARS_RE.test(phone)) return false;
+  const digits = phone.replace(/\D/g, '');
+  return digits.length >= 8 && digits.length <= 15;
 }
 
 export function parseWaitlistBody(
@@ -98,29 +108,38 @@ export function parseWaitlistBody(
 
   const name = typeof body.name === 'string' ? body.name.trim() : '';
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+  const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
   const location = typeof body.location === 'string' ? body.location.trim() : '';
   const properties = typeof body.properties === 'string' ? body.properties.trim() : '';
   const consent = body.consent === true || body.consent === 'true';
 
   if (!name || !email || !properties) return { error: 'missing_fields' };
   if (!consent) return { error: 'consent_required' };
-  if (name.length > MAX_NAME || email.length > MAX_EMAIL || location.length > MAX_LOCATION) {
+  if (
+    name.length > MAX_NAME ||
+    email.length > MAX_EMAIL ||
+    phone.length > MAX_PHONE ||
+    location.length > MAX_LOCATION
+  ) {
     return { error: 'field_too_long' };
   }
   if (!EMAIL_RE.test(email)) return { error: 'invalid_email' };
+  if (!isValidOptionalPhone(phone)) return { error: 'invalid_phone' };
   if (!PROPERTY_VALUES.has(properties)) return { error: 'invalid_properties' };
 
-  return { fields: { name, email, location, properties } };
+  return { fields: { name, email, phone, location, properties } };
 }
 
 function buildTeamText(fields: WaitlistFields, submittedAt: string): string {
   const loc = fields.location || '(não informado)';
+  const phone = fields.phone || '(não informado)';
   const portfolio = PROPERTY_LABELS[fields.properties] ?? fields.properties;
   return [
     'Lista de espera — HostLogic',
     '',
     `Nome: ${fields.name}`,
     `E-mail: ${fields.email}`,
+    `Telefone: ${phone}`,
     `Localização: ${loc}`,
     `Imóveis geridos: ${portfolio}`,
     '',
@@ -132,6 +151,7 @@ function buildTeamText(fields: WaitlistFields, submittedAt: string): string {
 
 function buildTeamHtml(fields: WaitlistFields, submittedAt: string): string {
   const loc = fields.location || '(não informado)';
+  const phone = fields.phone || '(não informado)';
   const portfolio = PROPERTY_LABELS[fields.properties] ?? fields.properties;
   return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -140,6 +160,7 @@ function buildTeamHtml(fields: WaitlistFields, submittedAt: string): string {
   <table style="border-collapse:collapse;font-size:14px;">
     <tr><td style="padding:4px 12px 4px 0;color:#64748b;">Nome</td><td>${escapeHtml(fields.name)}</td></tr>
     <tr><td style="padding:4px 12px 4px 0;color:#64748b;">E-mail</td><td>${escapeHtml(fields.email)}</td></tr>
+    <tr><td style="padding:4px 12px 4px 0;color:#64748b;">Telefone</td><td>${escapeHtml(phone)}</td></tr>
     <tr><td style="padding:4px 12px 4px 0;color:#64748b;">Localização</td><td>${escapeHtml(loc)}</td></tr>
     <tr><td style="padding:4px 12px 4px 0;color:#64748b;">Imóveis geridos</td><td>${escapeHtml(portfolio)}</td></tr>
     <tr><td style="padding:4px 12px 4px 0;color:#64748b;">Enviado em</td><td>${escapeHtml(submittedAt)}</td></tr>
@@ -211,6 +232,7 @@ const CLIENT_ERROR_MESSAGE: Record<string, string> = {
   consent_required: 'Marque o consentimento para continuar.',
   field_too_long: 'Algum campo ultrapassou o tamanho permitido.',
   invalid_email: 'Informe um e-mail válido.',
+  invalid_phone: 'Informe um telefone válido ou deixe em branco.',
   invalid_properties: 'Selecione o portfólio de imóveis.',
   invalid_body: 'Não foi possível ler o formulário. Tente novamente.',
 };

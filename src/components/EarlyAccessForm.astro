@@ -77,6 +77,20 @@ const waitlistPoints = [
             />
           </div>
           <div class="early-form__field">
+            <label for="ea-phone">
+              Telefone <span class="early-form__optional">opcional</span>
+            </label>
+            <input
+              id="ea-phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              maxlength="32"
+              inputmode="tel"
+              placeholder="Ex.: (41) 99999-9999"
+            />
+          </div>
+          <div class="early-form__field">
             <label for="ea-location">
               Cidade ou região <span class="early-form__optional">opcional</span>
             </label>
@@ -150,6 +164,7 @@ const waitlistPoints = [
       const fd = new FormData(form);
       const name = String(fd.get('name') || '').trim();
       const email = String(fd.get('email') || '').trim();
+      const phone = String(fd.get('phone') || '').trim();
       const location = String(fd.get('location') || '').trim();
       const properties = String(fd.get('properties') || '').trim();
       const website = String(fd.get('website') || '').trim();
@@ -174,6 +189,7 @@ const waitlistPoints = [
           body: JSON.stringify({
             name,
             email,
+            phone,
             location,
             properties,
             website,
