@@ -3,25 +3,33 @@
  *
  * Roteamento (Workers Static Assets, asset-first por defeito):
  *  - POST /api/anfitri-ia  -> chat demo (chama gemini-2.5-flash)
+ *  - POST /api/waitlist    -> lista de espera (Resend → equipe + confirmação)
  *  - qualquer outra rota   -> delega a env.ASSETS (site estático)
  *
- * A chave GEMINI_API_KEY vem de wrangler secret (prod) ou .dev.vars (local),
- * nunca do browser. Não há persistência de conversa (stateless, sem log de
- * conteúdo/PII — LGPD).
+ * Chaves (wrangler secret em prod, .dev.vars em local), nunca no browser:
+ *  - GEMINI_API_KEY  — chat demo
+ *  - RESEND_API_KEY  — envio da lista de espera
+ * Sem persistência de conversa/leads no Worker (stateless, sem log de PII — LGPD).
  *
  * @see https://developers.cloudflare.com/workers/static-assets/
  */
 import { KNOWLEDGE_BASE } from './knowledge-base';
 import { SYSTEM_PROMPT, APP_URL_PLACEHOLDER } from './system-prompt';
 import { APP_URL } from '../src/consts';
+import { handleWaitlist } from './waitlist';
 
 export interface Env {
   GEMINI_API_KEY: string;
+  RESEND_API_KEY?: string;
+  WAITLIST_FROM?: string;
+  WAITLIST_TO?: string;
   ASSETS: Fetcher;
   // Bindings de rate limit (wrangler.toml [[ratelimits]]). Tipo estrutural para não
   // depender da export `RateLimit` dos workers-types em versões mais antigas.
   ANFITRI_RL_BURST: { limit(options: { key: string }): Promise<{ success: boolean }> };
   ANFITRI_RL_SUSTAINED: { limit(options: { key: string }): Promise<{ success: boolean }> };
+  WAITLIST_RL_BURST: { limit(options: { key: string }): Promise<{ success: boolean }> };
+  WAITLIST_RL_SUSTAINED: { limit(options: { key: string }): Promise<{ success: boolean }> };
 }
 
 // ---- Configuração de limite (higiene; o teto de custo real é Rate Limit + maxOutputTokens) ----
@@ -287,6 +295,9 @@ export default {
     }
     if (url.pathname === '/api/anfitri-ia') {
       return handleChat(request, env);
+    }
+    if (url.pathname === '/api/waitlist') {
+      return handleWaitlist(request, env);
     }
     // Qualquer outra rota: delega aos assets estáticos (preserva o site).
     return env.ASSETS.fetch(request);

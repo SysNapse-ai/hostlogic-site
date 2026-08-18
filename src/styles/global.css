@@ -565,6 +565,9 @@ section.block p.sub {
   font-size: 13px;
   color: var(--hl-text-muted);
 }
+.early-form {
+  position: relative;
+}
 .early-form__stack {
   display: flex;
   flex-direction: column;
@@ -643,6 +646,17 @@ section.block p.sub {
 .early-form__submit:hover {
   background: var(--hl-primary-dark);
 }
+.early-form__submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.early-form__hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .early-form__error {
   margin: 12px 0 0;
   font-size: 13px;
@@ -661,65 +675,10 @@ section.block p.sub {
   color: #86efac;
 }
 .early-form__success-lead {
-  margin: 0 0 12px;
+  margin: 0;
   font-size: 14px;
   color: var(--hl-text-muted);
   line-height: 1.5;
-}
-.early-form__email-inline {
-  color: var(--hl-text);
-  font-weight: 700;
-}
-.early-form__preview {
-  margin: 0 0 14px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--hl-border);
-  background: rgba(15, 23, 42, 0.5);
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--hl-text-muted);
-  white-space: pre-wrap;
-  word-break: break-word;
-  max-height: 200px;
-  overflow-y: auto;
-}
-.early-form__success-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.early-form__mailto-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 11px 16px;
-  border-radius: var(--hl-radius);
-  font-size: 14px;
-  font-weight: 700;
-  border: 1px solid var(--hl-border);
-  background: transparent;
-  color: var(--hl-text);
-  cursor: pointer;
-}
-.early-form__mailto-btn:hover {
-  border-color: var(--hl-primary);
-}
-.early-form__success-hint {
-  margin: 0;
-  font-size: 12px;
-  color: var(--hl-text-muted);
-  line-height: 1.45;
-}
-.early-form__success-hint[role='status']:not([hidden]) {
-  color: #86efac;
-  margin-bottom: 8px;
-}
-.early-form__success p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--hl-text-muted);
 }
 .early-access__footnote {
   margin: 16px 0 0;
@@ -1543,9 +1502,7 @@ section.block p.sub,
 .early-access__list li,
 .early-form__panel-sub,
 .early-form__consent,
-.early-form__success-lead,
-.early-form__success p,
-.early-form__success-hint {
+.early-form__success-lead {
   color: var(--hl-text-muted);
 }
 .cat-card:hover,
@@ -1636,17 +1593,8 @@ section.block p.sub,
   color: var(--hl-text);
   border-color: rgba(0, 108, 228, 0.18);
 }
-.early-form__preview {
-  background: var(--hl-cyan-soft);
-  color: var(--hl-text-muted);
-}
-.early-form__success-title,
-.early-form__success-hint[role='status']:not([hidden]) {
+.early-form__success-title {
   color: #047857;
-}
-.early-form__email-inline,
-.early-form__mailto-btn {
-  color: var(--hl-primary-dark);
 }
 .site-footer {
   background: #ffffff;

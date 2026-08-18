@@ -1,8 +1,8 @@
-# Cloudflare Workers — assets estáticos (site Astro em dist/) + endpoint /api/anfitri-ia.
+# Cloudflare Workers — assets estáticos (site Astro em dist/) + APIs /api/anfitri-ia e /api/waitlist.
 # O painel Git unificado usa: build `npm run build` + deploy `npx wrangler deploy`.
 # Ver DEPLOY.md
 #
-# Roteamento asset-first (padrão): só /api/anfitri-ia invoca o Worker; o resto é servido
+# Roteamento asset-first (padrão): só as rotas /api/* acima invocam o Worker; o resto é servido
 # direto dos assets (grátis). Ver worker/index.ts.
 
 name = "hostlogic-site"
@@ -24,7 +24,13 @@ routes = [
 directory = "./dist"
 binding = "ASSETS"
 
-# GEMINI_API_KEY vem de `wrangler secret put GEMINI_API_KEY` (prod) ou .dev.vars (local).
+# Secrets (prod: wrangler secret put … | local: .dev.vars):
+#   GEMINI_API_KEY  — chat Anfitri-IA
+#   RESEND_API_KEY  — lista de espera (nunca no browser)
+
+[vars]
+WAITLIST_FROM = "HostLogic <noreply@hostlogic.com.br>"
+WAITLIST_TO = "adm@hostlogic.com.br"
 
 # Rate limiting por IP no endpoint /api/anfitri-ia (binding nativo da Cloudflare,
 # sem custo extra; disponível no plano gratuito). Defesa contra rapid-fire e
@@ -44,4 +50,21 @@ name = "ANFITRI_RL_SUSTAINED"
 namespace_id = "1002"
   [ratelimits.simple]
   limit = 20
+  period = 60
+
+# Lista de espera: poucos envios reais; bloqueia spam/bots antes do Resend.
+#   - BURST:     3 req / 10s por IP
+#   - SUSTAINED: 8 req / 60s por IP
+[[ratelimits]]
+name = "WAITLIST_RL_BURST"
+namespace_id = "1003"
+  [ratelimits.simple]
+  limit = 3
+  period = 10
+
+[[ratelimits]]
+name = "WAITLIST_RL_SUSTAINED"
+namespace_id = "1004"
+  [ratelimits.simple]
+  limit = 8
   period = 60

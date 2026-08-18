@@ -12,13 +12,13 @@ Home de teste (bruta), com:
 
 - Logo + tagline + tema escuro consistente com o app.
 - Resumo das áreas do sistema (cards).
-- Contato **somente por e-mail e telefone** (sem formulário/automação nesta fase).
+- Lista de espera em `/#inscreva-se`: envio automático (`POST /api/waitlist` + Resend).
+- Contato de rodapé por e-mail (`adm@hostlogic.com.br`) e telefone.
 - Link "Acessar o sistema" -> `https://app.hostlogic.com.br`.
 - Links legais -> `/privacidade` e `/termos` do app (canónicos).
-- Stubs preparados: `/demo` (vídeo), `/blog`, `/adesivos` (captura de lead futura).
+- Stubs: `/demo` (vídeo), `/blog`, `/adesivos`.
 
-Marketing comercial completo e captura automática de leads ficam para fase posterior
-(ver `../docs/SITE_FUTURE_INTEGRATIONS.md`).
+Segredos do Worker (`GEMINI_API_KEY`, `RESEND_API_KEY`): ver `DEPLOY.md`.
 
 ## Desenvolvimento local
 

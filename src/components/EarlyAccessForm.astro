@@ -1,5 +1,5 @@
 ---
-import { CONTACT, LEGAL } from '../consts';
+import { LEGAL } from '../consts';
 
 const propertyOptions = [
   { value: '', label: 'Selecione…' },
@@ -38,12 +38,19 @@ const waitlistPoints = [
 
     <div class="early-access__panel">
       <p class="early-form__panel-title">Cadastro rápido</p>
-      <p class="early-form__panel-sub">
-        Leva menos de 1 minuto. Ao enviar, copie a mensagem ou abra seu e-mail — o site ainda não
-        dispara e-mail automaticamente.
-      </p>
+      <p class="early-form__panel-sub">Leva menos de 1 minuto. O pedido chega direto à equipe HostLogic.</p>
 
       <form class="early-form" id="early-access-form" novalidate>
+        <div class="early-form__hp" aria-hidden="true">
+          <label for="ea-website">Site</label>
+          <input
+            id="ea-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
         <div class="early-form__stack">
           <div class="early-form__field">
             <label for="ea-name">Nome completo</label>
@@ -53,6 +60,7 @@ const waitlistPoints = [
               type="text"
               autocomplete="name"
               required
+              maxlength="120"
               placeholder="Como devemos te chamar?"
             />
           </div>
@@ -64,6 +72,7 @@ const waitlistPoints = [
               type="email"
               autocomplete="email"
               required
+              maxlength="160"
               placeholder="voce@empresa.com.br"
             />
           </div>
@@ -76,6 +85,7 @@ const waitlistPoints = [
               name="location"
               type="text"
               autocomplete="address-level2"
+              maxlength="120"
               placeholder="Ex.: Curitiba, PR"
             />
           </div>
@@ -99,30 +109,16 @@ const waitlistPoints = [
           </span>
         </label>
 
-        <button type="submit" class="early-form__submit">Enviar interesse</button>
+        <button type="submit" class="early-form__submit" id="early-form-submit">Enviar interesse</button>
 
         <p class="early-form__error" id="early-form-error" role="alert" hidden></p>
       </form>
 
       <div class="early-form__success" id="early-form-success" hidden>
-        <p class="early-form__success-title">Quase lá — avise a equipe HostLogic</p>
+        <p class="early-form__success-title">Pedido enviado</p>
         <p class="early-form__success-lead">
-          Seus dados foram validados. Para entrar na lista de espera, envie a mensagem abaixo para{' '}
-          <span class="early-form__email-inline">{CONTACT.email}</span> (copiar ou abrir o e-mail).
-        </p>
-        <pre class="early-form__preview" id="early-form-preview" aria-label="Texto do pedido"></pre>
-        <div class="early-form__success-actions">
-          <button type="button" class="early-form__submit" id="early-form-copy">
-            Copiar mensagem
-          </button>
-          <button type="button" class="early-form__mailto-btn" id="early-form-mailto">
-            Abrir no meu e-mail
-          </button>
-        </div>
-        <p class="early-form__success-hint" id="early-form-copy-feedback" role="status" hidden></p>
-        <p class="early-form__success-hint">
-          Se o Windows pedir um aplicativo de e-mail, escolha Outlook, Gmail ou outro — ou use só
-          «Copiar mensagem» e cole manualmente.
+          Recebemos os seus dados. A equipe HostLogic responde por e-mail quando houver vaga no acesso
+          antecipado. Se o endereço estiver certo, você também recebe uma confirmação.
         </p>
       </div>
 
@@ -133,89 +129,76 @@ const waitlistPoints = [
   </div>
 </section>
 
-<script define:vars={{ contactEmail: CONTACT.email }}>
+<script>
   const form = document.getElementById('early-access-form');
   const success = document.getElementById('early-form-success');
   const errorEl = document.getElementById('early-form-error');
-  const previewEl = document.getElementById('early-form-preview');
-  const copyBtn = document.getElementById('early-form-copy');
-  const mailtoBtn = document.getElementById('early-form-mailto');
-  const copyFeedback = document.getElementById('early-form-copy-feedback');
+  const submitBtn = document.getElementById('early-form-submit');
 
-  let pendingMailto = '';
-
-  function buildLeadMessage(name, email, location, properties) {
-    return [
-      'Lista de espera — HostLogic',
-      '',
-      `Nome: ${name}`,
-      `E-mail: ${email}`,
-      location ? `Localização: ${location}` : 'Localização: (não informado)',
-      `Imóveis geridos: ${properties}`,
-      '',
-      `Enviado em: ${new Date().toISOString()}`,
-    ].join('\n');
+  function showError(message) {
+    if (!errorEl) return;
+    errorEl.textContent = message;
+    errorEl.hidden = false;
   }
 
-  if (form && success && errorEl && previewEl && copyBtn && mailtoBtn) {
-    form.addEventListener('submit', (e) => {
+  if (form && success && errorEl && submitBtn instanceof HTMLButtonElement) {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorEl.hidden = true;
       errorEl.textContent = '';
-      if (copyFeedback) {
-        copyFeedback.hidden = true;
-        copyFeedback.textContent = '';
-      }
 
       const fd = new FormData(form);
       const name = String(fd.get('name') || '').trim();
       const email = String(fd.get('email') || '').trim();
       const location = String(fd.get('location') || '').trim();
       const properties = String(fd.get('properties') || '').trim();
+      const website = String(fd.get('website') || '').trim();
       const consent = fd.get('consent');
 
       if (!name || !email || !properties) {
-        errorEl.textContent = 'Preencha nome, e-mail e portfólio de imóveis.';
-        errorEl.hidden = false;
+        showError('Preencha nome, e-mail e portfólio de imóveis.');
         return;
       }
       if (!consent) {
-        errorEl.textContent = 'Marque o consentimento para continuar.';
-        errorEl.hidden = false;
+        showError('Marque o consentimento para continuar.');
         return;
       }
 
-      const plainBody = buildLeadMessage(name, email, location, properties);
-      previewEl.textContent = plainBody;
-      const subject = encodeURIComponent('HostLogic — Lista de espera');
-      const body = encodeURIComponent(plainBody);
-      pendingMailto = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
 
-      form.hidden = true;
-      success.hidden = false;
-    });
-
-    copyBtn.addEventListener('click', async () => {
-      const text = previewEl.textContent || '';
       try {
-        await navigator.clipboard.writeText(
-          `Para: ${contactEmail}\nAssunto: HostLogic — Lista de espera\n\n${text}`,
-        );
-        if (copyFeedback) {
-          copyFeedback.textContent = 'Mensagem copiada. Cole no seu e-mail e envie.';
-          copyFeedback.hidden = false;
+        const res = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            location,
+            properties,
+            website,
+            consent: true,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const message =
+            typeof data.message === 'string' && data.message
+              ? data.message
+              : 'Não foi possível enviar agora. Tente novamente.';
+          showError(message);
+          return;
         }
+        form.hidden = true;
+        success.hidden = false;
       } catch {
-        if (copyFeedback) {
-          copyFeedback.textContent =
-            'Não foi possível copiar automaticamente. Selecione o texto acima e copie (Ctrl+C).';
-          copyFeedback.hidden = false;
+        showError('Sem ligação ao servidor. Verifique a internet e tente de novo.');
+      } finally {
+        if (!form.hidden) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar interesse';
         }
       }
-    });
-
-    mailtoBtn.addEventListener('click', () => {
-      if (pendingMailto) window.location.href = pendingMailto;
     });
   }
 </script>

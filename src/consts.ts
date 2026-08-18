@@ -1,8 +1,7 @@
 /**
  * Configuração central do site institucional HostLogic.
  *
- * Fase inicial: contato SOMENTE por e-mail e telefone (sem formulário/automação).
- * Quando ativar captura de leads (adesivos) e marketing, ver docs/SITE_FUTURE_INTEGRATIONS.md.
+ * Lista de espera: POST /api/waitlist no Worker (Resend). Outro contato: e-mail/telefone no rodapé.
  */
 
 export const SITE = {
@@ -24,8 +23,8 @@ export const LEGAL = {
 } as const;
 
 /**
- * Contato comercial — fase inicial manual.
- * TODO: confirmar/preencher o telefone real antes do go-live do site.
+ * Contato comercial (rodapé / schema.org). A lista de espera envia para WAITLIST_TO no Worker.
+ * TODO: confirmar/preencher o telefone real.
  */
 export const CONTACT = {
   email: 'adm@hostlogic.com.br',
