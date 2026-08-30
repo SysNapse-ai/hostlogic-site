@@ -17,3 +17,5 @@ node_modules/
 *.log
 # os
 .DS_Store
+# originais locais de prints do app (PII real) — nunca commitar
+originais-prints/
