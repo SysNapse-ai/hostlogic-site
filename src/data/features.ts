@@ -78,7 +78,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Alertas operacionais reunidos',
-        desc: 'Falhas de IA, alterações pendentes, portaria, despesas, limpeza, mensagens, manutenção, compras e fila do condomínio num só lugar.',
+        desc: 'Falhas de IA, alterações pendentes, portaria, despesas, limpeza, mensagens e fila do condomínio num só lugar.',
       },
       {
         title: 'Painel de falhas com resolução',
@@ -102,7 +102,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     features: [
       {
         title: 'Check-in digital em etapas',
-        desc: 'Titular, acompanhantes, regras e vistoria num fluxo guiado pelo celular, sem app para instalar.',
+        desc: 'Titular, acompanhantes e regras num fluxo guiado pelo celular, sem app para instalar.',
       },
       {
         title: 'Cadastro do titular com selfie',
@@ -178,7 +178,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'limpeza',
     title: 'Limpeza e faxinas',
     blurb:
-      'Cada check-out gera uma ordem de serviço, com geofence, auditoria por fotos e lembretes no WhatsApp da faxineira.',
+      'Cada check-out gera uma ordem de serviço, com auditoria por fotos e lembretes no WhatsApp da faxineira.',
     features: [
       {
         title: 'Ordem de serviço automática por check-out',
@@ -193,10 +193,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Delegue a O.S.; a faxineira vê só o que é dela, com as instruções do imóvel no celular.',
       },
       {
-        title: 'Início automático ao chegar (geofence)',
-        desc: 'Ao entrar no raio GPS do imóvel, a O.S. passa para «em andamento» — sem depender de clique.',
-      },
-      {
         title: 'Auditoria por fotos de itens sorteados',
         desc: 'O sistema sorteia 3 itens ou cômodos por tarefa e exige as fotos antes de liberar.',
       },
@@ -207,14 +203,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       {
         title: 'Lembretes no WhatsApp da faxineira',
         desc: 'Avisos no dia anterior e antes do check-out, com link direto para a tarefa no app.',
-      },
-      {
-        title: 'Reporte de manutenção na faxina',
-        desc: 'Problemas achados na limpeza são registrados com fotos, sem WhatsApp solto.',
-      },
-      {
-        title: 'Pedido de insumos direto para Compras',
-        desc: 'A faxineira solicita materiais (quantidade e link) e o gestor centraliza em Compras.',
       },
       {
         title: 'Alertas de faxina crítica',
@@ -262,11 +250,11 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     features: [
       {
         title: 'Cadastro do imóvel',
-        desc: 'Nome, tipo, endereço, foto, bairro e região — base para reservas, faxinas, portal e vistoria.',
+        desc: 'Nome, tipo, endereço, foto, bairro e região — base para reservas, faxinas e portal.',
       },
       {
         title: 'Coordenadas GPS capturadas no local',
-        desc: 'Habilita o geofence de faxina e a validação de vistoria por proximidade, com o ponto real do apto.',
+        desc: 'Localização precisa do imóvel para a equipe e para o mapa do portal do hóspede.',
       },
       {
         title: 'iCal do Airbnb por imóvel',
@@ -287,46 +275,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       {
         title: 'Guia pós-check-in e link Airbnb',
         desc: 'Escreva o guia uma vez (texto e imagens) e copie um link fixo com o código de confirmação para o anúncio.',
-      },
-      {
-        title: 'Configuração de vistoria por imóvel',
-        desc: 'Defina cômodos, quantidade de fotos e raio GPS por unidade antes do hóspede entrar.',
-      },
-    ],
-  },
-  {
-    id: 'vistoria',
-    title: 'Vistoria digital',
-    blurb:
-      'Registro do estado do imóvel na entrada e na saída — fotos com data, GPS e hash, assinatura digital e PDF.',
-    features: [
-      {
-        title: 'Checklist de cômodos por imóvel',
-        desc: 'A vistoria segue a planta real (sala, quartos, banheiro), não um formulário genérico.',
-      },
-      {
-        title: 'Quantidade de fotos por número de quartos',
-        desc: 'Ajusta as fotos exigidas ao tamanho do imóvel, sem sobrecarregar o hóspede.',
-      },
-      {
-        title: 'Raio GPS configurável',
-        desc: 'Tolerância geográfica por unidade (10 a 5000 m), best-effort — não bloqueia se o GPS for negado.',
-      },
-      {
-        title: 'Fotos com metadados de auditoria',
-        desc: 'Data, hora, GPS e hash SHA-256 em cada foto — evidência técnica em disputa de danos.',
-      },
-      {
-        title: 'Saída comparada à entrada',
-        desc: 'Na saída, referencia as fotos da entrada por cômodo para apontar alterações ou danos.',
-      },
-      {
-        title: 'Assinatura digital do hóspede',
-        desc: 'Aceite formal do estado do imóvel no check-in e no check-out.',
-      },
-      {
-        title: 'Assinatura do anfitrião e termo em PDF',
-        desc: 'Se o hóspede reporta problema, você assina e gera um documento baixável para arquivo ou condomínio.',
       },
     ],
   },
@@ -379,31 +327,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       {
         title: 'Ocultar valores na tela',
         desc: 'Esconde os valores (viram ****) em reunião ou tela compartilhada.',
-      },
-    ],
-  },
-  {
-    id: 'compras',
-    title: 'Compras',
-    blurb:
-      'A equipe pede insumos por imóvel; você aprova e o valor entra sozinho como despesa no financeiro.',
-    features: [
-      {
-        title: 'Solicitação de insumos por imóvel',
-        desc: 'Desinfetante, lâmpadas e material de limpeza pedidos num só lugar, sem WhatsApp disperso.',
-      },
-      {
-        title: 'Fila de compras com filtro por imóvel',
-        desc: 'Acompanhe os pedidos pendentes e aprovados da operação.',
-      },
-      {
-        title: 'Aprovação vira despesa automática',
-        desc: 'Ao aprovar a compra, o valor entra no Financeiro como despesa categorizada (limpeza ou manutenção).',
-      },
-      {
-        title: 'Módulo ativável por plano',
-        desc: 'Compras é um módulo premium, ligado conforme o contrato.',
-        soon: true,
       },
     ],
   },

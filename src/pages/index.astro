@@ -64,7 +64,7 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
               <span class="ops-step__tag">03</span>
               <div>
                 <strong>Faxina comprovada</strong>
-                <p>Geofence, fotos sorteadas e vistoria</p>
+                <p>Registro de chegada e fotos sorteadas</p>
               </div>
             </div>
             <div class="ops-step ops-step--money">
@@ -81,8 +81,8 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           <span>responde com base no guia do imóvel</span>
         </div>
         <div class="product-note product-note--bottom">
-          <strong>Prova técnica</strong>
-          <span>data, GPS e hash SHA-256 nas fotos</span>
+          <strong>Fotos sorteadas</strong>
+          <span>evidência de limpeza antes do próximo check-in</span>
         </div>
       </div>
     </div>
@@ -99,11 +99,11 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
       <ol class="value-cards">
         <li class="value-card">
           <span class="value-card__num">01</span>
-          <h3>Prove o dano e segure a cobrança</h3>
+          <h3>Cadastro na portaria sem digitação</h3>
           <p>
-            Cada foto da vistoria carrega <strong>data, GPS e hash SHA-256</strong>. Se o hóspede
-            contesta um dano, você apresenta evidência técnica para sustentar a cobrança no condomínio
-            ou na Airbnb — em vez da sua palavra contra a dele.
+            Os dados que o hóspede preenche no portal são enviados ao aplicativo do condomínio
+            automaticamente, com <strong>status por hóspede</strong> — sem redigitar cadastro para a
+            portaria.
           </p>
         </li>
         <li class="value-card">
@@ -128,9 +128,9 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           <span class="value-card__num">04</span>
           <h3>Comprove que a faxina foi feita</h3>
           <p>
-            A ordem de serviço começa sozinha quando a faxineira chega ao imóvel (<strong>geofence por
-            GPS</strong>) e só libera a unidade com <strong>3 fotos de itens sorteados</strong> pelo
-            sistema — prova antes de o próximo hóspede entrar.
+            Cada check-out gera uma <strong>ordem de serviço</strong> automática. A faxineira registra a
+            chegada ao imóvel e a unidade só libera com as <strong>fotos de itens sorteados</strong> —
+            prova antes de o próximo hóspede entrar.
           </p>
         </li>
         <li class="value-card">
@@ -150,7 +150,7 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
 
   <section class="block" id="areas">
     <div class="container">
-      <h2>As 13 áreas do sistema</h2>
+      <h2>As {FEATURE_CATEGORY_COUNT} áreas do sistema</h2>
       <p class="sub">
         {FEATURE_CATEGORY_COUNT} áreas e {FEATURE_COUNT} recursos no catálogo — da captura da
         reserva ao fechamento do mês. Abra o detalhe de cada área em{' '}
@@ -200,9 +200,7 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           </li>
         </ul>
         <p class="portal-note">
-          Para condomínios, o valor é ter cadastro e comunicação organizados antes da chegada. A copy
-          pública foca no portal e na visibilidade operacional, sem divulgar detalhes de integrações
-          sensíveis de portaria.
+          Para condomínios, o valor é ter cadastro e comunicação organizados antes da chegada.
         </p>
       </div>
       <div class="portal-flow card" aria-hidden="true">
