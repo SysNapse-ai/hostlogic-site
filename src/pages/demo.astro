@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DemoShowcase from '../components/DemoShowcase.astro';
 import AnfitriDemoChat from '../components/AnfitriDemoChat.astro';
+import ProductCarousel from '../components/ProductCarousel.astro';
 
 // Demonstração visual com dados fictícios. Futuro: substituir/combinar com prints reais
 // capturados do app e vídeo (YouTube não listado / Cloudflare Stream / R2).
@@ -15,10 +16,16 @@ import AnfitriDemoChat from '../components/AnfitriDemoChat.astro';
     <span class="badge">Demonstração do produto</span>
     <h1>Como o HostLogic aparece na operação do anfitrião</h1>
     <p>
-      Frames com dados fictícios para apresentar os principais valores: portal do hóspede completo,
-      Anfitri-IA, timeline de reservas, financeiro e faxina comprovada.
+      Telas reais do produto, com dados de demonstração, para apresentar os principais valores: portal
+      do hóspede completo, Anfitri-IA, timeline de reservas, financeiro e faxina comprovada.
     </p>
   </div>
+
+  <section class="block" id="telas-reais">
+    <div class="container">
+      <ProductCarousel />
+    </div>
+  </section>
 
   <DemoShowcase />
 

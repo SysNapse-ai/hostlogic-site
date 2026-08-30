@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import DemoShowcase from '../components/DemoShowcase.astro';
 import EarlyAccessForm from '../components/EarlyAccessForm.astro';
 import AnfitriDemoChat from '../components/AnfitriDemoChat.astro';
+import ProductCarousel from '../components/ProductCarousel.astro';
 import { APP_URL } from '../consts';
 import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../data/features';
 
@@ -458,9 +459,9 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
 
   <section class="block" id="demo">
     <div class="container">
-      <h2>Demonstração em vídeo</h2>
-      <p class="sub">Em breve: um vídeo curto mostrando o HostLogic na prática.</p>
-      <div class="video-frame">Espaço reservado para o vídeo de demonstração (a publicar).</div>
+      <span class="value-band__eyebrow">Telas reais do app · dados de demonstração</span>
+      <h2>Veja o HostLogic na prática</h2>
+      <ProductCarousel />
     </div>
   </section>
 
