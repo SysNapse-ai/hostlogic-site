@@ -22,7 +22,8 @@ const PRODUCT_SUMMARY = [
   `Contato comercial: adm@hostlogic.com.br`,
   `Privacidade: cada conta fica isolada; documento e foto do hóspede não ficam à mostra nas listas; depois do prazo o sistema apaga ou anonimiza sozinho; o hóspede aceita privacidade no portal.`,
   `Relatório do mês em um clique: reservas, custos e lucro por imóvel, sem montar planilha.`,
-  `Anfitri-IA: no portal do hóspede (texto que o anfitrião cadastrou, mesmo rascunho do anúncio) e no painel por texto ou PTT (apertar para falar) sobre as estadias.`,
+  `Anfitri-IA: no portal do hóspede (texto que o anfitrião cadastrou). A conversa fica na visão anfitrião para consultar e esclarecer se preferir. No painel, texto ou PTT (apertar para falar) sobre as estadias.`,
+  `Avisos push no iPhone e no Android: reserva confirmada, alterada ou cancelada; cadastro do hóspede no portal; hóspede na Anfitri-IA; faxina iniciada. O anfitrião escolhe quais avisos receber. Não é app da loja: é o HostLogic no celular.`,
   `Fora do produto padrão: WhatsApp nativo, Gmail OAuth e envio automático de cadastro ao aplicativo da portaria (módulo à parte, por condomínio).`,
   `Tom comercial: o HostLogic transforma reserva, check-in, faxina, atendimento e financeiro numa operação acompanhável.`,
 ].join('\n');

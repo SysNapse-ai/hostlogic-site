@@ -67,11 +67,15 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'monitor',
     title: 'Monitor operacional',
     blurb:
-      'Check-ins, check-outs e o que ainda precisa de você — no mesmo painel, sem planilha.',
+      'Check-ins, check-outs e o que ainda precisa de você — no painel e no celular (push no iPhone e no Android).',
     features: [
       {
         title: 'KPIs de check-in e check-out (1, 3 e 7 dias)',
         desc: 'Mostra quantas entradas e saídas há nos próximos dias, com destaque para as janelas curtas.',
+      },
+      {
+        title: 'Avisos push no iPhone e no Android',
+        desc: 'O celular avisa reserva nova, alteração, cancelamento, cadastro no portal, pergunta na Anfitri-IA e faxina iniciada. Você liga ou desliga cada tipo.',
       },
       {
         title: 'Alertas operacionais reunidos',
@@ -127,7 +131,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Histórico visível para o anfitrião',
-        desc: 'Veja no painel o que o hóspede perguntou e o que a Anfitri-IA respondeu, sem pedir prints.',
+        desc: 'A conversa do portal aparece na visão anfitrião: consulte e, se preferir, esclareça o hóspede — sem pedir print.',
       },
       {
         title: 'Acesso pelo link ou código da reserva',
@@ -143,7 +147,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'anfitri-ia',
     title: 'Anfitri-IA',
     blurb:
-      'Responde o hóspede no portal e, no painel, conversa com você por texto ou PTT (apertar para falar) sobre as estadias.',
+      'Responde o hóspede no portal; a conversa fica na visão anfitrião. O celular avisa quando o hóspede pergunta. No painel, fale por texto ou PTT.',
     features: [
       {
         title: 'Assistente do hóspede no portal',
@@ -166,8 +170,16 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Atalhos como /status, /falhas, /faxinas-criticas e /checkins-hoje para ir direto ao que precisa.',
       },
       {
+        title: 'Mesma conversa na visão anfitrião',
+        desc: 'O que a Anfitri-IA responde no portal fica no seu painel: consulte e, se preferir, esclareça o hóspede.',
+      },
+      {
         title: 'Histórico de conversa por reserva',
-        desc: 'Veja o que o hóspede perguntou e o que a Anfitri-IA respondeu, por estadia.',
+        desc: 'Veja o que o hóspede perguntou e o que a Anfitri-IA respondeu, por estadia — sem pedir print.',
+      },
+      {
+        title: 'Push quando o hóspede pergunta',
+        desc: 'O iPhone ou o Android avisa no momento em que o hóspede fala com a Anfitri-IA no portal.',
       },
     ],
   },
@@ -200,6 +212,10 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       {
         title: 'Alertas de faxina crítica',
         desc: 'Avisa quando há risco de não liberar o imóvel a tempo do próximo check-in.',
+      },
+      {
+        title: 'Push quando a faxina começa',
+        desc: 'O celular avisa no iPhone e no Android no momento em que a faxineira registra a chegada.',
       },
     ],
   },

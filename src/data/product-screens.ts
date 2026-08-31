@@ -23,7 +23,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     title: 'Tudo da estadia num só cartão',
     bullets: [
       'A reserva do Airbnb entra sozinha, com bloco, apartamento e datas.',
-      'Badges mostram cadastro do hóspede, faxina e pagamento.',
+      'Badges mostram cadastro do hóspede, faxina e pagamento. O celular avisa no iPhone e no Android.',
     ],
     alt: 'Cartão da reserva com bloco, apartamento, datas e status da estadia',
     width: 591,
@@ -70,6 +70,32 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     height: 905,
   },
   {
+    id: 'anfitri-ia-hospede',
+    image: '/screenshots/anfitri-ia-hospede.webp',
+    area: 'Anfitri-IA',
+    title: 'O hóspede pergunta no portal',
+    bullets: [
+      'No celular, pelo link do imóvel, a Anfitri-IA responde Wi-Fi, regras e o guia.',
+      'Só afirma o que você cadastrou — inclusive o rascunho do anúncio.',
+    ],
+    alt: 'Chat da Anfitri-IA na visão hóspede, respondendo sobre o Wi-Fi do imóvel',
+    width: 472,
+    height: 1024,
+  },
+  {
+    id: 'anfitri-ia-anfitriao',
+    image: '/screenshots/anfitri-ia-anfitriao.webp',
+    area: 'Anfitri-IA',
+    title: 'Você lê a mesma conversa no painel',
+    bullets: [
+      'A visão anfitrião mostra o histórico do portal, por reserva.',
+      'Consulte e, se preferir, esclareça o hóspede — sem pedir print.',
+    ],
+    alt: 'Histórico da conversa do hóspede com a Anfitri-IA visível na visão anfitrião',
+    width: 472,
+    height: 1024,
+  },
+  {
     id: 'anfitri-ia',
     image: '/screenshots/anfitri-ia.webp',
     area: 'Anfitri-IA',
@@ -77,7 +103,6 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     bullets: [
       'Pergunte em linguagem natural («já cadastraram os acompanhantes?»).',
       'No painel, fale também por PTT (apertar para falar) sobre as estadias.',
-      'A resposta vem com dados do painel: imóvel, hóspede, datas e pendências.',
     ],
     alt: 'Chat da Anfitri-IA com pergunta operacional e resposta do painel',
     width: 447,
