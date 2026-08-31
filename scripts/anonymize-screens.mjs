@@ -61,6 +61,8 @@ const JOBS = [
     time: '14.17.06',
     slug: 'reserva-cartao',
     overlays: [
+      // Barra do iPhone (relógio 14:16 + sinal/bateria) e fragmento cortado.
+      { t: 'rect', x: 0, y: 0, w: 591, h: 62, fill: '#ffffff' },
       { t: 'rect', x: 108, y: 74, w: 430, h: 40, fill: '#fdfffe' },
       {
         t: 'text',
@@ -139,71 +141,42 @@ const JOBS = [
     time: '14.22.14',
     slug: 'portfolio',
     overlays: [
-      { t: 'rect', x: 26, y: 646, w: 172, h: 52, fill: '#fcf2f1' },
+      // Barra do iPhone (relógio 14:21 + sinal/bateria), fundo real #f1f2f7.
+      { t: 'rect', x: 0, y: 0, w: 591, h: 62, fill: '#f1f2f7' },
+      // Pills 1-3 (linha de cima): cobrir só as 2 linhas de texto (y660-688),
+      // cor de fundo real da pill, nome centrado como o original.
+      { t: 'rect', x: 30, y: 654, w: 160, h: 40, fill: '#fef2f2' },
+      { t: 'text', x: 112, y: 668, text: 'Ap charmoso-próx', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'text', x: 112, y: 686, text: 'estação CW...', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'rect', x: 214, y: 654, w: 160, h: 40, fill: '#fef2f2' },
+      { t: 'text', x: 296, y: 668, text: 'Vista jardim! Prox', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'text', x: 296, y: 686, text: 'Termin...', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'rect', x: 398, y: 654, w: 160, h: 40, fill: '#fdfbea' },
+      { t: 'text', x: 480, y: 668, text: 'Jardim Urbano!', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      { t: 'text', x: 480, y: 686, text: 'próximo à...', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      // Pills 4-5 (linha de baixo): texto em y786-812; ícone acima preservado.
+      { t: 'rect', x: 30, y: 780, w: 168, h: 36, fill: '#fdfbea' },
+      { t: 'text', x: 114, y: 792, text: 'Portal da', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      { t: 'text', x: 114, y: 810, text: 'Estação - B', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      { t: 'rect', x: 214, y: 780, w: 168, h: 36, fill: '#ebfdf5' },
+      { t: 'text', x: 297, y: 792, text: 'Recanto do', size: 10, weight: 700, fill: '#14532d', anchor: 'middle' },
+      { t: 'text', x: 297, y: 810, text: 'Terminal co...', size: 10, weight: 700, fill: '#14532d', anchor: 'middle' },
+      // Cartão de detalhe: título em y906-934, local em y954-970 (fundo branco).
+      { t: 'rect', x: 94, y: 900, w: 470, h: 38, fill: '#ffffff' },
       {
         t: 'text',
-        x: 32,
-        y: 678,
-        text: DEMO.listingB,
-        size: 10,
-        weight: 700,
-        fill: '#7a2e2e',
-      },
-      { t: 'rect', x: 210, y: 646, w: 172, h: 52, fill: '#fcf2f1' },
-      {
-        t: 'text',
-        x: 216,
-        y: 678,
-        text: DEMO.listingC,
-        size: 10,
-        weight: 700,
-        fill: '#7a2e2e',
-      },
-      { t: 'rect', x: 394, y: 646, w: 172, h: 52, fill: '#fff9ec' },
-      {
-        t: 'text',
-        x: 400,
-        y: 678,
-        text: DEMO.listingD,
-        size: 10,
-        weight: 700,
-        fill: '#6b4a1e',
-      },
-      { t: 'rect', x: 22, y: 736, w: 184, h: 78, fill: '#fefbea' },
-      {
-        t: 'text',
-        x: 32,
-        y: 786,
-        text: DEMO.listingE,
-        size: 10,
-        weight: 700,
-        fill: '#6b4a1e',
-      },
-      { t: 'rect', x: 206, y: 736, w: 184, h: 78, fill: '#ecfdf5' },
-      {
-        t: 'text',
-        x: 216,
-        y: 786,
-        text: DEMO.listingAShort,
-        size: 10,
-        weight: 700,
-        fill: '#14532d',
-      },
-      { t: 'rect', x: 70, y: 848, w: 500, h: 92, fill: '#ffffff' },
-      {
-        t: 'text',
-        x: 108,
-        y: 896,
+        x: 100,
+        y: 928,
         text: DEMO.listingA,
-        size: 18,
+        size: 20,
         weight: 700,
         fill: '#1a1d2e',
       },
-      { t: 'rect', x: 44, y: 938, w: 510, h: 36, fill: '#ffffff' },
+      { t: 'rect', x: 40, y: 944, w: 524, h: 30, fill: '#ffffff' },
       {
         t: 'text',
         x: 48,
-        y: 962,
+        y: 967,
         text: DEMO.place,
         size: 13,
         fill: '#4b5563',
@@ -252,39 +225,44 @@ const JOBS = [
         weight: 700,
         fill: '#1a1d2e',
       },
-      { t: 'rect', x: 48, y: 160, w: 380, h: 92, fill: '#ffffff' },
+      // Título do imóvel: 2 linhas (y192-208 e y216-232), começa em x≈116.
+      { t: 'rect', x: 110, y: 188, w: 250, h: 22, fill: '#ffffff' },
       {
         t: 'text',
-        x: 88,
-        y: 196,
+        x: 116,
+        y: 206,
         text: 'Jardim Urbano! próximo ao',
         size: 14,
         weight: 700,
         fill: '#1a1d2e',
       },
+      { t: 'rect', x: 110, y: 212, w: 240, h: 22, fill: '#ffffff' },
       {
         t: 'text',
-        x: 88,
-        y: 216,
+        x: 116,
+        y: 230,
         text: 'terminal c vaga',
         size: 14,
         weight: 700,
         fill: '#1a1d2e',
       },
-      { t: 'rect', x: 48, y: 222, w: 280, h: 40, fill: '#ffffff' },
+      // Linha do apto (y240-256), começa em x≈32; badge verde abaixo preservado.
+      { t: 'rect', x: 26, y: 236, w: 230, h: 25, fill: '#ffffff' },
       {
         t: 'text',
-        x: 88,
-        y: 244,
+        x: 32,
+        y: 253,
         text: DEMO.unitSoft,
         size: 12,
         fill: '#64748b',
       },
-      { t: 'rect', x: 28, y: 518, w: 420, h: 108, fill: '#fffffb' },
+      // Endereço: rótulo original (y573-583) preservado; só a linha do
+      // endereço real (y597-607) é substituída.
+      { t: 'rect', x: 24, y: 591, w: 400, h: 24, fill: '#ffffff' },
       {
         t: 'text',
-        x: 52,
-        y: 578,
+        x: 68,
+        y: 607,
         text: DEMO.street,
         size: 13,
         fill: '#4b5563',
@@ -320,6 +298,19 @@ const JOBS = [
     time: '12.05.54',
     slug: 'anfitri-ia-hospede',
     overlays: [
+      // O relógio 12:05 do iPhone sobrepõe o título no original; cobrimos a
+      // faixa toda (relógio + ícones + X) com o navy do cabeçalho e
+      // redesenhamos o título. «visão hóspede» (y64+) fica intacto.
+      { t: 'rect', x: 8, y: 6, w: 456, h: 54, fill: '#003176' },
+      {
+        t: 'text',
+        x: 48,
+        y: 52,
+        text: 'Anfitri-IA',
+        size: 21,
+        weight: 700,
+        fill: '#ffffff',
+      },
       { t: 'rect', x: 16, y: 110, w: 420, h: 210, fill: '#ffffff', rx: 12 },
       {
         t: 'text',
@@ -394,6 +385,10 @@ const JOBS = [
     time: '12.07.32',
     slug: 'anfitri-ia-anfitriao',
     overlays: [
+      // Relógio (12:07) e ícones de sinal/bateria da barra do iPhone,
+      // cobertos com o cinza exato do topo (#f1f2f7).
+      { t: 'rect', x: 36, y: 14, w: 90, h: 30, fill: '#f1f2f7' },
+      { t: 'rect', x: 336, y: 14, w: 122, h: 30, fill: '#f1f2f7' },
       { t: 'rect', x: 14, y: 300, w: 444, h: 200, fill: '#dcfce7', rx: 12 },
       {
         t: 'text',
@@ -483,7 +478,9 @@ const JOBS = [
     time: '14.17.33',
     slug: 'condominio-envio',
     overlays: [
-      { t: 'rect', x: 42, y: 148, w: 430, h: 44, fill: '#ffffff' },
+      // Barra do iPhone (relógio 14:17 + sinal/bateria) sobre o fundo escurecido.
+      { t: 'rect', x: 0, y: 0, w: 591, h: 64, fill: '#5e5e5e' },
+      { t: 'rect', x: 20, y: 148, w: 452, h: 44, fill: '#ffffff' },
       {
         t: 'text',
         x: 50,
@@ -719,43 +716,51 @@ const JOBS = [
   {
     time: '14.18.07',
     slug: 'financeiro-painel',
-    overlays: [], // agregados — sem nomes
+    overlays: [
+      // Barra do iPhone (relógio 14:17 + sinal/bateria), fundo claro real.
+      { t: 'rect', x: 0, y: 0, w: 591, h: 62, fill: '#f9f9f9' },
+    ],
   },
   {
     time: '14.19.40',
     slug: 'limpeza-os',
     overlays: [
-      { t: 'rect', x: 88, y: 528, w: 480, h: 70, fill: '#fbfbfb' },
+      // Barra do iPhone (relógio 14:19 + sinal/bateria), fundo real #f1f2f7.
+      { t: 'rect', x: 0, y: 0, w: 591, h: 62, fill: '#f1f2f7' },
+      // Nome do imóvel (y550-566), fundo plano #fbfbfb.
+      { t: 'rect', x: 90, y: 546, w: 400, h: 26, fill: '#fbfbfb' },
       {
         t: 'text',
-        x: 118,
-        y: 572,
+        x: 96,
+        y: 564,
         text: DEMO.listingLong,
-        size: 13,
+        size: 14,
         weight: 700,
         fill: '#1a1d2e',
       },
-      { t: 'rect', x: 80, y: 588, w: 490, h: 88, fill: '#fcfcfc' },
+      // Endereço real (linhas y580-592, 610-626, 640-652, 664-676) substituído
+      // por 2 linhas fictícias nas mesmas posições; fundo plano invisível.
+      { t: 'rect', x: 90, y: 574, w: 460, h: 112, fill: '#fbfbfb' },
       {
         t: 'text',
-        x: 118,
-        y: 620,
-        text: DEMO.streetFull1,
+        x: 96,
+        y: 592,
+        text: DEMO.street,
         size: 12,
         fill: '#4b5563',
       },
       {
         t: 'text',
-        x: 118,
-        y: 640,
+        x: 96,
+        y: 624,
         text: DEMO.streetFull2,
         size: 12,
         fill: '#4b5563',
       },
-      { t: 'rect', x: 90, y: 688, w: 440, h: 32, fill: '#fcfafb' },
+      { t: 'rect', x: 90, y: 688, w: 440, h: 30, fill: '#fbfbfb' },
       {
         t: 'text',
-        x: 118,
+        x: 96,
         y: 710,
         text: 'Reserva Airbnb: HMDEMO0008',
         size: 13,

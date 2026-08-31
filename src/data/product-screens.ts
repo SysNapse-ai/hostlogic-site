@@ -102,7 +102,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     title: 'Pergunte pela operação',
     bullets: [
       'Pergunte em linguagem natural («já cadastraram os acompanhantes?»).',
-      'No painel, fale também por PTT (apertar para falar) sobre as estadias.',
+      'No painel, fale também por voz (aperte para falar) sobre as estadias.',
     ],
     alt: 'Chat da Anfitri-IA com pergunta operacional e resposta do painel',
     width: 447,
@@ -125,7 +125,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     id: 'limpeza-os',
     image: '/screenshots/limpeza-os.webp',
     area: 'Limpeza',
-    title: 'O.S. gerada a cada check-out',
+    title: 'Ordem de serviço a cada check-out',
     bullets: [
       'Cada saída cria uma ordem de serviço com prazo contando.',
       'A faxineira entra com senha própria e registra a chegada ao imóvel.',

@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/fraunces';
 import '../styles/global.css';
 import { SITE, NAV, APP_URL, LEGAL, CONTACT } from '../consts';
 
@@ -79,12 +80,13 @@ const jsonLd = {
       <div class="container bar">
         <a href="/" class="logo-link" aria-label="HostLogic — início">
           <img
-            class="logo-mark"
-            src="/assets/HostLogic_AppIcon_512.png?v=1"
-            alt=""
+            class="logo-horizontal"
+            src="/assets/Logo_HostLogic_Horizontal_Transparent.png?v=2"
+            alt="HostLogic"
+            width="1194"
+            height="344"
             decoding="async"
           />
-          <span class="logo-wordmark">HostLogic</span>
         </a>
         <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
           {NAV.map((item) => <a href={item.href}>{item.label}</a>)}

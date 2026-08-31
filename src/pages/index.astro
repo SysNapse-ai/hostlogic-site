@@ -14,11 +14,11 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
   <section class="hero">
     <div class="container hero-shell">
       <div class="hero-copy">
-        <span class="badge">Operação Airbnb</span>
-        <h1>O sistema para o anfitrião que não quer administrar temporada em planilha.</h1>
+        <span class="badge">Para quem recebe hóspedes pelo Airbnb</span>
+        <h1>Cuidar de imóveis de temporada sem viver de planilha.</h1>
         <p class="lead">
-          Reserva, check-in, faxina e financeiro no mesmo lugar. O que entra pelo Airbnb já alimenta
-          calendário, equipe e o relatório do mês.
+          As reservas do Airbnb entram sozinhas no calendário. Check-in do hóspede, faxina e
+          financeiro ficam no mesmo lugar — e o relatório do mês sai com um clique.
         </p>
         <div class="cta">
           <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
@@ -31,17 +31,26 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
         </div>
       </div>
 
-      <div class="hero-product">
-        <figure class="hero-shot">
+      <div class="hero-product hero-visual">
+        <figure class="hero-photo">
+          <img
+            src="/images/ambiente-sala.webp"
+            alt="Sala de um imóvel de temporada arrumada, com chaves sobre a mesa, pronta para receber hóspedes"
+            width="1600"
+            height="900"
+            decoding="async"
+          />
+        </figure>
+        <figure class="hero-shot hero-shot--float">
           <img
             src="/screenshots/reserva-cartao.webp"
-            alt="Cartão da reserva com bloco, apartamento, datas e status da estadia"
+            alt="Tela do HostLogic com o cartão da reserva: datas, hóspedes e status da estadia"
             width="591"
             height="1280"
             decoding="async"
           />
-          <figcaption class="hero-shot__caption">Cartão da reserva — dados de demonstração</figcaption>
         </figure>
+        <p class="hero-visual__caption">Tela real · dados de demonstração</p>
       </div>
     </div>
   </section>
@@ -93,8 +102,8 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           <span class="value-card__num">05</span>
           <h3>Pare de digitar reserva</h3>
           <p>
-            <strong>iCal</strong> traz as reservas da Airbnb sozinhas (Booking em breve). Calendário,
-            faxina e financeiro já nascem preenchidos. O relatório do mês sai
+            A <strong>conexão com o calendário do Airbnb</strong> traz as reservas sozinhas (Booking
+            em breve). Calendário, faxina e financeiro já nascem preenchidos. O relatório do mês sai
             <strong>com um clique</strong>.
           </p>
         </li>
@@ -102,7 +111,7 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           <span class="value-card__num">06</span>
           <h3>Avisos no iPhone e no Android</h3>
           <p>
-            O HostLogic manda <strong>push</strong> no celular: reserva nova, alteração ou
+            O HostLogic manda <strong>aviso no celular</strong>: reserva nova, alteração ou
             cancelamento, cadastro do hóspede no portal, pergunta na Anfitri-IA e faxina iniciada.
             Você escolhe o que quer receber — sem ficar olhando o painel.
           </p>
@@ -160,14 +169,26 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           </li>
         </ul>
       </div>
-      <div class="portal-flow card" aria-hidden="true">
-        <p class="portal-flow__label">Fluxo resumido</p>
-        <ol class="portal-flow__list">
-          <li>Mensagem do Airbnb → link exclusivo</li>
-          <li>Titular: cadastro, documento e selfie</li>
-          <li>Acompanhantes: titular ou link próprio</li>
-          <li>Guia + Anfitri-IA + histórico no painel</li>
-        </ol>
+      <div>
+        <figure class="section-photo">
+          <img
+            src="/images/ambiente-chaves.webp"
+            alt="Porta de entrada de um imóvel de temporada com as chaves na fechadura"
+            width="1000"
+            height="750"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="portal-flow card" aria-hidden="true">
+          <p class="portal-flow__label">Fluxo resumido</p>
+          <ol class="portal-flow__list">
+            <li>Mensagem do Airbnb → link exclusivo</li>
+            <li>Titular: cadastro, documento e selfie</li>
+            <li>Acompanhantes: titular ou link próprio</li>
+            <li>Guia + Anfitri-IA + histórico no painel</li>
+          </ol>
+        </div>
       </div>
     </div>
   </section>
@@ -178,7 +199,8 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
       <p class="sub">
         No portal, a Anfitri-IA responde o hóspede. A mesma conversa fica na
         <strong>visão anfitrião</strong> — consulte e, se preferir, esclareça o hóspede. Cole o texto
-        do anúncio como rascunho; no painel, fale por texto ou <strong>PTT</strong>.
+        do anúncio como rascunho; no painel, fale por texto ou por voz,
+        <strong>apertando para falar</strong>.
       </p>
       <div class="anfitri-ia-grid">
         <article class="card anfitri-ia-card">
@@ -200,18 +222,18 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
         </article>
         <article class="card anfitri-ia-card anfitri-ia-card--host">
           <p class="anfitri-ia-card__badge">Painel HostLogic</p>
-          <h3>Conversa sobre as estadias — inclusive por PTT</h3>
+          <h3>Conversa sobre as estadias — por texto ou por voz</h3>
           <ul class="portal-steps anfitri-ia-card__list">
             <li>
               Pergunte sobre ocupação, pendências, faxinas e reservas. Os números vêm do sistema.
             </li>
             <li>
-              <strong>PTT:</strong> aperte para falar e ouça a resposta, sem digitar.
+              <strong>Por voz:</strong> aperte para falar e ouça a resposta, sem digitar.
             </li>
             <li>
               A conversa do portal aparece na <strong>visão anfitrião</strong>: você lê o que o
-              hóspede perguntou e o que a IA respondeu, e esclareça se preferir — sem pedir
-              print. O celular avisa com <strong>push</strong> quando o hóspede pergunta.
+              hóspede perguntou e o que a IA respondeu, e esclarece se preferir — sem pedir
+              print. O celular <strong>avisa</strong> quando o hóspede pergunta.
             </li>
           </ul>
         </article>
@@ -275,6 +297,15 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
     </div>
   </section>
 
+  <section class="quote-band" aria-label="HostLogic — gestão de imóveis de temporada">
+    <div class="container">
+      <blockquote>Receber bem é o seu trabalho. Manter tudo em ordem é o nosso.</blockquote>
+      <p class="quote-band__note">
+        HostLogic — do calendário de reservas à foto da faxina, sem complicação.
+      </p>
+    </div>
+  </section>
+
   <section class="block team-spotlight" id="equipe">
     <div class="container team-spotlight__grid">
       <div>
@@ -299,15 +330,27 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           <a class="btn btn-primary" href={APP_URL}>Entrar no painel</a>
         </div>
       </div>
-      <div class="team-flow card" aria-hidden="true">
-        <p class="portal-flow__label">Login e papéis</p>
-        <ol class="portal-flow__list">
-          <li>Admin cadastra colaborador em Equipe</li>
-          <li>Convite seguro — cada um define a senha</li>
-          <li>Login em app.hostlogic.com.br</li>
-          <li>Menu conforme o cargo</li>
-        </ol>
-        <p class="team-flow__roles">Cargos: Administrador · Gerente · Faxineira · Manutenção · Funcionário</p>
+      <div>
+        <figure class="section-photo">
+          <img
+            src="/images/ambiente-cama.webp"
+            alt="Cama arrumada com toalhas dobradas, pronta para o próximo hóspede"
+            width="1000"
+            height="750"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="team-flow card" aria-hidden="true">
+          <p class="portal-flow__label">Login e papéis</p>
+          <ol class="portal-flow__list">
+            <li>Admin cadastra colaborador em Equipe</li>
+            <li>Convite seguro — cada um define a senha</li>
+            <li>Login em app.hostlogic.com.br</li>
+            <li>Menu conforme o cargo</li>
+          </ol>
+          <p class="team-flow__roles">Cargos: Administrador · Gerente · Faxineira · Manutenção · Funcionário</p>
+        </div>
       </div>
     </div>
   </section>

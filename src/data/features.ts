@@ -26,15 +26,15 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'reservas-calendario',
     title: 'Reservas e calendário',
     blurb:
-      'As reservas da Airbnb entram por iCal, sem lançamento manual, num calendário único do portfólio. Relatório do mês sai com um clique.',
+      'As reservas da Airbnb entram sozinhas, sem lançamento manual, num calendário único de todos os imóveis. Relatório do mês sai com um clique.',
     features: [
       {
-        title: 'Captura automática por iCal (Airbnb)',
-        desc: 'Sincroniza as reservas da Airbnb sem digitação; calendário e lista operacional ficam alinhados.',
+        title: 'Reservas do Airbnb entram sozinhas',
+        desc: 'A conexão com o calendário do Airbnb (iCal) traz as reservas sem digitação; calendário e lista do dia a dia ficam alinhados.',
       },
       {
-        title: 'Booking.com por iCal (em breve)',
-        desc: 'Sincronização do calendário do Booking.com na mesma fila do Airbnb — segunda fase.',
+        title: 'Booking.com (em breve)',
+        desc: 'Conexão com o calendário do Booking.com na mesma fila do Airbnb — segunda fase.',
         soon: true,
       },
       {
@@ -43,7 +43,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Reserva ligada pelo código de confirmação',
-        desc: 'Portal, faxina e financeiro ficam na mesma reserva pelo código Airbnb — mesmo quando ele não aparece no iCal.',
+        desc: 'Portal, faxina e financeiro ficam na mesma reserva pelo código Airbnb — mesmo quando o calendário não o informa.',
       },
       {
         title: 'Revisão antes de fechar a pendência',
@@ -54,7 +54,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Um calendário para o portfólio, com a origem da reserva (Airbnb ou direto) por cor.',
       },
       {
-        title: 'Badges de status por reserva',
+        title: 'Etiquetas de status por reserva',
         desc: 'Mostra o que falta antes do check-in: portal, faxina, pagamento e alteração.',
       },
       {
@@ -67,14 +67,14 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'monitor',
     title: 'Monitor operacional',
     blurb:
-      'Check-ins, check-outs e o que ainda precisa de você — no painel e no celular (push no iPhone e no Android).',
+      'Check-ins, check-outs e o que ainda precisa de você — no painel e com avisos no celular (iPhone e Android).',
     features: [
       {
-        title: 'KPIs de check-in e check-out (1, 3 e 7 dias)',
+        title: 'Contadores de check-in e check-out (1, 3 e 7 dias)',
         desc: 'Mostra quantas entradas e saídas há nos próximos dias, com destaque para as janelas curtas.',
       },
       {
-        title: 'Avisos push no iPhone e no Android',
+        title: 'Avisos no iPhone e no Android',
         desc: 'O celular avisa reserva nova, alteração, cancelamento, cadastro no portal, pergunta na Anfitri-IA e faxina iniciada. Você liga ou desliga cada tipo.',
       },
       {
@@ -147,7 +147,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'anfitri-ia',
     title: 'Anfitri-IA',
     blurb:
-      'Responde o hóspede no portal; a conversa fica na visão anfitrião. O celular avisa quando o hóspede pergunta. No painel, fale por texto ou PTT.',
+      'Responde o hóspede no portal; a conversa fica na visão anfitrião. O celular avisa quando o hóspede pergunta. No painel, fale por texto ou por voz.',
     features: [
       {
         title: 'Assistente do hóspede no portal',
@@ -162,7 +162,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Converse sobre ocupação, pendências, faxinas e o estado das reservas, com os números vindos do sistema.',
       },
       {
-        title: 'PTT — apertar para falar sobre as estadias',
+        title: 'Por voz — aperte para falar sobre as estadias',
         desc: 'No painel, fale com a Anfitri-IA sem digitar: aperte para falar e ouça a resposta enquanto se desloca.',
       },
       {
@@ -178,7 +178,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Veja o que o hóspede perguntou e o que a Anfitri-IA respondeu, por estadia — sem pedir print.',
       },
       {
-        title: 'Push quando o hóspede pergunta',
+        title: 'Aviso no celular quando o hóspede pergunta',
         desc: 'O iPhone ou o Android avisa no momento em que o hóspede fala com a Anfitri-IA no portal.',
       },
     ],
@@ -214,8 +214,8 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Avisa quando há risco de não liberar o imóvel a tempo do próximo check-in.',
       },
       {
-        title: 'Push quando a faxina começa',
-        desc: 'O celular avisa no iPhone e no Android no momento em que a faxineira registra a chegada.',
+        title: 'Aviso no celular quando a faxina começa',
+        desc: 'O iPhone e o Android avisam no momento em que a faxineira registra a chegada.',
       },
     ],
   },
@@ -255,7 +255,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'imoveis',
     title: 'Imóveis',
     blurb:
-      'A carteira de imóveis organizada, com GPS, iCal e o guia que alimenta o portal e a Anfitri-IA.',
+      'A carteira de imóveis organizada, com localização, calendário do Airbnb e o guia que alimenta o portal e a Anfitri-IA.',
     features: [
       {
         title: 'Cadastro do imóvel',
@@ -266,8 +266,8 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Localização precisa do imóvel para a equipe e para o mapa do portal do hóspede.',
       },
       {
-        title: 'iCal do Airbnb por imóvel',
-        desc: 'Guarde a URL do calendário da Airbnb no cadastro, com sync manual quando precisar na hora.',
+        title: 'Calendário do Airbnb ligado a cada imóvel',
+        desc: 'Guarde o endereço do calendário da Airbnb no cadastro e atualize na hora quando precisar.',
       },
       {
         title: 'Instruções de limpeza e taxa de faxina',
