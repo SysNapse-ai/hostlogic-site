@@ -53,7 +53,8 @@ const DEMO = {
 
 /** @typedef {{ t: 'rect', x: number, y: number, w: number, h: number, fill: string, rx?: number }} RectOp */
 /** @typedef {{ t: 'text', x: number, y: number, text: string, size: number, fill?: string, weight?: number, anchor?: string }} TextOp */
-/** @typedef {RectOp | TextOp} OverlayOp */
+/** @typedef {{ t: 'image', x: number, y: number, w: number, h: number, src: string, rx?: number }} ImageOp */
+/** @typedef {RectOp | TextOp | ImageOp} OverlayOp */
 
 /** @type {{ time: string, slug: string, overlays: OverlayOp[] }} */
 const JOBS = [
@@ -143,45 +144,44 @@ const JOBS = [
     overlays: [
       // Barra do iPhone (relógio 14:21 + sinal/bateria), fundo real #f1f2f7.
       { t: 'rect', x: 0, y: 0, w: 591, h: 62, fill: '#f1f2f7' },
-      // Pills 1-3 (linha de cima): cobrir só as 2 linhas de texto (y660-688),
-      // cor de fundo real da pill, nome centrado como o original.
-      { t: 'rect', x: 30, y: 654, w: 160, h: 40, fill: '#fef2f2' },
-      { t: 'text', x: 112, y: 668, text: 'Ap charmoso-próx', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
-      { t: 'text', x: 112, y: 686, text: 'estação CW...', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
-      { t: 'rect', x: 214, y: 654, w: 160, h: 40, fill: '#fef2f2' },
-      { t: 'text', x: 296, y: 668, text: 'Vista jardim! Prox', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
-      { t: 'text', x: 296, y: 686, text: 'Termin...', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
-      { t: 'rect', x: 398, y: 654, w: 160, h: 40, fill: '#fdfbea' },
-      { t: 'text', x: 480, y: 668, text: 'Jardim Urbano!', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
-      { t: 'text', x: 480, y: 686, text: 'próximo à...', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
-      // Pills 4-5 (linha de baixo): texto em y786-812; ícone acima preservado.
-      { t: 'rect', x: 30, y: 780, w: 168, h: 36, fill: '#fdfbea' },
-      { t: 'text', x: 114, y: 792, text: 'Portal da', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
-      { t: 'text', x: 114, y: 810, text: 'Estação - B', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
-      { t: 'rect', x: 214, y: 780, w: 168, h: 36, fill: '#ebfdf5' },
-      { t: 'text', x: 297, y: 792, text: 'Recanto do', size: 10, weight: 700, fill: '#14532d', anchor: 'middle' },
-      { t: 'text', x: 297, y: 810, text: 'Terminal co...', size: 10, weight: 700, fill: '#14532d', anchor: 'middle' },
-      // Cartão de detalhe: título em y906-934, local em y954-970 (fundo branco).
-      { t: 'rect', x: 94, y: 900, w: 470, h: 38, fill: '#ffffff' },
+      // Pills 1-3: APENAS as 2 linhas de nome (ícone e borda intactos).
+      { t: 'rect', x: 56, y: 654, w: 124, h: 38, fill: 'auto' },
+      { t: 'text', x: 118, y: 668, text: 'Ap charmoso-próx', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'text', x: 118, y: 684, text: 'estação CW...', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'rect', x: 240, y: 654, w: 124, h: 38, fill: 'auto' },
+      { t: 'text', x: 302, y: 668, text: 'Vista jardim! Prox', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'text', x: 302, y: 684, text: 'Termin...', size: 10, weight: 700, fill: '#7a2e2e', anchor: 'middle' },
+      { t: 'rect', x: 424, y: 654, w: 118, h: 38, fill: 'auto' },
+      { t: 'text', x: 483, y: 668, text: 'Jardim Urbano!', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      { t: 'text', x: 483, y: 684, text: 'próximo à...', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      // Pills 4-5: só o nome; ícone no topo e cantos do card ficam.
+      { t: 'rect', x: 56, y: 780, w: 124, h: 36, fill: 'auto' },
+      { t: 'text', x: 118, y: 794, text: 'Portal da', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      { t: 'text', x: 118, y: 810, text: 'Estação - B', size: 10, weight: 700, fill: '#6b4a1e', anchor: 'middle' },
+      { t: 'rect', x: 240, y: 780, w: 124, h: 36, fill: 'auto' },
+      { t: 'text', x: 302, y: 794, text: 'Recanto do', size: 10, weight: 700, fill: '#14532d', anchor: 'middle' },
+      { t: 'text', x: 302, y: 810, text: 'Terminal co...', size: 10, weight: 700, fill: '#14532d', anchor: 'middle' },
+      // Detalhe: texto do título/local/hóspede, sem cobrir grelha nem logo Airbnb.
+      { t: 'rect', x: 110, y: 904, w: 320, h: 28, fill: 'auto' },
       {
         t: 'text',
-        x: 100,
-        y: 928,
+        x: 114,
+        y: 926,
         text: DEMO.listingA,
-        size: 20,
+        size: 18,
         weight: 700,
         fill: '#1a1d2e',
       },
-      { t: 'rect', x: 40, y: 944, w: 524, h: 30, fill: '#ffffff' },
+      { t: 'rect', x: 44, y: 948, w: 420, h: 22, fill: 'auto' },
       {
         t: 'text',
         x: 48,
-        y: 967,
+        y: 965,
         text: DEMO.place,
         size: 13,
         fill: '#4b5563',
       },
-      { t: 'rect', x: 78, y: 1024, w: 460, h: 32, fill: '#fdfdfd' },
+      { t: 'rect', x: 124, y: 1026, w: 200, h: 20, fill: 'auto' },
       {
         t: 'text',
         x: 124,
@@ -258,7 +258,7 @@ const JOBS = [
       },
       // Endereço: rótulo original (y573-583) preservado; só a linha do
       // endereço real (y597-607) é substituída.
-      { t: 'rect', x: 24, y: 591, w: 400, h: 24, fill: '#ffffff' },
+      { t: 'rect', x: 24, y: 591, w: 280, h: 24, fill: '#ffffff' },
       {
         t: 'text',
         x: 68,
@@ -267,25 +267,14 @@ const JOBS = [
         size: 13,
         fill: '#4b5563',
       },
-      { t: 'rect', x: 20, y: 618, w: 410, h: 250, fill: '#d9e4f0', rx: 8 },
       {
-        t: 'text',
-        x: 225,
-        y: 730,
-        text: 'Mapa de demonstração',
-        size: 14,
-        weight: 700,
-        fill: '#475569',
-        anchor: 'middle',
-      },
-      {
-        t: 'text',
-        x: 225,
-        y: 754,
-        text: DEMO.street,
-        size: 12,
-        fill: '#64748b',
-        anchor: 'middle',
+        t: 'image',
+        x: 20,
+        y: 618,
+        w: 410,
+        h: 250,
+        src: 'demo-map.png',
+        rx: 8,
       },
     ],
   },
@@ -828,6 +817,7 @@ function escXml(s) {
 /** @param {number} w @param {number} h @param {OverlayOp[]} ops */
 function overlaySvg(w, h, ops) {
   const body = ops
+    .filter((op) => op.t !== 'image')
     .map((op) => {
       if (op.t === 'rect') {
         const rx = op.rx ? ` rx="${op.rx}" ry="${op.rx}"` : '';
@@ -844,6 +834,63 @@ function overlaySvg(w, h, ops) {
   );
 }
 
+async function imageLayers(ops) {
+  const layers = [];
+  for (const op of ops) {
+    if (op.t !== 'image') continue;
+    const src = path.join(__dirname, 'assets', op.src);
+    if (!fs.existsSync(src)) {
+      throw new Error(`Imagem de overlay em falta: ${src}`);
+    }
+    const buf = await sharp(src)
+      .resize(op.w, op.h, { fit: 'cover' })
+      .composite(
+        op.rx
+          ? [
+              {
+                input: Buffer.from(
+                  `<svg xmlns="http://www.w3.org/2000/svg" width="${op.w}" height="${op.h}"><rect x="0" y="0" width="${op.w}" height="${op.h}" rx="${op.rx}" ry="${op.rx}" fill="#fff"/></svg>`,
+                ),
+                blend: 'dest-in',
+              },
+            ]
+          : [],
+      )
+      .png()
+      .toBuffer();
+    layers.push({ input: buf, left: op.x, top: op.y });
+  }
+  return layers;
+}
+
+async function sampleFill(input, op) {
+  const { data, info } = await sharp(input)
+    .extract({ left: op.x, top: op.y, width: op.w, height: op.h })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  let rS = 0, gS = 0, bS = 0, n = 0;
+  for (let i = 0; i < data.length; i += info.channels) {
+    const r = data[i], g = data[i + 1], b = data[i + 2];
+    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    if (lum < 140) continue; // ignora texto/ícone/borda
+    rS += r; gS += g; bS += b; n += 1;
+  }
+  if (!n) return '#ffffff';
+  return `#${[rS / n, gS / n, bS / n].map((v) => Math.round(v).toString(16).padStart(2, '0')).join('')}`;
+}
+
+async function resolveOverlays(input, ops) {
+  const out = [];
+  for (const op of ops) {
+    if (op.t === 'rect' && op.fill === 'auto') {
+      out.push({ ...op, fill: await sampleFill(input, op) });
+    } else {
+      out.push(op);
+    }
+  }
+  return out;
+}
+
 async function processJob(srcDir, job) {
   const input = findOriginal(srcDir, job.time);
   const meta = await sharp(input).metadata();
@@ -853,14 +900,22 @@ async function processJob(srcDir, job) {
     throw new Error(`Sem dimensões: ${input}`);
   }
 
-  let pipeline = sharp(input);
-  if (job.overlays.length) {
-    const overlayPng = await sharp(overlaySvg(width, height, job.overlays), {
+  const overlays = await resolveOverlays(input, job.overlays);
+  const composites = [];
+  const drawOps = overlays.filter((op) => op.t !== 'image');
+  if (drawOps.length) {
+    const overlayPng = await sharp(overlaySvg(width, height, drawOps), {
       density: 72,
     })
       .png()
       .toBuffer();
-    pipeline = pipeline.composite([{ input: overlayPng, top: 0, left: 0 }]);
+    composites.push({ input: overlayPng, top: 0, left: 0 });
+  }
+  composites.push(...(await imageLayers(overlays)));
+
+  let pipeline = sharp(input);
+  if (composites.length) {
+    pipeline = pipeline.composite(composites);
   }
 
   const dest = path.join(outDir, `${job.slug}.webp`);
@@ -876,16 +931,31 @@ async function processJob(srcDir, job) {
   return { dest, bytes };
 }
 
+function parseOnly(argv) {
+  const flag = argv.indexOf('--only');
+  if (flag >= 0 && argv[flag + 1]) {
+    return argv[flag + 1].split(',').map((s) => s.trim()).filter(Boolean);
+  }
+  return null;
+}
+
 async function main() {
-  const srcDir = parseSrcDir(process.argv.slice(2));
+  const argv = process.argv.slice(2);
+  const srcDir = parseSrcDir(argv);
+  const only = parseOnly(argv);
   if (!fs.existsSync(srcDir)) {
     throw new Error(`Diretório de originais inexistente: ${srcDir}`);
   }
   assertSrcOutsideRepo(srcDir);
   fs.mkdirSync(outDir, { recursive: true });
 
+  const jobs = only ? JOBS.filter((j) => only.includes(j.slug)) : JOBS;
+  if (!jobs.length) {
+    throw new Error(`Nenhum job corresponde a --only ${only.join(',')}`);
+  }
+
   const results = [];
-  for (const job of JOBS) {
+  for (const job of jobs) {
     results.push(await processJob(srcDir, job));
   }
 

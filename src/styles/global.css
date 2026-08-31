@@ -1316,10 +1316,11 @@ section.block p.sub {
 /* Faixa editorial de citação sobre foto de ambiente. */
 .quote-band {
   position: relative;
-  padding: clamp(4rem, 3rem + 5vw, 7rem) 0;
+  padding: clamp(4.5rem, 3.4rem + 6vw, 8rem) 0;
   background-image: url('/images/ambiente-mesa.webp');
   background-size: cover;
-  background-position: center;
+  background-position: center 28%;
+  min-height: clamp(18rem, 42vw, 28rem);
 }
 .quote-band::before {
   content: '';
