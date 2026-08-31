@@ -7,9 +7,7 @@ import ProductCarousel from '../components/ProductCarousel.astro';
 import { APP_URL } from '../consts';
 import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../data/features';
 
-// Home institucional HostLogic. Estrutura pronta para evoluir para marketing comercial
-// completo (todas as funções do sistema apresentadas comercialmente). Ver docs/SITE_FUTURE_INTEGRATIONS.md.
-// Lista de espera: envio automático via Worker + Resend (POST /api/waitlist).
+// Home institucional HostLogic. Lista de espera: POST /api/waitlist (Worker + Resend).
 ---
 
 <BaseLayout>
@@ -19,18 +17,17 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
         <span class="badge">Operação Airbnb</span>
         <h1>O sistema para o anfitrião que não quer administrar temporada em planilha.</h1>
         <p class="lead">
-          O HostLogic transforma reserva, check-in, faxina, atendimento e repasse em uma operação
-          acompanhável. O que entra pelo Airbnb já alimenta calendário, equipe e financeiro — com
-          trilha para auditoria e LGPD.
+          Reserva, check-in, faxina e financeiro no mesmo lugar. O que entra pelo Airbnb já alimenta
+          calendário, equipe e o relatório do mês.
         </p>
         <div class="cta">
           <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
           <a class="btn btn-ghost" href="/funcionalidades">Ver funcionalidades</a>
         </div>
         <div class="hero-proof">
-          <span><strong>{FEATURE_CATEGORY_COUNT} áreas</strong> · {FEATURE_COUNT} recursos no catálogo</span>
-          <span>RLS por conta, LGPD e dados sensíveis separados</span>
-          <span><a href="#plano-pago">Ver o que faz valer o plano pago</a></span>
+          <span><a href="#plano-pago">O que o HostLogic faz</a></span>
+          <span><a href="#portal-hospede">Portal do hóspede</a></span>
+          <span><a href="#anfitri-ia">Anfitri-IA</a></span>
         </div>
       </div>
 
@@ -38,7 +35,7 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
         <figure class="hero-shot">
           <img
             src="/screenshots/reserva-cartao.webp"
-            alt="Cartão da reserva com bloco, apartamento, datas e badges de formulário, condomínio e pagamento"
+            alt="Cartão da reserva com bloco, apartamento, datas e status da estadia"
             width="591"
             height="1280"
             decoding="async"
@@ -52,55 +49,52 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
   <section class="block value-band" id="plano-pago">
     <div class="container">
       <span class="value-band__eyebrow">O valor está na operação</span>
-      <h2 class="value-band__title">Cinco controles que tiram risco do dia a dia do anfitrião</h2>
+      <h2 class="value-band__title">O que o HostLogic resolve no dia a dia</h2>
       <p class="sub value-band__sub">
-        A assinatura faz sentido quando reduz retrabalho, melhora a prova operacional e evita perda no
-        fechamento. Estes são os pontos que o HostLogic entrega de forma concreta.
+        Menos retrabalho, prova da faxina e fechamento do mês sem montar planilha.
       </p>
       <ol class="value-cards">
         <li class="value-card">
           <span class="value-card__num">01</span>
-          <h3>Cadastro na portaria sem digitação</h3>
+          <h3>O hóspede se cadastra sozinho</h3>
           <p>
-            Os dados que o hóspede preenche no portal são enviados ao aplicativo do condomínio
-            automaticamente, com <strong>status por hóspede</strong> — sem redigitar cadastro para a
-            portaria.
+            Titular e acompanhantes preenchem o cadastro no <strong>link exclusivo</strong> do imóvel.
+            Você vê tudo no painel — sem cobrar dado por mensagem.
           </p>
         </li>
         <li class="value-card">
           <span class="value-card__num">02</span>
-          <h3>Feche o mês com o valor certo</h3>
+          <h3>Relatório do mês em um clique</h3>
           <p>
-            O sistema compara o <strong>repasse pago pela Airbnb com a previsão</strong> da reserva.
-            Quando os valores divergem, ele sinaliza para você reconciliar — você não descobre o rombo
-            só na conferência do banco.
+            Reservas, custos e lucro por imóvel saem no <strong>botão de relatório</strong>. Não é o
+            extrato da Airbnb: é o fechamento da sua operação, pronto para conferir ou enviar.
           </p>
         </li>
         <li class="value-card">
           <span class="value-card__num">03</span>
-          <h3>Deixe o hóspede se resolver no portal</h3>
+          <h3>Link exclusivo com Anfitri-IA</h3>
           <p>
-            O link do imóvel pode ir na mensagem automática do Airbnb. Ali o hóspede faz o cadastro,
-            vê regras e localização, fala com a <strong>Anfitri-IA</strong> e você acompanha o histórico
-            da conversa no painel.
+            A mensagem automática do Airbnb leva a um link com a estadia, acompanhantes e a
+            <strong>Anfitri-IA</strong>. Cole o texto do anúncio (mesmo rascunho); ela responde só o
+            que você cadastrou — <em>«Tem secador?» → «Sim, da marca X, X watts»</em>.
           </p>
         </li>
         <li class="value-card">
           <span class="value-card__num">04</span>
-          <h3>Comprove que a faxina foi feita</h3>
+          <h3>Comprove a faxina e o estado do imóvel</h3>
           <p>
-            Cada check-out gera uma <strong>ordem de serviço</strong> automática. A faxineira registra a
-            chegada ao imóvel e a unidade só libera com as <strong>fotos de itens sorteados</strong> —
-            prova antes de o próximo hóspede entrar.
+            Cada check-out gera uma <strong>ordem de serviço</strong>. A faxineira entra com
+            <strong>senha própria</strong>, avisa a chegada e tira fotos — prova da limpeza e de como
+            o imóvel estava antes da próxima reserva.
           </p>
         </li>
         <li class="value-card">
           <span class="value-card__num">05</span>
           <h3>Pare de digitar reserva</h3>
           <p>
-            <strong>iCal e sincronização automática</strong> trazem as reservas da Airbnb
-            sozinhas (Booking em breve). Calendário, faxina e financeiro já nascem preenchidos — sem
-            lançamento manual.
+            <strong>iCal</strong> traz as reservas da Airbnb sozinhas (Booking em breve). Calendário,
+            faxina e financeiro já nascem preenchidos. O relatório do mês sai
+            <strong>com um clique</strong>.
           </p>
         </li>
       </ol>
@@ -113,9 +107,9 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
     <div class="container">
       <h2>As {FEATURE_CATEGORY_COUNT} áreas do sistema</h2>
       <p class="sub">
-        {FEATURE_CATEGORY_COUNT} áreas e {FEATURE_COUNT} recursos no catálogo — da captura da
-        reserva ao fechamento do mês. Abra o detalhe de cada área em{' '}
-        <a href="/funcionalidades">Funcionalidades</a>.
+        Da captura da reserva ao fechamento do mês. Detalhe de cada área em{' '}
+        <a href="/funcionalidades">Funcionalidades</a>
+        ({FEATURE_COUNT} recursos).
       </p>
       <div class="cat-grid">
         {FEATURE_CATEGORIES.map((category) => (
@@ -135,42 +129,34 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
   <section class="block portal-spotlight" id="portal-hospede">
     <div class="container portal-spotlight__grid">
       <div>
-        <h2>Portal do hóspede — cadastro, regras e atendimento em um link</h2>
+        <h2>Portal do hóspede — um link exclusivo da estadia</h2>
         <p class="sub">
-          Mantenha o link do imóvel na mensagem automática do Airbnb. O hóspede acessa o portal,
-          preenche o próprio cadastro, registra acompanhantes, consulta regras, localização e instruções,
-          e ainda fala com a Anfitri-IA durante a estadia.
+          A mensagem automática do Airbnb leva o hóspede a um link com as informações da estadia,
+          cadastro de acompanhantes e a Anfitri-IA para o que você escolher responder.
         </p>
         <ul class="portal-steps">
           <li>
-            <strong>Titular da reserva</strong> preenche dados pessoais, documento com foto e selfie
-            de verificação no fluxo guiado.
+            <strong>Titular</strong> preenche dados, documento e selfie no celular — sem instalar app.
           </li>
           <li>
-            <strong>Acompanhantes</strong> podem ser cadastrados pelo titular; se preferir, ele envia
-            um <strong>convite individual</strong> para cada pessoa se autocadastrar pelo próprio link.
+            <strong>Acompanhantes</strong> entram pelo titular ou por um convite individual.
           </li>
           <li>
-            O <strong>guia do imóvel</strong> concentra regras, Wi‑Fi, acesso, localização e orientações
-            que costumam virar mensagem repetida no Airbnb ou WhatsApp.
+            O <strong>guia do imóvel</strong> concentra regras, Wi‑Fi, acesso e localização.
           </li>
           <li>
-            A <strong>Anfitri-IA</strong> responde dúvidas com base no guia cadastrado, e você acompanha
-            o histórico da conversa por reserva — útil para auditoria, suporte e relacionamento com
-            condomínios.
+            A <strong>Anfitri-IA</strong> usa o texto que você cadastrou (mesmo rascunho do anúncio)
+            e você vê o histórico no painel.
           </li>
         </ul>
-        <p class="portal-note">
-          Para condomínios, o valor é ter cadastro e comunicação organizados antes da chegada.
-        </p>
       </div>
       <div class="portal-flow card" aria-hidden="true">
         <p class="portal-flow__label">Fluxo resumido</p>
         <ol class="portal-flow__list">
-          <li>Mensagem do Airbnb → link do imóvel</li>
+          <li>Mensagem do Airbnb → link exclusivo</li>
           <li>Titular: cadastro, documento e selfie</li>
-          <li>Acompanhantes: cadastro pelo titular ou link próprio</li>
-          <li>Guia + Anfitri-IA + histórico visível no painel</li>
+          <li>Acompanhantes: titular ou link próprio</li>
+          <li>Guia + Anfitri-IA + histórico no painel</li>
         </ol>
       </div>
     </div>
@@ -178,62 +164,46 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
 
   <section class="block anfitri-ia-spotlight" id="anfitri-ia">
     <div class="container">
-      <h2>Anfitri-IA — atende o hóspede e apoia a gestão</h2>
+      <h2>Anfitri-IA — no portal do hóspede e no seu painel</h2>
       <p class="sub">
-        Dois papéis na mesma marca: <strong>responde ao hóspede</strong> no portal do imóvel e
-        <strong>apoia você</strong> no painel. As respostas ficam ancoradas no guia cadastrado, e o
-        histórico da conversa fica visível por reserva.
+        Cole o texto do anúncio como rascunho: ela organiza e responde com segurança só o que você
+        incluiu. No painel, fale por texto ou <strong>PTT (apertar para falar)</strong> sobre as
+        estadias.
       </p>
       <div class="anfitri-ia-grid">
         <article class="card anfitri-ia-card">
-          <p class="anfitri-ia-card__badge">Portal do hóspede · por imóvel</p>
-          <h3>Assistente para o hóspede</h3>
+          <p class="anfitri-ia-card__badge">Portal do hóspede</p>
+          <h3>Responde o que você cadastrou</h3>
           <ul class="portal-steps anfitri-ia-card__list">
             <li>
-              Pelo link do imóvel, o hóspede abre o chat <strong>Anfitri-IA</strong> no celular
-              (atalho «Fale com a Anfitri-IA») sem instalar app.
+              O hóspede abre o chat no celular, pelo link do imóvel, sem instalar app.
             </li>
             <li>
-              Responde com base no <strong>guia do imóvel</strong> que você treinou: Wi‑Fi, regras,
-              horários, inventário e procedimentos de uso.
+              Você cola o texto bruto (anúncio, regras, inventário). Ela transforma em respostas
+              claras e só afirma o que está no campo de respostas.
             </li>
             <li>
-              Informa sobre a <strong>própria estadia</strong> (datas, check-in/out quando disponíveis).
-              Não decide por você — em urgência orienta contato com o anfitrião.
-            </li>
-            <li>
-              Reduz mensagens repetitivas no Airbnb/WhatsApp sobre «qual a senha do Wi‑Fi?» ou «onde é o
-              lixo?».
+              Exemplo: <em>«O imóvel tem secador de cabelo?»</em> — <strong>Anfitri-IA:</strong>
+              <em>«Sim, da marca X, com X watts»</em> — se você tiver escrito isso.
             </li>
           </ul>
         </article>
         <article class="card anfitri-ia-card anfitri-ia-card--host">
-          <p class="anfitri-ia-card__badge">Painel HostLogic · gestão</p>
-          <h3>Consultora para o anfitrião</h3>
+          <p class="anfitri-ia-card__badge">Painel HostLogic</p>
+          <h3>Conversa sobre as estadias — inclusive por PTT</h3>
           <ul class="portal-steps anfitri-ia-card__list">
             <li>
-              No painel, pergunte à <strong>Anfitri-IA</strong> sobre ocupação, pendências, faxinas e o
-              estado das reservas — tom direto, com os números vindos do sistema.
+              Pergunte sobre ocupação, pendências, faxinas e reservas. Os números vêm do sistema.
             </li>
             <li>
-              Em <strong>Meus imóveis</strong>, o treinamento da Anfitri-IA alimenta o portal: guia pós
-              check-in, inventário, troubleshooting e sugestões de texto com IA.
+              <strong>PTT:</strong> aperte para falar e ouça a resposta, sem digitar.
             </li>
             <li>
-              Veja o <strong>histórico de conversas</strong> entre hóspede e Anfitri-IA por reserva; isso dá
-              visibilidade ao que foi perguntado e respondido sem depender de print.
-            </li>
-            <li>
-              Apoio a <strong>precificação e estratégia</strong> (sugestões — você aprova o que for sensível).
-              O hóspede não vê dados financeiros nem outras reservas.
+              Veja o histórico da conversa com o hóspede por reserva, sem pedir print.
             </li>
           </ul>
         </article>
       </div>
-      <p class="portal-note">
-        LGPD: o núcleo hóspede é informativo; dados sensíveis ficam no fluxo de check-in e nas políticas
-        do produto. Você controla o conteúdo de treinamento por unidade.
-      </p>
 
       <div class="anfitri-ia-demo-wrap">
         <p class="anfitri-ia-demo-wrap__title">
@@ -246,115 +216,71 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
 
   <section class="block finance-spotlight" id="financeiro">
     <div class="container">
-      <h2>Financeiro — repasses, custos e lucro por imóvel</h2>
-      <p class="sub">Visão mensal e anual sem planilha paralela.</p>
+      <h2>Financeiro — o mês fecha com um clique</h2>
+      <p class="sub">Reservas, custos e lucro por imóvel. Relatório no botão, sem planilha paralela.</p>
       <div class="finance-grid">
         <article class="card finance-card">
           <p class="finance-card__badge">Visão geral</p>
           <h3>Painel do mês</h3>
           <ul class="portal-steps finance-card__list">
             <li>
-              <strong>Líquido do mês</strong>, recebido, a receber e acumulado do ano — com comparativo em relação
-              ao mês anterior.
+              <strong>Líquido do mês</strong>, recebido, a receber e acumulado do ano.
             </li>
             <li>
-              Filtre por <strong>mês/ano</strong>, imóvel ou grupo de <strong>proprietários</strong> (comissão
-              configurável por dono).
+              Filtre por <strong>mês</strong>, imóvel ou proprietário.
             </li>
             <li>
-              Gráfico de <strong>receita prevista × recebido × custos × lucro</strong> (histórico e projeção dos
-              próximos meses no critério Airbnb-like).
-            </li>
-            <li>
-              Tabela por imóvel com reservas e repasses pagos; exporte o mês em <strong>CSV</strong> para sua
-              contabilidade.
-            </li>
-            <li>
-              <strong>Ocultar valores</strong> na tela quando estiver em frente à equipe ou em reunião.
+              <strong>Ocultar valores</strong> na tela em reunião ou com a equipe.
             </li>
           </ul>
         </article>
         <article class="card finance-card finance-card--payout">
-          <p class="finance-card__badge">Repasses Airbnb</p>
-          <h3>Previsão e pagamento real</h3>
+          <p class="finance-card__badge">Fechamento</p>
+          <h3>Relatório em um clique</h3>
           <ul class="portal-steps finance-card__list">
             <li>
-              A previsão usa as reservas confirmadas; o <strong>repasse recebido</strong> entra quando o
-              sistema registra o pagamento da Airbnb.
+              Gere o relatório do mês no botão — para conferir ou enviar, sem montar planilha.
             </li>
             <li>
-              Em <strong>Reservas capturadas</strong>, abra o financeiro a partir do badge de repasse pendente ou
-              pago — sem procurar código de reserva à mão.
-            </li>
-            <li>
-              Se o valor do repasse <strong>divergir</strong> do total do anfitrião na confirmação (alteração,
-              taxa, ajuste), o sistema sinaliza para você <strong>reconciliar</strong> ou colar o detalhe da tela
-              Airbnb após alteração.
-            </li>
-            <li>
-              Cancelamentos e alterações alimentam o histórico financeiro da reserva para conferência, não só a
-              confirmação inicial.
+              Não substitui o extrato da Airbnb: junta a <strong>sua operação</strong> (reservas,
+              custos e lucro) num só arquivo.
             </li>
           </ul>
         </article>
         <article class="card finance-card finance-card--costs">
-          <p class="finance-card__badge">Custos e precificação</p>
-          <h3>Despesas e sugestões</h3>
+          <p class="finance-card__badge">Custos</p>
+          <h3>Despesas por imóvel</h3>
           <ul class="portal-steps finance-card__list">
             <li>
-              Cadastre <strong>despesas por imóvel</strong>: faxina, condomínio, luz, água, internet, manutenção,
-              impostos e outros — com previsão e baixa quando pago.
+              Cadastre faxina, condomínio, luz, água, internet, manutenção e impostos.
             </li>
             <li>
-              Gráfico de <strong>distribuição de custos</strong> no mês para enxergar onde o dinheiro está indo.
-            </li>
-            <li>
-              Aba <strong>Proprietários</strong>: repasses e comissões por dono do imóvel, quando você administra
-              para terceiros.
-            </li>
-            <li>
-              Aba <strong>Precificação</strong>: sugestões de tarifa e ocupação (IA) — você decide o que aplicar na
-              Airbnb.
+              Se administra para terceiros, acompanhe comissão por proprietário.
             </li>
           </ul>
         </article>
       </div>
-      <p class="portal-note">
-        O módulo Financeiro é para administradores da conta. A Anfitri-IA do hóspede não exibe valores nem outras
-        reservas — apenas o que você autoriza no guia operacional.
-      </p>
     </div>
   </section>
 
   <section class="block team-spotlight" id="equipe">
     <div class="container team-spotlight__grid">
       <div>
-        <h2>Equipe — cadastro e login por perfil</h2>
+        <h2>Equipe — cada um com a própria senha</h2>
         <p class="sub">
-          Você centraliza quem acessa o HostLogic. Colaboradores entram com <strong>e-mail e senha</strong> no mesmo
-          painel — com permissões diferentes conforme o cargo.
+          Colaboradores entram com <strong>e-mail e senha</strong> no mesmo painel, com permissão do
+          cargo. A faxineira tem acesso só às faxinas dela.
         </p>
         <ul class="portal-steps">
           <li>
-            Em <strong>Equipe</strong>, o administrador (ou gerente) cadastra nome, e-mail, WhatsApp, CPF, foto e
-            <strong>cargo</strong>: faxineira, manutenção, funcionário, gerente ou administrador (até dois
-            administradores por conta).
+            Cadastre <strong>cargo</strong>: faxineira, manutenção, funcionário, gerente ou
+            administrador.
           </li>
           <li>
-            Na criação ou no reset de senha, o sistema pode gerar um <strong>link seguro de convite</strong> para o
-            colaborador definir a senha — sem expor credencial em grupo de WhatsApp.
+            Convite por <strong>link seguro</strong> para o colaborador definir a senha.
           </li>
           <li>
-            No primeiro acesso, quem precisar <strong>troca a senha</strong> antes de usar o painel (política de
-            senha forte).
-          </li>
-          <li>
-            <strong>Faxineiras</strong> veem o módulo de faxinas com as tarefas atribuídas a elas; gerentes e
-            administradores enxergam toda a operação, financeiro e configurações conforme o perfil.
-          </li>
-          <li>
-            Membros arquivados saem do acesso ativo; histórico fica sob controle do administrador (LGPD e
-            multi-tenant por conta).
+            A <strong>faxineira</strong> avisa a chegada ao imóvel e envia as fotos da limpeza.
           </li>
         </ul>
         <div class="team-cta">
@@ -365,54 +291,12 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
         <p class="portal-flow__label">Login e papéis</p>
         <ol class="portal-flow__list">
           <li>Admin cadastra colaborador em Equipe</li>
-          <li>Convite seguro ou senha inicial</li>
+          <li>Convite seguro — cada um define a senha</li>
           <li>Login em app.hostlogic.com.br</li>
-          <li>Menu conforme cargo (faxina, gestão…)</li>
+          <li>Menu conforme o cargo</li>
         </ol>
         <p class="team-flow__roles">Cargos: Administrador · Gerente · Faxineira · Manutenção · Funcionário</p>
       </div>
-    </div>
-    <div class="container">
-      <p class="portal-note">
-        Recuperação de senha por e-mail (Supabase). O portal do hóspede é outro fluxo — link da reserva, sem login da
-        equipe. Hóspedes não acessam o painel de gestão.
-      </p>
-    </div>
-  </section>
-
-  <section class="block whatsapp-spotlight" id="whatsapp">
-    <div class="container whatsapp-spotlight__inner">
-      <span class="coming-soon-badge">Em breve</span>
-      <h2>Integração direta com WhatsApp</h2>
-      <p class="sub">
-        Conecte o canal no painel e automatize a conversa operacional — hoje você já pode enviar
-        <strong>links do portal</strong> e convites de acompanhante pelo WhatsApp; a integração nativa
-        simplifica o restante.
-      </p>
-      <ul class="portal-steps whatsapp-spotlight__list">
-        <li>
-          <strong>Hóspede</strong> — boas-vindas, link de check-in digital, lembretes de pré-check-in e
-          regras da estadia (templates editáveis por conta).
-        </li>
-        <li>
-          <strong>Equipe</strong> — avisos de faxina e checkout (ex.: lembrete no dia anterior e antes do
-          horário de saída).
-        </li>
-        <li>
-          <strong>Anfitrião</strong> — alertas operacionais importantes no mesmo número que você já usa
-          para a operação.
-        </li>
-        <li>
-          O hóspede informa o telefone no portal; quando o número bate com a mensagem recebida, o
-          HostLogic associa a conversa à <strong>reserva certa</strong> (sem misturar hóspedes).
-        </li>
-      </ul>
-      <p class="portal-note">
-        A integração direta (configuração guiada no produto) está em desenvolvimento. Clientes em
-        lista de espera serão avisados quando abrir para novas contas. LGPD: consentimento e limites de
-        envio conforme política do canal.
-      </p>
-      <a class="btn btn-ghost" href="#inscreva-se">Avise-me na lista de espera</a>
     </div>
   </section>
 

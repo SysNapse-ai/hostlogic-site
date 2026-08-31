@@ -1,6 +1,7 @@
 /**
  * Slides do carrossel de prints reais (dados de demonstração).
- * Copy alinhada ao plano do site — não anunciar módulos fora do lançamento.
+ * Copy alinhada ao plano do site — não anunciar módulos fora do lançamento
+ * (envio automático à portaria, Gmail OAuth, WhatsApp nativo).
  */
 
 export interface ProductScreen {
@@ -22,10 +23,9 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     title: 'Tudo da estadia num só cartão',
     bullets: [
       'A reserva do Airbnb entra sozinha, com bloco, apartamento e datas.',
-      'Badges mostram formulário do hóspede, cadastro no condomínio e pagamento.',
-      'Botão de copiar o cadastro para a portaria.',
+      'Badges mostram cadastro do hóspede, faxina e pagamento.',
     ],
-    alt: 'Cartão da reserva com bloco, apartamento, datas e badges de formulário, condomínio e pagamento',
+    alt: 'Cartão da reserva com bloco, apartamento, datas e status da estadia',
     width: 591,
     height: 1280,
   },
@@ -48,7 +48,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     area: 'Portal do hóspede',
     title: 'Um link resolve a chegada',
     bullets: [
-      'O hóspede recebe o link na mensagem automática do Airbnb.',
+      'O hóspede recebe o link exclusivo na mensagem automática do Airbnb.',
       'Vê confirmação, datas, endereço com mapa e regras, sem instalar app.',
     ],
     alt: 'Portal do hóspede no celular com confirmação da estadia, datas e mapa',
@@ -59,7 +59,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     id: 'checkin-titular',
     image: '/screenshots/checkin-titular.webp',
     area: 'Check-in digital',
-    title: 'Cadastro guiado com LGPD',
+    title: 'Cadastro guiado no celular',
     bullets: [
       'O titular preenche nome, documento e telefone no celular.',
       'Selfie opcional com aviso de privacidade.',
@@ -70,25 +70,13 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     height: 905,
   },
   {
-    id: 'condominio-envio',
-    image: '/screenshots/condominio-envio.webp',
-    area: 'Condomínio',
-    title: 'Cadastro enviado à portaria',
-    bullets: [
-      'Os dados do portal viram cadastro no app do condomínio automaticamente.',
-      'Status por hóspede: «Enviado ao condomínio».',
-    ],
-    alt: 'Tela de envio do cadastro ao condomínio com status por hóspede',
-    width: 591,
-    height: 1280,
-  },
-  {
     id: 'anfitri-ia',
     image: '/screenshots/anfitri-ia.webp',
     area: 'Anfitri-IA',
     title: 'Pergunte pela operação',
     bullets: [
       'Pergunte em linguagem natural («já cadastraram os acompanhantes?»).',
+      'No painel, fale também por PTT (apertar para falar) sobre as estadias.',
       'A resposta vem com dados do painel: imóvel, hóspede, datas e pendências.',
     ],
     alt: 'Chat da Anfitri-IA com pergunta operacional e resposta do painel',
@@ -99,10 +87,10 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     id: 'financeiro-painel',
     image: '/screenshots/financeiro-painel.webp',
     area: 'Financeiro',
-    title: 'O mês fecha sem planilha',
+    title: 'O mês fecha com um clique',
     bullets: [
       'Pago, a receber e ganhos brutos por imóvel ou portfólio.',
-      'Taxa do Airbnb calculada e destacada.',
+      'Gere o relatório do mês no botão, sem montar planilha.',
     ],
     alt: 'Painel financeiro com pago, a receber e ganhos por imóvel',
     width: 591,
@@ -115,7 +103,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     title: 'O.S. gerada a cada check-out',
     bullets: [
       'Cada saída cria uma ordem de serviço com prazo contando.',
-      'Atribua a faxineira e acompanhe o registro de chegada ao imóvel.',
+      'A faxineira entra com senha própria e registra a chegada ao imóvel.',
     ],
     alt: 'Ordem de serviço de limpeza gerada no check-out',
     width: 591,
@@ -128,23 +116,10 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     title: 'Prova por fotos sorteadas',
     bullets: [
       'O sistema sorteia os itens a fotografar (chão da sala, cama arrumada…).',
-      'A unidade só libera com o mínimo de fotos enviadas.',
+      'As fotos comprovam a faxina e o estado do imóvel antes da próxima reserva.',
     ],
     alt: 'Tela de fotos sorteadas para comprovar a faxina',
     width: 408,
     height: 807,
-  },
-  {
-    id: 'integracoes',
-    image: '/screenshots/integracoes.webp',
-    area: 'Integrações',
-    title: 'Reservas capturadas em tempo real',
-    bullets: [
-      'E-mails do Airbnb processados automaticamente: confirmadas, alteradas, canceladas.',
-      'Diagnóstico do fluxo visível.',
-    ],
-    alt: 'Tela de integrações com captura de e-mails de reserva do Airbnb',
-    width: 447,
-    height: 902,
   },
 ];

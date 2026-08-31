@@ -4,13 +4,13 @@ import EarlyAccessForm from '../components/EarlyAccessForm.astro';
 import { APP_URL } from '../consts';
 
 const description =
-  'HostLogic para anfitriões de curta temporada: reservas, check-in digital, dados dos hóspedes, pendências e portaria em um fluxo simples. Validação guiada com até 4 imóveis.';
+  'HostLogic para anfitriões de curta temporada: reservas, check-in digital, dados dos hóspedes e pendências em um fluxo simples. Validação guiada com até 4 imóveis.';
 
 const painPoints = [
-  'Reservas espalhadas entre e-mail, WhatsApp e planilha.',
+  'Reservas espalhadas entre e-mail, conversas e planilha.',
   'Hóspede chega sem dados completos ou documentos em dia.',
   'Alterações e cancelamentos sem rastreio claro.',
-  'Retrabalho para liberar entrada e cumprir regras do imóvel/condomínio.',
+  'Retrabalho para reunir informações da estadia antes da chegada.',
 ];
 
 const flowSteps = [
@@ -25,7 +25,7 @@ const flowSteps = [
   },
   {
     title: 'Operação segue',
-    body: 'Informações reunidas para liberação, portaria e próximos passos da estadia.',
+    body: 'Informações reunidas para a chegada e os próximos passos da estadia.',
   },
 ];
 
@@ -51,8 +51,8 @@ const limitsIncluded = [
 ];
 
 const limitsDeferred = [
-  'PMS completo, financeiro oficial ou WhatsApp como produto maduro.',
-  'Processos específicos de condomínio ou portaria sob análise prévia.',
+  'WhatsApp nativo e captura por e-mail como produto maduro.',
+  'Processos específicos de condomínio ou portaria — módulo à parte, sob análise prévia.',
   'Módulos avançados de limpeza e manutenção em segunda fase.',
 ];
 
@@ -65,7 +65,7 @@ const faq = [
   {
     question: 'Funciona em condomínio?',
     answer:
-      'Sim, para organizar check-in, dados dos hóspedes e status operacional. Regras de portaria variam por prédio — o HostLogic ajuda a manter tudo reunido e rastreável.',
+      'O app padrão organiza check-in, dados dos hóspedes e status da estadia. Envio automático ao aplicativo da portaria é um módulo à parte, combinado prédio a prédio — não faz parte do produto padrão.',
   },
   {
     question: 'Como começo?',
@@ -81,7 +81,7 @@ const faq = [
       <span class="badge">HostLogic para anfitriões</span>
       <h1>Operação de hospedagem sem planilha espalhada.</h1>
       <p class="lead">
-        Reservas, check-in digital, dados dos hóspedes, pendências e portaria em um fluxo simples
+        Reservas, check-in digital, dados dos hóspedes e pendências em um fluxo simples
         para anfitriões de curta temporada.
       </p>
       <p class="sub">

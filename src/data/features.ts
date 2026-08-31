@@ -5,6 +5,7 @@
  * Itens "Em breve" (soon) são roadmap real, não wishlist.
  *
  * Tom da copy: verbo + resultado concreto. Sem adjetivos vazios.
+ * Não anunciar no catálogo público: WhatsApp nativo, Gmail OAuth, envio automático à portaria.
  */
 
 export interface Feature {
@@ -25,7 +26,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'reservas-calendario',
     title: 'Reservas e calendário',
     blurb:
-      'As reservas da Airbnb entram por iCal e captura automática, sem lançamento manual, num calendário único do portfólio.',
+      'As reservas da Airbnb entram por iCal, sem lançamento manual, num calendário único do portfólio. Relatório do mês sai com um clique.',
     features: [
       {
         title: 'Captura automática por iCal (Airbnb)',
@@ -37,16 +38,12 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         soon: true,
       },
       {
-        title: 'Gmail OAuth (multi-caixa, somente leitura)',
-        desc: 'Conecte uma ou mais contas Gmail sem partilhar a senha; acesso somente leitura, com revogação a qualquer momento.',
-      },
-      {
         title: 'Alterações e cancelamentos aplicados',
         desc: 'Quando a Airbnb muda datas, hóspedes ou valores, calendário, faxinas e financeiro atualizam juntos.',
       },
       {
-        title: 'Reconciliação pelo código de confirmação',
-        desc: 'Liga portal, automações e reserva pelo código Airbnb — mesmo quando ele não aparece no iCal.',
+        title: 'Reserva ligada pelo código de confirmação',
+        desc: 'Portal, faxina e financeiro ficam na mesma reserva pelo código Airbnb — mesmo quando ele não aparece no iCal.',
       },
       {
         title: 'Revisão antes de fechar a pendência',
@@ -58,7 +55,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Badges de status por reserva',
-        desc: 'Mostra o que falta antes do check-in: portal, portaria, repasse, faxina e alteração.',
+        desc: 'Mostra o que falta antes do check-in: portal, faxina, pagamento e alteração.',
       },
       {
         title: 'Filtros Ativas, Alteradas e Canceladas',
@@ -70,7 +67,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'monitor',
     title: 'Monitor operacional',
     blurb:
-      'A tela que reúne o que entra, o que sai e o que precisa de você — no lugar da planilha e do grupo de WhatsApp.',
+      'Check-ins, check-outs e o que ainda precisa de você — no mesmo painel, sem planilha.',
     features: [
       {
         title: 'KPIs de check-in e check-out (1, 3 e 7 dias)',
@@ -78,11 +75,11 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Alertas operacionais reunidos',
-        desc: 'Falhas de IA, alterações pendentes, portaria, despesas, limpeza, mensagens e fila do condomínio num só lugar.',
+        desc: 'Alterações pendentes, despesas, limpeza e falhas da Anfitri-IA num só lugar.',
       },
       {
         title: 'Painel de falhas com resolução',
-        desc: 'Marque falhas como resolvidas, veja o histórico de tarefas e dispare agentes manualmente.',
+        desc: 'Marque falhas como resolvidas e veja o histórico do que já foi tratado.',
       },
       {
         title: 'Próximas reservas com contagem regressiva',
@@ -98,7 +95,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'portal-hospede',
     title: 'Portal do hóspede',
     blurb:
-      'Um link do imóvel para cadastro, acompanhantes, regras, localização e Anfitri-IA — com visibilidade para o anfitrião.',
+      'Um link exclusivo do imóvel: informações da estadia, cadastro de acompanhantes e Anfitri-IA — o hóspede se resolve sozinho.',
     features: [
       {
         title: 'Check-in digital em etapas',
@@ -106,7 +103,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Cadastro do titular com selfie',
-        desc: 'Dados pessoais e foto de rosto para liberação no condomínio, com consentimento LGPD.',
+        desc: 'Dados pessoais e foto de rosto no fluxo guiado, com aceite de privacidade.',
       },
       {
         title: 'Autocadastro de acompanhantes',
@@ -114,7 +111,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Link do imóvel na mensagem do Airbnb',
-        desc: 'Mantenha o link do portal na mensagem automática do Airbnb para o hóspede acessar regras, localização e instruções.',
+        desc: 'Mantenha o link exclusivo na mensagem automática do Airbnb: o hóspede acessa a estadia, regras e instruções.',
       },
       {
         title: 'Guia do imóvel após o check-in',
@@ -122,11 +119,11 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Cadastro de veículo (placa)',
-        desc: 'Registra a placa para condomínios que a exigem na portaria.',
+        desc: 'Registra a placa quando o imóvel pede, junto com o restante do cadastro.',
       },
       {
         title: 'Anfitri-IA dentro do portal',
-        desc: 'O hóspede tira dúvidas sobre regras, acesso e estadia com base no guia que você cadastrou.',
+        desc: 'O hóspede tira dúvidas com base no texto que você cadastrou — inclusive o rascunho do anúncio.',
       },
       {
         title: 'Histórico visível para o anfitrião',
@@ -134,7 +131,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Acesso pelo link ou código da reserva',
-        desc: 'O hóspede entra no portal pelo link exclusivo do imóvel, mantido na mensagem automática do Airbnb, ou pelo código de confirmação — sem app ou login manual.',
+        desc: 'O hóspede entra pelo link exclusivo do imóvel ou pelo código de confirmação — sem app ou login manual.',
       },
       {
         title: 'Pré-visualização para o anfitrião',
@@ -146,31 +143,31 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'anfitri-ia',
     title: 'Anfitri-IA',
     blurb:
-      'Responde ao hóspede no portal do imóvel e deixa o histórico visível para o anfitrião acompanhar cada conversa.',
+      'Responde o hóspede no portal e, no painel, conversa com você por texto ou PTT (apertar para falar) sobre as estadias.',
     features: [
       {
         title: 'Assistente do hóspede no portal',
-        desc: 'Responde Wi-Fi, regras, horários, localização e guia do imóvel 24h com base no que você treinou.',
+        desc: 'Responde Wi-Fi, regras, horários e guia do imóvel com base no que você cadastrou — inclusive o texto bruto do anúncio.',
+      },
+      {
+        title: 'Rascunho vira resposta segura',
+        desc: 'Cole o texto como rascunho; a Anfitri-IA organiza e só afirma o que você incluiu no campo de respostas.',
       },
       {
         title: 'Consultora do gestor no painel',
-        desc: 'Converse sobre ocupação, pendências, faxinas, falhas e preço, com tom direto para decidir rápido.',
+        desc: 'Converse sobre ocupação, pendências, faxinas e o estado das reservas, com os números vindos do sistema.',
       },
       {
-        title: 'Números vindos do banco (anti-alucinação)',
-        desc: 'Totais de check-ins, faxinas e falhas vêm do sistema, não da imaginação da IA — você confia nos números.',
+        title: 'PTT — apertar para falar sobre as estadias',
+        desc: 'No painel, fale com a Anfitri-IA sem digitar: aperte para falar e ouça a resposta enquanto se desloca.',
       },
       {
-        title: 'Comandos por slash no chat',
-        desc: 'Atalhos como /status, /falhas, /faxinas-criticas, /checkins-hoje, /historico-hospede e /notificar-equipe.',
-      },
-      {
-        title: 'Entrada por voz e leitura em voz (TTS)',
-        desc: 'Use o chat sem as mãos durante portaria, limpeza ou deslocamento.',
+        title: 'Comandos por atalho no chat',
+        desc: 'Atalhos como /status, /falhas, /faxinas-criticas e /checkins-hoje para ir direto ao que precisa.',
       },
       {
         title: 'Histórico de conversa por reserva',
-        desc: 'Veja o que o hóspede perguntou e o que a Anfitri-IA respondeu — útil para auditoria, suporte e condomínios.',
+        desc: 'Veja o que o hóspede perguntou e o que a Anfitri-IA respondeu, por estadia.',
       },
     ],
   },
@@ -178,7 +175,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'limpeza',
     title: 'Limpeza e faxinas',
     blurb:
-      'Cada check-out gera uma ordem de serviço, com auditoria por fotos e lembretes no WhatsApp da faxineira.',
+      'Cada check-out gera uma ordem de serviço. A faxineira entra com senha própria, avisa a chegada e tira fotos — prova da faxina e do estado do imóvel.',
     features: [
       {
         title: 'Ordem de serviço automática por check-out',
@@ -189,20 +186,16 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'O gestor vê o que está na fila, o que atrasou e o histórico, sem planilha.',
       },
       {
-        title: 'Atribuição à faxineira certa',
-        desc: 'Delegue a O.S.; a faxineira vê só o que é dela, com as instruções do imóvel no celular.',
+        title: 'Faxineira com senha própria',
+        desc: 'Ela entra no app com o próprio acesso, vê só as tarefas dela e avisa a chegada ao imóvel.',
       },
       {
-        title: 'Auditoria por fotos de itens sorteados',
-        desc: 'O sistema sorteia 3 itens ou cômodos por tarefa e exige as fotos antes de liberar.',
+        title: 'Fotos de itens sorteados',
+        desc: 'O sistema sorteia itens ou cômodos e exige as fotos antes de liberar a unidade.',
       },
       {
-        title: 'Liberação da unidade com 3 fotos',
-        desc: 'Só libera o imóvel para o próximo hóspede com evidência mínima de limpeza concluída.',
-      },
-      {
-        title: 'Lembretes no WhatsApp da faxineira',
-        desc: 'Avisos no dia anterior e antes do check-out, com link direto para a tarefa no app.',
+        title: 'Prova do estado do imóvel',
+        desc: 'As fotos comprovam a faxina e como o imóvel estava antes da próxima reserva.',
       },
       {
         title: 'Alertas de faxina crítica',
@@ -214,7 +207,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'equipe',
     title: 'Equipe e acessos',
     blurb:
-      'Quem acessa o HostLogic, com que permissão e como entra — centralizado, sem senha em grupo de WhatsApp.',
+      'Quem acessa o HostLogic, com que permissão e como entra — cada um com a própria senha, inclusive a faxineira.',
     features: [
       {
         title: 'Cadastro de colaboradores por cargo',
@@ -226,7 +219,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Troca de senha obrigatória no 1º acesso',
-        desc: 'Contas provisionadas não ficam com credencial temporária; exige senha forte.',
+        desc: 'Contas novas não ficam com senha temporária; exige senha forte.',
       },
       {
         title: 'Permissões por perfil',
@@ -238,15 +231,15 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Arquivamento sem apagar histórico',
-        desc: 'Remove o acesso mas mantém o registro — ex-colaboradores ficam para consulta e auditoria.',
+        desc: 'Remove o acesso mas mantém o registro — ex-colaboradores ficam para consulta.',
       },
     ],
   },
   {
-    id: 'imoveis-condominios',
-    title: 'Imóveis e condomínios',
+    id: 'imoveis',
+    title: 'Imóveis',
     blurb:
-      'A carteira de imóveis organizada, com GPS, iCal, perfis de condomínio e o guia que alimenta o portal.',
+      'A carteira de imóveis organizada, com GPS, iCal e o guia que alimenta o portal e a Anfitri-IA.',
     features: [
       {
         title: 'Cadastro do imóvel',
@@ -261,10 +254,6 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Guarde a URL do calendário da Airbnb no cadastro, com sync manual quando precisar na hora.',
       },
       {
-        title: 'Perfis de condomínio reutilizáveis',
-        desc: 'Dados operacionais do prédio e regras de portaria reaproveitados em vários imóveis do mesmo condomínio.',
-      },
-      {
         title: 'Instruções de limpeza e taxa de faxina',
         desc: 'Padronize como cada imóvel é entregue e registre a base de custo da limpeza.',
       },
@@ -273,8 +262,8 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Impede cadastro no portal acima da capacidade do imóvel.',
       },
       {
-        title: 'Guia pós-check-in e link Airbnb',
-        desc: 'Escreva o guia uma vez (texto e imagens) e copie um link fixo com o código de confirmação para o anúncio.',
+        title: 'Guia pós-check-in e link do anúncio',
+        desc: 'Escreva o guia uma vez (mesmo rascunho) e use o link fixo na mensagem automática do Airbnb.',
       },
     ],
   },
@@ -282,10 +271,10 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'financeiro',
     title: 'Financeiro',
     blurb:
-      'Receita, repasses, custos e lucro por imóvel, sem planilha paralela e com o repasse Airbnb reconciliado.',
+      'Receita, custos e lucro por imóvel, sem planilha paralela. O relatório do mês sai com um clique.',
     features: [
       {
-        title: 'Painel do mês (líquido, recebido, a receber, YTD)',
+        title: 'Painel do mês (líquido, recebido, a receber)',
         desc: 'Quanto entrou, quanto falta e o resultado líquido do mês, com comparativo e acumulado do ano.',
       },
       {
@@ -294,23 +283,23 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Gráfico de previsto, recebido, custos e lucro',
-        desc: 'Acompanhe o fluxo de caixa e a margem ao longo de meses passados e futuros.',
+        desc: 'Acompanhe o fluxo e a margem ao longo de meses passados e futuros.',
       },
       {
-        title: 'Extrato por imóvel com alerta de pendência',
-        desc: 'Bruto, recebido, despesas e líquido por unidade, destacando o repasse ainda não reconciliado.',
+        title: 'Extrato por imóvel',
+        desc: 'Bruto, recebido, despesas e líquido por unidade, no mesmo painel.',
       },
       {
-        title: 'Repasse Airbnb reconciliado',
-        desc: 'Compara previsão e valor pago; se o repasse da Airbnb divergir, sinaliza para você reconciliar.',
+        title: 'Relatório do mês em um clique',
+        desc: 'Gere o fechamento para conferir ou enviar — reservas, custos e lucro, sem montar planilha.',
       },
       {
         title: 'Despesas por categoria',
         desc: 'Faxina, condomínio, luz, água, internet, manutenção e impostos, com previsão e baixa quando pago.',
       },
       {
-        title: 'Proprietários e comissão automática',
-        desc: 'Modele a carteira de terceiros e desconte a comissão do líquido sem cálculo manual.',
+        title: 'Proprietários e comissão',
+        desc: 'Quando você administra para terceiros, desconte a comissão do líquido sem cálculo manual.',
       },
       {
         title: 'Distribuição de custos em gráfico',
@@ -318,11 +307,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       },
       {
         title: 'Precificação assistida',
-        desc: 'Cole preços de concorrentes da Airbnb e receba sugestão de tarifa (mediana, P25/P75) com leitura da IA.',
-      },
-      {
-        title: 'Exportação em CSV e repasse em PDF',
-        desc: 'Compartilhe números com o contador ou o proprietário e arquive o mês sem reescrever dados.',
+        desc: 'Cole preços de concorrentes da Airbnb e receba sugestão de tarifa — você decide o que aplicar.',
       },
       {
         title: 'Ocultar valores na tela',
@@ -331,123 +316,46 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     ],
   },
   {
-    id: 'whatsapp',
-    title: 'WhatsApp',
-    blurb:
-      'O canal que o hóspede brasileiro já usa, com mensagens operacionais e a Anfitri-IA respondendo na reserva certa.',
-    features: [
-      {
-        title: 'Templates automáticos editáveis',
-        desc: 'Boas-vindas, regras da estadia e pré-check-in com variáveis {{nome}}, {{regras}} e {{link}}.',
-      },
-      {
-        title: 'Interruptores por tipo de mensagem',
-        desc: 'Ligue ou desligue cada fluxo sem tocar em código, controlando custo e tom.',
-      },
-      {
-        title: 'Pré-check-in automático (~24h antes)',
-        desc: 'Lembra as regras, o link do portal e alerta sobre acompanhantes incompletos antes da chegada.',
-      },
-      {
-        title: 'Conversa ligada à reserva pelo número',
-        desc: 'Quando o hóspede escreve, a resposta vem no contexto da estadia certa, sem misturar hóspedes.',
-      },
-      {
-        title: 'Resposta automática da Anfitri-IA',
-        desc: 'Atende no canal preferido do hóspede, com escalação para você quando necessário.',
-        soon: true,
-      },
-      {
-        title: 'Notificações ao anfitrião',
-        desc: 'Avisa cancelamentos, falhas de condomínio e faxina crítica no número que você já usa.',
-      },
-      {
-        title: 'Notificações à equipe',
-        desc: 'A faxineira recebe a O.S. e os cancelamentos, reduzindo ligações do anfitrião.',
-      },
-      {
-        title: 'Lembretes de faxina configuráveis',
-        desc: 'Horário e fuso do dia anterior e do dia da faxina ajustáveis por conta.',
-      },
-      {
-        title: 'Menu guiado e número não cadastrado',
-        desc: 'O hóspede pede «menu» e recebe opções; número desconhecido é orientado a se cadastrar, sem vazar dados.',
-      },
-      {
-        title: 'Anti-loop e guarda de envio',
-        desc: 'Protege a reputação do número Business e evita spam acidental.',
-      },
-    ],
-  },
-  {
-    id: 'integracoes',
-    title: 'Integrações operacionais',
-    blurb:
-      'iCal, Gmail OAuth e conferência operacional num fluxo confiável, com monitoramento e recuperação de falhas.',
-    features: [
-      {
-        title: 'Gmail OAuth multi-caixa',
-        desc: 'Conecte mais de uma caixa Gmail em somente leitura, com revogação a qualquer momento (LGPD).',
-      },
-      {
-        title: 'Rotinas de portaria por unidade',
-        desc: 'Organize os dados exigidos por cada condomínio e acompanhe pendências sem expor detalhes técnicos no site público.',
-      },
-      {
-        title: 'Fila de conferência de portaria',
-        desc: 'Acompanhe falhas, confirmação manual e reconciliação de cadastro sem duplicar hóspedes.',
-      },
-      {
-        title: 'Webhooks idempotentes',
-        desc: 'Reenvios de webhook não duplicam reservas nem eventos — processamento confiável.',
-      },
-      {
-        title: 'Pipeline visual de integrações',
-        desc: 'Estado legível de cada etapa de captura e conferência, com badges por reserva.',
-      },
-    ],
-  },
-  {
     id: 'seguranca-lgpd',
-    title: 'Segurança e LGPD',
+    title: 'Privacidade dos dados',
     blurb:
-      'Multi-tenant com RLS, mascaramento de PII e retenção automática dos dados de hóspedes.',
+      'Cada conta fica isolada. Documento e foto do hóspede não ficam à mostra nas listas. Depois do prazo, o sistema apaga ou anonimiza sozinho.',
     features: [
       {
-        title: 'Multi-tenant com RLS',
-        desc: 'Reservas, financeiro e equipe da sua conta ficam isolados de outras contas na mesma plataforma.',
+        title: 'Sua conta isolada das outras',
+        desc: 'Reservas, financeiro e equipe da sua conta não misturam com as de outro anfitrião na mesma plataforma.',
       },
       {
-        title: 'Mascaramento de PII',
-        desc: 'Oculta CPF, placas e nomes sensíveis nas listagens quando ativo, reduzindo a exposição.',
+        title: 'CPF e documentos ocultos nas listas',
+        desc: 'Quando ativo, esconde CPF, placas e nomes sensíveis nas telas do dia a dia.',
       },
       {
-        title: 'Consentimento LGPD no portal',
-        desc: 'O hóspede aceita termos e privacidade antes do check-in, com URLs configuráveis.',
+        title: 'Hóspede aceita privacidade no portal',
+        desc: 'Antes do check-in, o hóspede aceita termos e privacidade, com os textos que você configura.',
       },
       {
-        title: 'Retenção e anonimização automáticas',
-        desc: 'Remove ou anonimiza os dados do hóspede após o prazo legal configurável, sem trabalho manual.',
+        title: 'Dados antigos saem sozinhos',
+        desc: 'Depois do prazo que você definir, o sistema apaga ou anonimiza os dados do hóspede, sem trabalho manual.',
       },
       {
-        title: 'Aceite legal com prova registrada',
-        desc: 'O usuário host fica bloqueado até aceitar os documentos atualizados, com hora e IP registrados.',
+        title: 'Aceite legal com registro',
+        desc: 'O anfitrião só usa o painel depois de aceitar os documentos atualizados.',
       },
       {
-        title: 'Páginas legais públicas',
-        desc: 'Privacidade, Termos e DPA acessíveis a hóspedes e anfitriões, com rodapé unificado.',
+        title: 'Páginas de privacidade e termos',
+        desc: 'Privacidade e termos acessíveis a hóspedes e anfitriões, no rodapé do produto.',
       },
       {
-        title: 'Logs de auditoria operacional',
-        desc: 'Rastreia captura de reservas, falhas de IA, faxinas, condomínio e ações da equipe.',
+        title: 'Histórico do que aconteceu na operação',
+        desc: 'Registra captura de reservas, faxinas e ações da equipe para consulta posterior.',
       },
       {
-        title: 'Exportação de logs (CSV/TXT)',
-        desc: 'Compartilhe evidências com suporte, contabilidade ou auditoria externa.',
+        title: 'Exportar o histórico',
+        desc: 'Baixe o registro em arquivo para o contador, o suporte ou uma conferência.',
       },
       {
-        title: 'Backup e restauro da conta',
-        desc: 'Exporte e importe um pacote JSON para recuperação de emergência do tenant.',
+        title: 'Cópia de segurança da conta',
+        desc: 'Exporte e importe um pacote da sua conta para recuperação de emergência.',
       },
     ],
   },

@@ -16,12 +16,15 @@ import { SITE, APP_URL } from '../src/consts';
 const PRODUCT_SUMMARY = [
   `HostLogic é um sistema de gestão de propriedades para hospedagem (Airbnb e temporada).`,
   `Público: anfitriões e administradores que não querem administrar temporada em planilha.`,
-  `Núcleo: reservas, calendário, equipe, faxinas, portal do hóspede, Anfitri-IA, financeiro e WhatsApp.`,
-  `Airbnb integrado agora; Booking.com é roadmap (em breve), não prometer data.`,
+  `Núcleo: reservas, calendário, equipe, faxinas, portal do hóspede, Anfitri-IA e financeiro.`,
+  `Airbnb integrado agora via iCal; Booking.com é roadmap (em breve), não prometer data.`,
   `Acesse o sistema em: ${APP_URL}`,
   `Contato comercial: adm@hostlogic.com.br`,
-  `LGPD: multi-tenant com RLS, mascaramento de PII, consentimento e retenção/anonimização de dados de hóspedes.`,
-  `Tom comercial: o HostLogic transforma reserva, check-in, faxina, atendimento e repasse numa operação acompanhável.`,
+  `Privacidade: cada conta fica isolada; documento e foto do hóspede não ficam à mostra nas listas; depois do prazo o sistema apaga ou anonimiza sozinho; o hóspede aceita privacidade no portal.`,
+  `Relatório do mês em um clique: reservas, custos e lucro por imóvel, sem montar planilha.`,
+  `Anfitri-IA: no portal do hóspede (texto que o anfitrião cadastrou, mesmo rascunho do anúncio) e no painel por texto ou PTT (apertar para falar) sobre as estadias.`,
+  `Fora do produto padrão: WhatsApp nativo, Gmail OAuth e envio automático de cadastro ao aplicativo da portaria (módulo à parte, por condomínio).`,
+  `Tom comercial: o HostLogic transforma reserva, check-in, faxina, atendimento e financeiro numa operação acompanhável.`,
 ].join('\n');
 
 /** Transforma o catálogo em texto compacto: "Categoria — blurb · itens". */

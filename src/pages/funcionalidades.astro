@@ -4,7 +4,7 @@ import EarlyAccessForm from '../components/EarlyAccessForm.astro';
 import { APP_URL } from '../consts';
 import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../data/features';
 
-const description = `Funcionalidades do HostLogic — ${FEATURE_CATEGORY_COUNT} áreas e ${FEATURE_COUNT} recursos para anfitriões e administradores de hospedagem: reservas, portal do hóspede, Anfitri-IA, faxinas, financeiro, WhatsApp e LGPD.`;
+const description = `Funcionalidades do HostLogic — ${FEATURE_CATEGORY_COUNT} áreas e ${FEATURE_COUNT} recursos para anfitriões: reservas, portal do hóspede, Anfitri-IA, faxinas, financeiro e privacidade dos dados.`;
 ---
 
 <BaseLayout title="Funcionalidades" description={description}>
@@ -12,9 +12,8 @@ const description = `Funcionalidades do HostLogic — ${FEATURE_CATEGORY_COUNT} 
     <span class="badge">Catálogo de funcionalidades</span>
     <h1>Funcionalidades</h1>
     <p>
-      {FEATURE_CATEGORY_COUNT} áreas e {FEATURE_COUNT} recursos no catálogo — da captura da reserva
-      ao fechamento do mês, com LGPD, portal do hóspede e rotinas de portaria organizadas. Itens
-      marcados como «Em breve» são roadmap, não promessa vaga.
+      {FEATURE_CATEGORY_COUNT} áreas e {FEATURE_COUNT} recursos — da captura da reserva ao
+      fechamento do mês. Itens marcados como «Em breve» são roadmap, não promessa vaga.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>

@@ -10,7 +10,7 @@ export const SITE = {
   url: 'https://hostlogic.com.br',
   tagline: 'Gestão de propriedades para hospedagem',
   description:
-    'HostLogic — reservas, equipe, financeiro, portal do hóspede, Anfitri-IA; em breve integração direta com WhatsApp.',
+    'HostLogic — reservas, equipe, financeiro, portal do hóspede e Anfitri-IA para anfitriões de temporada.',
 } as const;
 
 /** URL do produto (painel/login). App de produção, desacoplado do site. */
@@ -42,7 +42,6 @@ export const NAV = [
   { label: 'Portal do hóspede', href: '/#portal-hospede' },
   { label: 'Anfitri-IA', href: '/#anfitri-ia' },
   { label: 'Financeiro', href: '/#financeiro' },
-  { label: 'WhatsApp', href: '/#whatsapp' },
   { label: 'Lista de espera', href: '/#inscreva-se' },
   { label: 'Demonstração', href: '/demo' },
   { label: 'Blog', href: '/blog' },
