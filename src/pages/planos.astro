@@ -4,7 +4,7 @@ import EarlyAccessForm from '../components/EarlyAccessForm.astro';
 import { APP_URL } from '../consts';
 
 const description =
-  'HostLogic para anfitriões de curta temporada: reservas, check-in digital, dados dos hóspedes e pendências em um fluxo simples. Validação guiada com até 4 imóveis.';
+  'HostLogic para anfitriões de curta temporada: reservas, check-in digital, dados dos hóspedes e pendências em um fluxo simples. Teste grátis de 15 dias com até 4 imóveis.';
 
 const painPoints = [
   'Reservas espalhadas entre e-mail, conversas e planilha.',
@@ -38,10 +38,18 @@ const differentiators = [
 ];
 
 const pilotBullets = [
-  '7 dias com até 4 imóveis, para testar o fluxo em operação real.',
+  '15 dias grátis com até 4 imóveis, para testar o fluxo em operação real.',
   'Sem compromisso longo no início.',
   'Ao final, decidimos juntos: continuar, expandir ou encerrar.',
-  'Depois da validação: R$129 por imóvel ativo/mês.',
+];
+
+const pricingTiers = [
+  { range: '1 imóvel', price: 'R$39/mês' },
+  { range: '2 imóveis', price: 'R$69/mês' },
+  { range: '3 a 5 imóveis', price: 'R$99/mês' },
+  { range: '6 a 8 imóveis', price: 'R$159/mês' },
+  { range: '9 a 15 imóveis', price: 'R$249/mês' },
+  { range: 'Mais de 15 imóveis', price: 'Fale com a gente' },
 ];
 
 const limitsIncluded = [
@@ -75,14 +83,19 @@ const faq = [
       'Sim. O HostLogic manda avisos no celular: reserva nova, alteração, cancelamento, cadastro no portal, pergunta na Anfitri-IA e faxina iniciada. Ative os avisos uma vez nas configurações. Não é um app da loja — é o HostLogic no celular.',
   },
   {
+    question: 'Como funciona o preço por imóvel?',
+    answer:
+      'Depois do teste grátis, a mensalidade segue por faixa de imóveis ativos, a partir de R$39/mês. Começamos com poucos imóveis para medir valor antes de expandir.',
+  },
+  {
     question: 'Como começo?',
     answer:
-      'O acesso é por convite durante o piloto comercial. Solicite acesso e nossa equipa configura o primeiro imóvel com você.',
+      'O acesso é por convite. Solicite acesso, nossa equipe libera seu teste grátis de 15 dias e configura o primeiro imóvel com você.',
   },
 ];
 ---
 
-<BaseLayout title="Planos e validação" description={description}>
+<BaseLayout title="Planos e teste grátis" description={description}>
   <section class="hero hero--compact">
     <div class="container page-head">
       <span class="badge">HostLogic para anfitriões</span>
@@ -96,7 +109,7 @@ const faq = [
         e status — tudo em um só lugar.
       </p>
       <div class="cta">
-        <a class="btn btn-primary" href="#inscreva-se">Solicitar validação guiada</a>
+        <a class="btn btn-primary" href="#inscreva-se">Começar teste grátis de 15 dias</a>
         <a class="btn btn-ghost" href={APP_URL}>Acessar o sistema</a>
       </div>
     </div>
@@ -145,8 +158,8 @@ const faq = [
   <section class="block">
     <div class="container commercial-grid">
       <article class="card commercial-card commercial-card--pilot">
-        <span class="value-band__eyebrow">Começo controlado</span>
-        <h2>Validação guiada</h2>
+        <span class="value-band__eyebrow">Teste grátis</span>
+        <h2>15 dias grátis com até 4 imóveis</h2>
         <ul class="portal-steps">
           {pilotBullets.map((bullet) => (
             <li>{bullet}</li>
@@ -174,6 +187,28 @@ const faq = [
           ))}
         </ul>
       </article>
+
+      <article class="card commercial-card commercial-card--wide">
+        <span class="value-band__eyebrow">Depois do teste</span>
+        <h2>Planos após o teste grátis</h2>
+        <table class="commercial-pricing-table">
+          <caption class="sr-only">Mensalidade por faixa de imóveis ativos</caption>
+          <thead>
+            <tr>
+              <th scope="col">Imóveis ativos</th>
+              <th scope="col">Mensalidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pricingTiers.map((tier) => (
+              <tr>
+                <td>{tier.range}</td>
+                <td>{tier.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </article>
     </div>
   </section>
 
@@ -189,7 +224,7 @@ const faq = [
         ))}
       </div>
       <p class="portal-note">
-        Valores em BRL. Condições do piloto comercial — sujeitas a ajuste antes da disponibilidade
+        Valores em BRL. Condições promocionais de lançamento — sujeitas a ajuste antes da disponibilidade
         pública. Não substituem proposta ou contrato formal.
       </p>
     </div>
@@ -296,6 +331,48 @@ const faq = [
     margin-top: 1rem;
     font-weight: var(--fw-bold);
     color: var(--hl-text-strong);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .commercial-pricing-table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+  }
+
+  .commercial-pricing-table th,
+  .commercial-pricing-table td {
+    padding: 0.7rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--hl-border);
+    font-size: var(--fs-sm);
+  }
+
+  .commercial-pricing-table th {
+    color: var(--hl-text-muted);
+    font-weight: var(--fw-bold);
+  }
+
+  .commercial-pricing-table td:last-child,
+  .commercial-pricing-table th:last-child {
+    text-align: right;
+    font-weight: var(--fw-bold);
+    white-space: nowrap;
+  }
+
+  .commercial-pricing-table tbody tr:last-child td {
+    border-bottom: 0;
   }
 
   .commercial-faq-grid {
