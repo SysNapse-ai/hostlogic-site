@@ -1,7 +1,7 @@
 /**
  * Anonimiza prints do app (PII real) e exporta WebP para public/screenshots/.
  *
- * Os JPEG originais NUNCA devem estar dentro deste repo. O script lê-os de
+ * Os originais (JPEG/PNG) NUNCA devem estar dentro deste repo. O script lê-os de
  * um diretório externo (env PRINTS_DIR, argumento --src, ou o default em
  * Downloads) e só escreve .webp anonimizados.
  *
@@ -54,9 +54,11 @@ const DEMO = {
 /** @typedef {{ t: 'rect', x: number, y: number, w: number, h: number, fill: string, rx?: number }} RectOp */
 /** @typedef {{ t: 'text', x: number, y: number, text: string, size: number, fill?: string, weight?: number, anchor?: string }} TextOp */
 /** @typedef {{ t: 'image', x: number, y: number, w: number, h: number, src: string, rx?: number }} ImageOp */
-/** @typedef {RectOp | TextOp | ImageOp} OverlayOp */
+/** Desfoca a região do próprio original (para cartões translúcidos, onde um rect sólido destoaria). */
+/** @typedef {{ t: 'blur', x: number, y: number, w: number, h: number, sigma?: number }} BlurOp */
+/** @typedef {RectOp | TextOp | ImageOp | BlurOp} OverlayOp */
 
-/** @type {{ time: string, slug: string, overlays: OverlayOp[] }} */
+/** @type {{ time?: string, file?: string, slug: string, overlays: OverlayOp[] }[]} */
 const JOBS = [
   {
     time: '14.17.06',
@@ -767,16 +769,87 @@ const JOBS = [
     slug: 'integracoes',
     overlays: [
       { t: 'rect', x: 38, y: 538, w: 280, h: 26, fill: '#ffffff' },
-      {
-        t: 'text',
-        x: 48,
-        y: 556,
-        text: 'Reserva confirmada — demonstração',
-        size: 11,
-        fill: '#475569',
-      },
-    ],
-  },
+    {
+      t: 'text',
+      x: 48,
+      y: 556,
+      text: 'Reserva confirmada — demonstração',
+      size: 11,
+      fill: '#475569',
+    },
+  ],
+},
+{
+  file: 'anfitri-ia-historico.png',
+  slug: 'anfitri-ia-historico',
+  overlays: [
+    // «Olá, Gabriel!» — só o nome; o cumprimento fica.
+    { t: 'rect', x: 348, y: 406, w: 72, h: 18, fill: '#ffffff' },
+    {
+      t: 'text',
+      x: 350,
+      y: 420,
+      text: 'Marina!',
+      size: 13,
+      fill: '#1a1d2e',
+    },
+    // «Seu cadastro no condomínio está concluído.» — não anunciar portaria.
+    { t: 'rect', x: 34, y: 586, w: 320, h: 22, fill: '#ffffff' },
+    {
+      t: 'text',
+      x: 36,
+      y: 602,
+      text: 'Seu cadastro está concluído.',
+      size: 13,
+      fill: '#1a1d2e',
+    },
+    // «Aconchego» no fim da linha do check-in.
+    { t: 'rect', x: 34, y: 608, w: 300, h: 22, fill: '#ffffff' },
+    {
+      t: 'text',
+      x: 36,
+      y: 624,
+      text: 'O horário de check-in para sua estadia no Recanto',
+      size: 13,
+      fill: '#1a1d2e',
+    },
+    // «Aeroporto com garagem!» na linha seguinte.
+    { t: 'rect', x: 34, y: 632, w: 380, h: 22, fill: '#ffffff' },
+    {
+      t: 'text',
+      x: 36,
+      y: 648,
+      text: 'do Terminal! É às 17:00 de sábado, 5 de',
+      size: 13,
+      fill: '#1a1d2e',
+    },
+  ],
+},
+{
+  // Central de Notificações do iPhone (591×1280). Cartões translúcidos: blur + texto branco.
+  file: 'Mensagens_hostlogic.jpeg',
+  slug: 'avisos-push',
+  overlays: [
+    // Cartão 1 — código interno da reserva.
+    { t: 'blur', x: 108, y: 562, w: 270, h: 38, sigma: 18 },
+    { t: 'text', x: 114, y: 589, text: 'Cód. RES-0A1B2C3D', size: 23, fill: '#f5f5f7' },
+    // Cartão 2 — nome real do anúncio (2 linhas).
+    { t: 'blur', x: 108, y: 702, w: 420, h: 38, sigma: 18 },
+    { t: 'text', x: 114, y: 729, text: '2/2 hóspedes — Recanto do', size: 23, fill: '#f5f5f7' },
+    { t: 'blur', x: 108, y: 736, w: 420, h: 38, sigma: 18 },
+    { t: 'text', x: 114, y: 762, text: 'Terminal com vaga', size: 23, fill: '#f5f5f7' },
+    // Cartão 3 — nome do anúncio + código Airbnb (datas ficam).
+    { t: 'blur', x: 108, y: 876, w: 430, h: 38, sigma: 18 },
+    { t: 'text', x: 114, y: 903, text: 'Recanto do Terminal com', size: 23, fill: '#f5f5f7' },
+    { t: 'blur', x: 108, y: 908, w: 430, h: 38, sigma: 18 },
+    { t: 'text', x: 114, y: 934, text: 'vaga · Cód. HMDEMO2026 ·', size: 23, fill: '#f5f5f7' },
+    // Cartão 4 (parcialmente tapado) — nome real do anúncio.
+    { t: 'blur', x: 118, y: 988, w: 420, h: 38, sigma: 18 },
+    { t: 'text', x: 124, y: 1015, text: '4/4 hóspedes — Recanto do', size: 23, fill: '#f5f5f7' },
+    { t: 'blur', x: 118, y: 1020, w: 420, h: 38, sigma: 18 },
+    { t: 'text', x: 124, y: 1047, text: 'Terminal com vaga', size: 23, fill: '#f5f5f7' },
+  ],
+},
 ];
 
 function parseSrcDir(argv) {
@@ -796,12 +869,19 @@ function assertSrcOutsideRepo(srcDir) {
   }
 }
 
-function findOriginal(srcDir, time) {
+function findOriginal(srcDir, job) {
+  if (job.file) {
+    const p = path.join(srcDir, job.file);
+    if (!fs.existsSync(p)) {
+      throw new Error(`Original não encontrado: ${p}`);
+    }
+    return p;
+  }
   const files = fs.readdirSync(srcDir);
-  const needle = `at ${time}.`;
-  const hit = files.find((f) => f.includes(needle) && /\.jpe?g$/i.test(f));
+  const needle = `at ${job.time}.`;
+  const hit = files.find((f) => f.includes(needle) && /\.(jpe?g|png)$/i.test(f));
   if (!hit) {
-    throw new Error(`Original não encontrado para ${time} em ${srcDir}`);
+    throw new Error(`Original não encontrado para ${job.time} em ${srcDir}`);
   }
   return path.join(srcDir, hit);
 }
@@ -817,7 +897,7 @@ function escXml(s) {
 /** @param {number} w @param {number} h @param {OverlayOp[]} ops */
 function overlaySvg(w, h, ops) {
   const body = ops
-    .filter((op) => op.t !== 'image')
+    .filter((op) => op.t !== 'image' && op.t !== 'blur')
     .map((op) => {
       if (op.t === 'rect') {
         const rx = op.rx ? ` rx="${op.rx}" ry="${op.rx}"` : '';
@@ -863,6 +943,20 @@ async function imageLayers(ops) {
   return layers;
 }
 
+async function blurLayers(input, ops) {
+  const layers = [];
+  for (const op of ops) {
+    if (op.t !== 'blur') continue;
+    const buf = await sharp(input)
+      .extract({ left: op.x, top: op.y, width: op.w, height: op.h })
+      .blur(op.sigma ?? 8)
+      .png()
+      .toBuffer();
+    layers.push({ input: buf, left: op.x, top: op.y });
+  }
+  return layers;
+}
+
 async function sampleFill(input, op) {
   const { data, info } = await sharp(input)
     .extract({ left: op.x, top: op.y, width: op.w, height: op.h })
@@ -892,7 +986,7 @@ async function resolveOverlays(input, ops) {
 }
 
 async function processJob(srcDir, job) {
-  const input = findOriginal(srcDir, job.time);
+  const input = findOriginal(srcDir, job);
   const meta = await sharp(input).metadata();
   const width = meta.width || 0;
   const height = meta.height || 0;
@@ -901,8 +995,9 @@ async function processJob(srcDir, job) {
   }
 
   const overlays = await resolveOverlays(input, job.overlays);
-  const composites = [];
-  const drawOps = overlays.filter((op) => op.t !== 'image');
+  // Ordem: blur do original primeiro, depois rect/text (SVG), depois imagens.
+  const composites = await blurLayers(input, overlays);
+  const drawOps = overlays.filter((op) => op.t !== 'image' && op.t !== 'blur');
   if (drawOps.length) {
     const overlayPng = await sharp(overlaySvg(width, height, drawOps), {
       density: 72,

@@ -43,6 +43,19 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     height: 1280,
   },
   {
+    id: 'avisos-push',
+    image: '/screenshots/avisos-push.webp',
+    area: 'Avisos no celular',
+    title: 'O celular avisa — você não fica olhando o painel',
+    bullets: [
+      'Reserva confirmada com código e datas, cadastro do hóspede concluído (2/2, 4/4) e hóspede que chamou a Anfitri-IA: cada evento vira um aviso no iPhone ou no Android.',
+      'Não é app da loja: é o HostLogic instalado no celular. Você escolhe nas configurações quais avisos quer receber.',
+    ],
+    alt: 'Central de Notificações do iPhone com avisos do HostLogic: reserva confirmada, cadastro completo e hóspede contactou a Anfitri-IA',
+    width: 591,
+    height: 1280,
+  },
+  {
     id: 'portal-home',
     image: '/screenshots/portal-home.webp',
     area: 'Portal do hóspede',
