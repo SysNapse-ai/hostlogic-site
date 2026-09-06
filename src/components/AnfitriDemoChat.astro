@@ -83,7 +83,9 @@ const SUGGESTIONS = [
 
     let used = 0; // perguntas consumidas (só em sucesso)
     let busy = false;
-    const history = []; // { role: 'user'|'model', text }
+    // { role: 'user'|'model', text, sig? } — turnos 'model' levam a assinatura HMAC
+    // emitida pelo Worker; sem ela o servidor rejeita o histórico (anti-forja).
+    const history = [];
 
     // Render XSS-safe: cria elemento com textContent (preserva quebras via CSS white-space).
     function addMessage(role, text) {
@@ -180,16 +182,22 @@ const SUGGESTIONS = [
               'Você fez muitas perguntas rápido demais. Espere uns 10 segundos e tente de novo.';
           }
           addMessage('model', data.reply || fallback);
-          // Em erro, remover a pergunta do histórico: sem resposta do modelo, o próximo
-          // envio teria dois turnos 'user' seguidos e o Gemini rejeita (contents must
-          // alternate). Assim a próxima pergunta parte de um histórico válido.
-          history.pop();
+          if (data.error === 'invalid_history') {
+            // Servidor não reconheceu as respostas anteriores (ex.: página antiga após
+            // deploy). Recomeça o histórico; o contador de perguntas mantém-se.
+            history.length = 0;
+          } else {
+            // Em erro, remover a pergunta do histórico: sem resposta do modelo, o próximo
+            // envio teria dois turnos 'user' seguidos e o Gemini rejeita (contents must
+            // alternate). Assim a próxima pergunta parte de um histórico válido.
+            history.pop();
+          }
           setBusy(false);
           return;
         }
 
         addMessage('model', data.reply);
-        history.push({ role: 'model', text: data.reply });
+        history.push({ role: 'model', text: data.reply, sig: data.sig });
         used++;
         setCounter();
         setBusy(false);

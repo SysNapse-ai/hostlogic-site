@@ -7,9 +7,13 @@
  *  - qualquer outra rota   -> delega a env.ASSETS (site estático)
  *
  * Chaves (wrangler secret em prod, .dev.vars em local), nunca no browser:
- *  - GEMINI_API_KEY  — chat demo
- *  - RESEND_API_KEY  — envio da lista de espera
+ *  - GEMINI_API_KEY          — chat demo
+ *  - ANFITRI_HISTORY_SECRET  — (opcional) HMAC dos turnos `model`; sem ele deriva da GEMINI_API_KEY
+ *  - RESEND_API_KEY          — envio da lista de espera
  * Sem persistência de conversa/leads no Worker (stateless, sem log de PII — LGPD).
+ *
+ * Anti prompt-injection por histórico: o browser reenvia os turnos `model`; cada um vem com
+ * `sig` (HMAC emitido por nós). Turno `model` sem assinatura válida → 400 `invalid_history`.
  *
  * @see https://developers.cloudflare.com/workers/static-assets/
  */
@@ -17,9 +21,12 @@ import { KNOWLEDGE_BASE } from './knowledge-base';
 import { SYSTEM_PROMPT, APP_URL_PLACEHOLDER } from './system-prompt';
 import { APP_URL } from '../src/consts';
 import { handleWaitlist } from './waitlist';
+import { resolveHistorySecret, signModelTurn, verifyModelTurn } from './history-sig';
+import { filterDemoOutput } from './output-filter';
 
 export interface Env {
   GEMINI_API_KEY: string;
+  ANFITRI_HISTORY_SECRET?: string;
   RESEND_API_KEY?: string;
   WAITLIST_FROM?: string;
   WAITLIST_TO?: string;
@@ -38,7 +45,12 @@ const MAX_USER_MESSAGE_CHARS = 500;   // entrada do visitante (maxlength do inpu
 const MAX_MODEL_MESSAGE_CHARS = 2000; // eco do servidor (até ~400 tokens ≈ 1500 chars); truncar, não rejeitar
 const MAX_PAYLOAD_BYTES = 32768;      // comporta 6 turnos com respostas do modelo
 const REQUEST_TIMEOUT_MS = 20_000;
-const MAX_OUTPUT_TOKENS = 400;
+// Gemini 2.5 Flash: o "thinking" conta para maxOutputTokens. Com 400 e thinking dinâmico
+// as respostas saíam truncadas a meio da frase; sem thinking (budget 0) o modelo ficou
+// menos resistente a prompt-injection no red-team. Compromisso: thinking curto e fixo,
+// com folga de ~500 tokens (~2000 chars) para a resposta.
+const THINKING_BUDGET_TOKENS = 512;
+const MAX_OUTPUT_TOKENS = 1024;
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
@@ -81,8 +93,17 @@ function isAllowedOrigin(request: Request): boolean {
   }
 }
 
-/** Valida e normaliza o payload. Retorna turnos ou um erro HTTP. */
-function validatePayload(raw: unknown): { turns: ChatTurn[] } | { error: Response } {
+const INVALID_HISTORY_REPLY =
+  'O histórico desta conversa não é válido. Reiniciei a demonstração — pode perguntar de novo.';
+
+/**
+ * Valida e normaliza o payload. Retorna turnos ou um erro HTTP.
+ * Turnos `model` precisam de `sig` válida (emitida por este Worker) — impede histórico forjado.
+ */
+async function validatePayload(
+  raw: unknown,
+  historySecret: string | null,
+): Promise<{ turns: ChatTurn[] } | { error: Response }> {
   if (typeof raw !== 'object' || raw === null) {
     return { error: json({ error: 'invalid_body' }, 400) };
   }
@@ -118,11 +139,27 @@ function validatePayload(raw: unknown): { turns: ChatTurn[] } | { error: Respons
       }
       turns.push({ role, text });
     } else {
-      // Resposta anterior do modelo (eco do servidor): truncar para nunca quebrar a conversa.
+      // Resposta anterior do modelo (eco do servidor): só aceitamos o que nós emitimos.
+      // A assinatura cobre o texto exato; verificar ANTES de truncar.
+      const sig = (m as { sig?: unknown }).sig;
+      if (!historySecret) {
+        // Sem segredo não há como verificar: serviço indisponível (nunca aceitar às cegas).
+        return { error: json({ error: 'service_unavailable', reply: 'Demonstração indisponível no momento.' }, 503) };
+      }
+      // Teto folgado antes do HMAC (a resposta assinada pode exceder o eco truncado).
+      if (text.length > MAX_MODEL_MESSAGE_CHARS * 4 || !(await verifyModelTurn(text, sig, historySecret))) {
+        return { error: json({ error: 'invalid_history', reply: INVALID_HISTORY_REPLY }, 400) };
+      }
       turns.push({ role, text: text.slice(0, MAX_MODEL_MESSAGE_CHARS) });
     }
   }
   return { turns };
+}
+
+/** Resposta 200 do chat: texto + assinatura para o browser reenviar no histórico. */
+async function chatReply(reply: string, notInKb: boolean, historySecret: string): Promise<Response> {
+  const sig = await signModelTurn(reply, historySecret);
+  return json({ reply, sig, notInKb }, 200);
 }
 
 /** Monta o body para generateContent (v1beta). */
@@ -147,6 +184,7 @@ function buildGeminiBody(turns: ChatTurn[]): unknown {
       temperature: 0.6,
       maxOutputTokens: MAX_OUTPUT_TOKENS,
       topP: 0.95,
+      thinkingConfig: { thinkingBudget: THINKING_BUDGET_TOKENS },
     },
     safetySettings: [
       { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
@@ -232,13 +270,15 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
     return json({ error: 'invalid_json' }, 400);
   }
 
-  const result = validatePayload(parsed);
+  // Só checamos a chave após validar o payload: erros de cliente (4xx) sempre
+  // têm prioridade sobre a indisponibilidade do serviço (503). A verificação de
+  // assinatura dos turnos `model` precisa do segredo (null → 503 dentro da validação).
+  const historySecret = resolveHistorySecret(env);
+  const result = await validatePayload(parsed, historySecret);
   if ('error' in result) return result.error;
   const turns = result.turns;
 
-  // Só checamos a chave após validar o payload: erros de cliente (4xx) sempre
-  // têm prioridade sobre a indisponibilidade do serviço (503).
-  if (!env.GEMINI_API_KEY || env.GEMINI_API_KEY.trim().length === 0) {
+  if (!historySecret || !env.GEMINI_API_KEY || env.GEMINI_API_KEY.trim().length === 0) {
     return json({ error: 'service_unavailable', reply: 'Demonstração indisponível no momento.' }, 503);
   }
 
@@ -261,21 +301,25 @@ async function handleChat(request: Request, env: Env): Promise<Response> {
     }
     const data: unknown = await upstream.json();
     if (isBlocked(data)) {
-      return json(
-        {
-          reply: 'Não posso responder a isso nesta demonstração. Posso te ajudar com o HostLogic: reservas, portal do hóspede, faxinas, financeiro e mais.',
-          notInKb: false,
-        },
-        200,
+      // 200 assinado: o browser guarda esta resposta no histórico e vai reenviá-la.
+      return chatReply(
+        'Não posso responder a isso nesta demonstração. Posso te ajudar com o HostLogic: reservas, portal do hóspede, faxinas, financeiro e mais.',
+        false,
+        historySecret,
       );
     }
     const text = extractGeminiText(data);
     if (!text) {
       return json({ error: 'empty_response', reply: 'Não consegui formar uma resposta agora. Tente reformular a pergunta.' }, 502);
     }
+    // Última linha de defesa: se o modelo vazou as instruções, substitui por recusa.
+    const filtered = filterDemoOutput(text);
+    if (filtered.blocked) {
+      return chatReply(filtered.text, false, historySecret);
+    }
     // notInKb é heurístico: se a resposta começa com o aviso combinado no prompt.
     const notInKb = /^isso eu não encontrei na base/i.test(text);
-    return json({ reply: text, notInKb }, 200);
+    return chatReply(text, notInKb, historySecret);
   } catch (err) {
     clearTimeout(timeout);
     if (err instanceof DOMException && err.name === 'AbortError') {
