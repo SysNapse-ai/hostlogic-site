@@ -2,14 +2,17 @@
  * Cloudflare Worker — HostLogic site.
  *
  * Roteamento (Workers Static Assets, asset-first por defeito):
- *  - POST /api/anfitri-ia  -> chat demo (chama gemini-2.5-flash)
- *  - POST /api/waitlist    -> lista de espera (Resend → equipe + confirmação)
- *  - qualquer outra rota   -> delega a env.ASSETS (site estático)
+ *  - POST /api/anfitri-ia    -> chat demo (chama gemini-2.5-flash)
+ *  - POST /api/waitlist      -> lista de espera (Resend → equipe + confirmação)
+ *  - POST /api/pilot-intake  -> programa piloto (app + Resend; browser nunca chama o app)
+ *  - qualquer outra rota     -> delega a env.ASSETS (site estático)
  *
  * Chaves (wrangler secret em prod, .dev.vars em local), nunca no browser:
- *  - GEMINI_API_KEY          — chat demo
- *  - ANFITRI_HISTORY_SECRET  — (opcional) HMAC dos turnos `model`; sem ele deriva da GEMINI_API_KEY
- *  - RESEND_API_KEY          — envio da lista de espera
+ *  - GEMINI_API_KEY           — chat demo
+ *  - ANFITRI_HISTORY_SECRET   — (opcional) HMAC dos turnos `model`; sem ele deriva da GEMINI_API_KEY
+ *  - RESEND_API_KEY           — lista de espera e programa piloto
+ *  - APP_PILOT_INTAKE_URL     — POST /api/public/pilot-requests no app
+ *  - APP_PILOT_INTAKE_SECRET  — mesmo valor que SITE_PILOT_INTAKE_SECRET no Render
  * Sem persistência de conversa/leads no Worker (stateless, sem log de PII — LGPD).
  *
  * Anti prompt-injection por histórico: o browser reenvia os turnos `model`; cada um vem com
@@ -21,6 +24,7 @@ import { KNOWLEDGE_BASE } from './knowledge-base';
 import { SYSTEM_PROMPT, APP_URL_PLACEHOLDER } from './system-prompt';
 import { APP_URL } from '../src/consts';
 import { handleWaitlist } from './waitlist';
+import { handlePilotIntake } from './pilot-intake';
 import { resolveHistorySecret, signModelTurn, verifyModelTurn } from './history-sig';
 import { filterDemoOutput } from './output-filter';
 
@@ -30,6 +34,8 @@ export interface Env {
   RESEND_API_KEY?: string;
   WAITLIST_FROM?: string;
   WAITLIST_TO?: string;
+  APP_PILOT_INTAKE_URL?: string;
+  APP_PILOT_INTAKE_SECRET?: string;
   ASSETS: Fetcher;
   // Bindings de rate limit (wrangler.toml [[ratelimits]]). Tipo estrutural para não
   // depender da export `RateLimit` dos workers-types em versões mais antigas.
@@ -37,6 +43,8 @@ export interface Env {
   ANFITRI_RL_SUSTAINED: { limit(options: { key: string }): Promise<{ success: boolean }> };
   WAITLIST_RL_BURST: { limit(options: { key: string }): Promise<{ success: boolean }> };
   WAITLIST_RL_SUSTAINED: { limit(options: { key: string }): Promise<{ success: boolean }> };
+  PILOT_INTAKE_RL_BURST: { limit(options: { key: string }): Promise<{ success: boolean }> };
+  PILOT_INTAKE_RL_SUSTAINED: { limit(options: { key: string }): Promise<{ success: boolean }> };
 }
 
 // ---- Configuração de limite (higiene; o teto de custo real é Rate Limit + maxOutputTokens) ----
@@ -342,6 +350,9 @@ export default {
     }
     if (url.pathname === '/api/waitlist') {
       return handleWaitlist(request, env);
+    }
+    if (url.pathname === '/api/pilot-intake') {
+      return handlePilotIntake(request, env);
     }
     // Qualquer outra rota: delega aos assets estáticos (preserva o site).
     return env.ASSETS.fetch(request);

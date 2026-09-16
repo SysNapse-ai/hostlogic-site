@@ -49,10 +49,12 @@ O repo inclui `wrangler.toml` com `[assets] directory = "./dist"` (site Astro es
    |------|--------|
    | `NODE_VERSION` | `22` |
    | `GEMINI_API_KEY` | chave da Google AI Studio (modelo `gemini-2.5-flash`) — definir via `wrangler secret put GEMINI_API_KEY` ou **Settings → Variables → Encrypt** no painel |
-   | `RESEND_API_KEY` | chave da API Resend (envio da lista de espera) — `wrangler secret put RESEND_API_KEY` |
+   | `RESEND_API_KEY` | chave da API Resend (lista de espera e programa piloto) — `wrangler secret put RESEND_API_KEY` |
+   | `APP_PILOT_INTAKE_URL` | URL completa `…/api/public/pilot-requests` no app (TH ou PROD) — `wrangler secret put APP_PILOT_INTAKE_URL` |
+   | `APP_PILOT_INTAKE_SECRET` | mesmo valor que `SITE_PILOT_INTAKE_SECRET` no Render — `wrangler secret put APP_PILOT_INTAKE_SECRET` |
 
-   > `GEMINI_API_KEY` e `RESEND_API_KEY` são **secrets**. Nunca commitá-los nem pôr no `wrangler.toml`.
-   > Local: `.dev.vars` (já no `.gitignore`) com as duas chaves para `wrangler dev`.
+   > `GEMINI_API_KEY`, `RESEND_API_KEY`, `APP_PILOT_INTAKE_URL` e `APP_PILOT_INTAKE_SECRET` são **secrets**. Nunca commitá-los nem pôr no `wrangler.toml`.
+   > Local: `.dev.vars` (já no `.gitignore`) para `wrangler dev`.
 
 4. **Rate Limiting** (recomendado, anti-abuso/custo): no painel do projeto → **Security → WAF → Rate limiting rules**, criar regra para o path `/api/anfitri-ia` com limite de ~15 req/min por IP. O plano Free do Workers inclui 100k req/dia; os assets estáticos não contam (só os endpoints `/api/*` invocam o Worker).
 
@@ -94,6 +96,33 @@ No Resend: API Keys → Create → permissão **Sending access**. From = `HostLo
 
 Teste após deploy: preencher a lista de espera com um e-mail real → deve chegar em `adm@` (Gmail) e uma confirmação no endereço do visitante.
 
+## Programa piloto (Worker → app)
+
+O formulário em `/#programa-piloto` (home e `/planos`) chama `POST /api/pilot-intake` **no mesmo origin**. O browser **não** chama o app. O Worker:
+
+1. Valida o corpo (faixa só `6-10` / `11-20` / `20+`, URL `https` Airbnb, consentimento).
+2. `POST` para o app (`APP_PILOT_INTAKE_URL`) com o header `X-HostLogic-Site-Key` = `APP_PILOT_INTAKE_SECRET`.
+3. Envia aviso a `adm@hostlogic.com.br` e confirmação ao visitante (Resend). Se o app falhar ou der timeout, o aviso interno vai **mesmo assim**, com a flag **não gravado**.
+
+`consentVersion` = `piloto-site-2026-09`. Sem `APP_PILOT_INTAKE_SECRET` (ou URL inválida) o Worker é **fail-closed**: 503, **não** envia o body a um host arbitrário.
+
+### Secrets (nunca no browser, nunca no `wrangler.toml`)
+
+| Nome | Valor |
+|------|--------|
+| `APP_PILOT_INTAKE_URL` | URL completa do app, ex. `https://th.hostlogic.com.br/api/public/pilot-requests` (TH) ou `https://app.hostlogic.com.br/api/public/pilot-requests` (PROD) |
+| `APP_PILOT_INTAKE_SECRET` | **O mesmo valor** que `SITE_PILOT_INTAKE_SECRET` no Render do app |
+| `RESEND_API_KEY` | Já usado na lista de espera |
+
+```bash
+cd hostlogic-site
+npx wrangler secret put APP_PILOT_INTAKE_URL
+npx wrangler secret put APP_PILOT_INTAKE_SECRET
+# Local: acrescentar as duas linhas em .dev.vars (já no .gitignore)
+```
+
+A oferta pública em `/planos` (15 dias, 4 imóveis, tabela R$39–249) **não muda**. O programa piloto é uma secção à parte.
+
 ## Passo C — Domínios customizados (Pages)
 
 No projeto Pages → **Custom domains** → **Set up a custom domain**:
@@ -133,6 +162,12 @@ curl -s -o /dev/null -w "%{http_code}" -X POST https://hostlogic.com.br/api/wait
   -H "Content-Type: application/json" \
   -d '{"name":"x","email":"bad","properties":"1","consent":true}'
 # esperado: 400
+
+# Programa piloto (Worker; o browser nunca chama o app):
+curl -s -o /dev/null -w "%{http_code}" -X POST https://hostlogic.com.br/api/pilot-intake \
+  -H "Content-Type: application/json" \
+  -d '{"name":"x","email":"bad","airbnbProfileUrl":"https://example.com","listingsBand":"1","firstPropertyName":"x","consent":true}'
+# esperado: 400
 ```
 
 No browser:
@@ -142,6 +177,7 @@ No browser:
 - Privacidade/Termos → app `/privacidade` e `/termos`
 - **Anfitri-IA (demonstração):** na home (`/#anfitri-ia`) e em `/demo`, faça uma pergunta ao widget. Resposta esperada dentro de alguns segundos. Sem `GEMINI_API_KEY` no ambiente, o widget mostra "Demonstração indisponível no momento" (503) — não é erro, é a guarda de falta de chave.
 - **Lista de espera:** em `/#inscreva-se`, «Enviar interesse» deve mostrar «Pedido enviado» (sem copiar mensagem). Sem `RESEND_API_KEY`, o botão mostra indisponível (503).
+- **Programa piloto:** em `/#programa-piloto` (home e `/planos`), a pergunta canónica e o formulário (faixa só 6–10 / 11–20 / 20+). Sem `APP_PILOT_INTAKE_SECRET`, o envio devolve 503 (fail-closed). `/planos` continua com 15 dias, 4 imóveis e a tabela R$39–249.
 
 ## Passo F — UptimeRobot (opcional, Fase 5)
 

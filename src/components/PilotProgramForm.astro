@@ -1,0 +1,254 @@
+---
+import { LEGAL } from '../consts';
+
+const listingsOptions = [
+  { value: '', label: 'Selecione…' },
+  { value: '6-10', label: '6 a 10 imóveis' },
+  { value: '11-20', label: '11 a 20 imóveis' },
+  { value: '20+', label: 'Mais de 20 imóveis' },
+];
+
+const offerBullets = [
+  'Trinta dias de graça, sem cartão.',
+  'Começa com 1 imóvel.',
+  'Depois dos 30 dias, 50% da mensalidade da tabela de /planos por 6 meses, se participar das revisões D7, D21 e D30.',
+  'Sem cartão, sem contrato. Sai quando quiser.',
+];
+
+const CONSENT_VERSION = 'piloto-site-2026-09';
+---
+
+<section class="early-access" id="programa-piloto" aria-labelledby="pilot-program-title">
+  <div class="container early-access__shell">
+    <div class="early-access__intro">
+      <span class="early-access__badge">Programa piloto</span>
+      <h2 id="pilot-program-title" class="early-access__title">
+        Tem mais de 5 imóveis no Airbnb? Quer ser piloto e receber vantagens?
+      </h2>
+      <ul class="early-access__list">
+        {offerBullets.map((point) => (
+          <li>{point}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="early-access__panel">
+      <p class="early-form__panel-title">Pedido de piloto</p>
+      <p class="early-form__panel-sub">
+        Só para quem tem mais de 5 imóveis no Airbnb. Analisamos o perfil e respondemos por e-mail.
+      </p>
+
+      <form class="early-form" id="pilot-program-form" novalidate>
+        <div class="early-form__hp" aria-hidden="true">
+          <label for="pp-website">Site</label>
+          <input
+            id="pp-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+        <div class="early-form__stack">
+          <div class="early-form__field">
+            <label for="pp-name">Nome completo</label>
+            <input
+              id="pp-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              minlength="2"
+              maxlength="120"
+              placeholder="Como devemos te chamar?"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="pp-email">E-mail</label>
+            <input
+              id="pp-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="254"
+              placeholder="voce@empresa.com.br"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="pp-whatsapp">
+              WhatsApp <span class="early-form__optional">opcional</span>
+            </label>
+            <input
+              id="pp-whatsapp"
+              name="whatsapp"
+              type="tel"
+              autocomplete="tel"
+              maxlength="40"
+              inputmode="tel"
+              placeholder="Ex.: (41) 99999 9999"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="pp-city">
+              Cidade <span class="early-form__optional">opcional</span>
+            </label>
+            <input
+              id="pp-city"
+              name="city"
+              type="text"
+              autocomplete="address-level2"
+              maxlength="120"
+              placeholder="Ex.: Curitiba, PR"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="pp-airbnb">URL do perfil Airbnb</label>
+            <input
+              id="pp-airbnb"
+              name="airbnbProfileUrl"
+              type="url"
+              required
+              maxlength="2000"
+              placeholder="https://www.airbnb.com/users/show/…"
+            />
+          </div>
+          <div class="early-form__field">
+            <label for="pp-band">Faixa de imóveis no Airbnb</label>
+            <select id="pp-band" name="listingsBand" required>
+              {listingsOptions.map((opt) => (
+                <option value={opt.value} disabled={opt.value === ''} selected={opt.value === ''}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div class="early-form__field">
+            <label for="pp-first-property">Título exacto do 1.º anúncio</label>
+            <input
+              id="pp-first-property"
+              name="firstPropertyName"
+              type="text"
+              required
+              maxlength="200"
+              placeholder="Como está no anúncio do Airbnb"
+            />
+          </div>
+        </div>
+
+        <label class="early-form__consent">
+          <input type="checkbox" name="consent" required />
+          <span>
+            Autorizo a HostLogic a usar estes dados para avaliar o meu pedido de piloto e a
+            contactar-me só para essa finalidade. Li o aviso da lei de proteção de dados em{' '}
+            <a href={LEGAL.privacy} target="_blank" rel="noopener noreferrer">/privacidade</a>.
+            Posso pedir correção ou exclusão em suporte@hostlogic.com.br.
+          </span>
+        </label>
+
+        <button type="submit" class="early-form__submit" id="pilot-form-submit">Enviar pedido</button>
+
+        <p class="early-form__error" id="pilot-form-error" role="alert" hidden></p>
+      </form>
+
+      <div class="early-form__success" id="pilot-form-success" hidden>
+        <p class="early-form__success-title">Pedido enviado</p>
+        <p class="early-form__success-lead">
+          Recebemos o teu pedido para o programa piloto. Vamos analisar o teu perfil no Airbnb e
+          respondemos por e-mail. Enquanto isso, não precisas de fazer mais nada.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const CONSENT_VERSION = 'piloto-site-2026-09';
+  const form = document.getElementById('pilot-program-form');
+  const success = document.getElementById('pilot-form-success');
+  const errorEl = document.getElementById('pilot-form-error');
+  const submitBtn = document.getElementById('pilot-form-submit');
+
+  function showError(message) {
+    if (!errorEl) return;
+    errorEl.textContent = message;
+    errorEl.hidden = false;
+  }
+
+  function cleanWhatsapp(raw) {
+    return String(raw || '')
+      .trim()
+      .replace(/[-.]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  if (form && success && errorEl && submitBtn instanceof HTMLButtonElement) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.hidden = true;
+      errorEl.textContent = '';
+
+      const fd = new FormData(form);
+      const name = String(fd.get('name') || '').trim();
+      const email = String(fd.get('email') || '').trim();
+      const whatsapp = cleanWhatsapp(fd.get('whatsapp'));
+      const city = String(fd.get('city') || '').trim();
+      const airbnbProfileUrl = String(fd.get('airbnbProfileUrl') || '').trim();
+      const listingsBand = String(fd.get('listingsBand') || '').trim();
+      const firstPropertyName = String(fd.get('firstPropertyName') || '').trim();
+      const website = String(fd.get('website') || '').trim();
+      const consent = fd.get('consent');
+
+      if (!name || name.length < 2 || !email || !airbnbProfileUrl || !listingsBand || !firstPropertyName) {
+        showError('Preencha nome, e-mail, perfil Airbnb, faixa de imóveis e o título do 1.º anúncio.');
+        return;
+      }
+      if (!consent) {
+        showError('Marque o consentimento para continuar.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
+
+      try {
+        const res = await fetch('/api/pilot-intake', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            whatsapp,
+            city,
+            airbnbProfileUrl,
+            listingsBand,
+            firstPropertyName,
+            website,
+            consent: true,
+            consentVersion: CONSENT_VERSION,
+            source: 'site-piloto',
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const message =
+            typeof data.message === 'string' && data.message
+              ? data.message
+              : 'Não foi possível enviar agora. Tente novamente.';
+          showError(message);
+          return;
+        }
+        form.hidden = true;
+        success.hidden = false;
+      } catch {
+        showError('Sem ligação ao servidor. Verifique a internet e tente de novo.');
+      } finally {
+        if (!form.hidden) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar pedido';
+        }
+      }
+    });
+  }
+</script>

@@ -1,8 +1,8 @@
-# Cloudflare Workers — assets estáticos (site Astro em dist/) + APIs /api/anfitri-ia e /api/waitlist.
+# Cloudflare Workers — assets estáticos (site Astro em dist/) + APIs /api/anfitri-ia, /api/waitlist e /api/pilot-intake.
 # O painel Git unificado usa: build `npm run build` + deploy `npx wrangler deploy`.
 # Ver DEPLOY.md
 #
-# Roteamento asset-first (padrão): só as rotas /api/* acima invocam o Worker; o resto é servido
+# Roteamento asset-first (padrão): só as rotas /api/* do Worker; o resto é servido
 # direto dos assets (grátis). Ver worker/index.ts.
 
 name = "hostlogic-site"
@@ -28,7 +28,9 @@ binding = "ASSETS"
 #   GEMINI_API_KEY          — chat Anfitri-IA
 #   ANFITRI_HISTORY_SECRET  — (opcional) HMAC dos turnos `model` do chat; se ausente,
 #                             deriva da GEMINI_API_KEY (ver worker/history-sig.ts)
-#   RESEND_API_KEY          — lista de espera (nunca no browser)
+#   RESEND_API_KEY           — lista de espera e programa piloto (nunca no browser)
+#   APP_PILOT_INTAKE_URL     — URL completa do POST /api/public/pilot-requests no app (TH/PROD)
+#   APP_PILOT_INTAKE_SECRET   — mesmo valor que SITE_PILOT_INTAKE_SECRET no Render
 
 [vars]
 WAITLIST_FROM = "HostLogic <noreply@hostlogic.com.br>"
@@ -67,6 +69,23 @@ namespace_id = "1003"
 [[ratelimits]]
 name = "WAITLIST_RL_SUSTAINED"
 namespace_id = "1004"
+  [ratelimits.simple]
+  limit = 8
+  period = 60
+
+# Programa piloto: poucos envios reais; namespaces distintos da waitlist (1003–1004).
+#   - BURST:     3 req / 10s por IP
+#   - SUSTAINED: 8 req / 60s por IP
+[[ratelimits]]
+name = "PILOT_INTAKE_RL_BURST"
+namespace_id = "1005"
+  [ratelimits.simple]
+  limit = 3
+  period = 10
+
+[[ratelimits]]
+name = "PILOT_INTAKE_RL_SUSTAINED"
+namespace_id = "1006"
   [ratelimits.simple]
   limit = 8
   period = 60

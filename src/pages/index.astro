@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DemoShowcase from '../components/DemoShowcase.astro';
 import EarlyAccessForm from '../components/EarlyAccessForm.astro';
+import PilotProgramForm from '../components/PilotProgramForm.astro';
 import AnfitriDemoChat from '../components/AnfitriDemoChat.astro';
 import ProductCarousel from '../components/ProductCarousel.astro';
 import { APP_URL } from '../consts';
 import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../data/features';
 
-// Home institucional HostLogic. Lista de espera: POST /api/waitlist (Worker + Resend).
+// Home institucional HostLogic. Programa piloto: POST /api/pilot-intake. Lista de espera: POST /api/waitlist.
 ---
 
 <BaseLayout>
@@ -377,5 +378,6 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
     </div>
   </section>
 
+  <PilotProgramForm />
   <EarlyAccessForm />
 </BaseLayout>
