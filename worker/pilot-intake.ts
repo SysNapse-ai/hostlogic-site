@@ -96,6 +96,17 @@ export interface PilotIntakeFields {
   firstPropertyName: string;
 }
 
+export function isAirbnbPublicHost(host: string): boolean {
+  const h = host.replace(/\.+$/, '').toLowerCase();
+  if (!h) return false;
+  return (
+    h === 'airbnb.com' ||
+    (h.endsWith('.airbnb.com') && h !== '.airbnb.com') ||
+    h === 'airbnb.com.br' ||
+    (h.endsWith('.airbnb.com.br') && h !== '.airbnb.com.br')
+  );
+}
+
 export function parseAirbnbProfileHostname(raw: unknown): string | null {
   if (typeof raw !== 'string') return null;
   const trimmed = raw.trim();
@@ -108,10 +119,8 @@ export function parseAirbnbProfileHostname(raw: unknown): string | null {
   }
   if (url.protocol !== 'https:') return null;
   const host = url.hostname.replace(/\.+$/, '').toLowerCase();
-  if (host === 'airbnb.com' || (host.endsWith('.airbnb.com') && host !== '.airbnb.com')) {
-    return host;
-  }
-  return null;
+  if (!isAirbnbPublicHost(host)) return null;
+  return host;
 }
 
 export function isAirbnbProfileUrl(raw: unknown): boolean {
@@ -193,13 +202,13 @@ function buildInternalText(fields: PilotIntakeFields, notSaved: boolean): string
     `E-mail: ${fields.email}`,
     `WhatsApp: ${dash(fields.whatsapp)}`,
     `Cidade: ${dash(fields.city)}`,
-    `Perfil Airbnb: ${fields.airbnbProfileUrl}`,
+    `1.º anúncio (link): ${fields.airbnbProfileUrl}`,
     `Faixa de imóveis: ${fields.listingsBand}`,
     `1.º imóvel (título do anúncio): ${fields.firstPropertyName}`,
     `consentVersion: ${PILOT_SITE_CONSENT_VERSION}`,
     'source: site-piloto',
     '',
-    'Validar o perfil Airbnb (mais de 5 imóveis) antes de aprovar.',
+    'Abrir o anúncio → anfitrião → confirmar mais de 5 imóveis antes de aprovar.',
   ];
   if (notSaved) {
     lines.push('', 'não gravado: o pedido NÃO foi gravado no app (erro ou timeout). Contactar o visitante à mão.');
@@ -213,7 +222,7 @@ function buildConfirmText(name: string): string {
     '',
     'Recebemos o teu pedido para o programa piloto.',
     '',
-    'Vamos analisar o teu perfil no Airbnb e respondemos por e-mail.',
+    'Vamos analisar o teu anúncio no Airbnb e respondemos por e-mail.',
     '',
     'Enquanto isso, não precisas de fazer mais nada.',
     '',
@@ -290,14 +299,14 @@ async function postAppIntake(
 }
 
 const CLIENT_ERROR_MESSAGE: Record<string, string> = {
-  missing_fields: 'Preencha nome, e-mail, perfil Airbnb, faixa de imóveis e o título do 1.º anúncio.',
+  missing_fields: 'Preencha nome, e-mail, o link do 1.º anúncio, a faixa de imóveis e o título do 1.º anúncio.',
   consent_required: 'Marque o consentimento para continuar.',
   invalid_name: 'Informe o nome completo (2 a 120 caracteres).',
   field_too_long: 'Algum campo ultrapassou o tamanho permitido.',
   invalid_email: 'Informe um e-mail válido.',
   invalid_whatsapp: 'Informe um WhatsApp válido (só números, espaços, + e parênteses) ou deixe em branco.',
   invalid_listings_band: 'Selecione a faixa de imóveis (mais de 5).',
-  invalid_airbnb_url: 'Informe a URL https do teu perfil no Airbnb.',
+  invalid_airbnb_url: 'Informe a URL https do 1.º anúncio no Airbnb (não é o iCal).',
   invalid_first_property: 'Informe o título exacto do 1.º anúncio (até 200 caracteres).',
   invalid_body: 'Não foi possível ler o formulário. Tente novamente.',
 };

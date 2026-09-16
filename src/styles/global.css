@@ -543,6 +543,12 @@ section.block p.sub {
   font-weight: 500;
   color: var(--hl-text-muted);
 }
+.early-form__hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--hl-text-muted);
+}
 .early-form__field input,
 .early-form__field select {
   width: 100%;

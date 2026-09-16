@@ -103,15 +103,16 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
             />
           </div>
           <div class="early-form__field">
-            <label for="pp-airbnb">URL do perfil Airbnb</label>
+            <label for="pp-airbnb">URL do 1.º anúncio no Airbnb</label>
             <input
               id="pp-airbnb"
               name="airbnbProfileUrl"
               type="url"
               required
               maxlength="2000"
-              placeholder="https://www.airbnb.com/users/show/…"
+              placeholder="https://www.airbnb.com.br/h/…"
             />
+            <p class="early-form__hint">O link do anúncio no browser. Não é o iCal nem o perfil.</p>
           </div>
           <div class="early-form__field">
             <label for="pp-band">Faixa de imóveis no Airbnb</label>
@@ -201,7 +202,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
       const consent = fd.get('consent');
 
       if (!name || name.length < 2 || !email || !airbnbProfileUrl || !listingsBand || !firstPropertyName) {
-        showError('Preencha nome, e-mail, perfil Airbnb, faixa de imóveis e o título do 1.º anúncio.');
+        showError('Preencha nome, e-mail, o link do 1.º anúncio, a faixa de imóveis e o título do 1.º anúncio.');
         return;
       }
       if (!consent) {
