@@ -124,17 +124,6 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
               ))}
             </select>
           </div>
-          <div class="early-form__field">
-            <label for="pp-first-property">Título exacto do 1.º anúncio</label>
-            <input
-              id="pp-first-property"
-              name="firstPropertyName"
-              type="text"
-              required
-              maxlength="200"
-              placeholder="Como está no anúncio do Airbnb"
-            />
-          </div>
         </div>
 
         <label class="early-form__consent">
@@ -155,7 +144,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
       <div class="early-form__success" id="pilot-form-success" hidden>
         <p class="early-form__success-title">Pedido enviado</p>
         <p class="early-form__success-lead">
-          Recebemos o teu pedido para o programa piloto. Vamos analisar o teu perfil no Airbnb e
+          Recebemos o teu pedido para o programa piloto. Vamos analisar o teu anúncio no Airbnb e
           respondemos por e-mail. Enquanto isso, não precisas de fazer mais nada.
         </p>
       </div>
@@ -197,12 +186,11 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
       const city = String(fd.get('city') || '').trim();
       const airbnbProfileUrl = String(fd.get('airbnbProfileUrl') || '').trim();
       const listingsBand = String(fd.get('listingsBand') || '').trim();
-      const firstPropertyName = String(fd.get('firstPropertyName') || '').trim();
       const website = String(fd.get('website') || '').trim();
       const consent = fd.get('consent');
 
-      if (!name || name.length < 2 || !email || !airbnbProfileUrl || !listingsBand || !firstPropertyName) {
-        showError('Preencha nome, e-mail, o link do 1.º anúncio, a faixa de imóveis e o título do 1.º anúncio.');
+      if (!name || name.length < 2 || !email || !airbnbProfileUrl || !listingsBand) {
+        showError('Preencha nome, e-mail, o link do 1.º anúncio e a faixa de imóveis.');
         return;
       }
       if (!consent) {
@@ -224,7 +212,6 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
             city,
             airbnbProfileUrl,
             listingsBand,
-            firstPropertyName,
             website,
             consent: true,
             consentVersion: CONSENT_VERSION,

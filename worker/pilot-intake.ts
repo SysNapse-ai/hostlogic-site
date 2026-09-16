@@ -127,6 +127,29 @@ export function isAirbnbProfileUrl(raw: unknown): boolean {
   return parseAirbnbProfileHostname(raw) !== null;
 }
 
+function listingTitleFromAirbnbUrl(raw: string): string {
+  try {
+    const url = new URL(raw.trim());
+    const segments = url.pathname.split('/').filter(Boolean);
+    const hAt = segments.findIndex((part) => part.toLowerCase() === 'h');
+    if (hAt >= 0 && segments[hAt + 1]) {
+      const slug = decodeURIComponent(segments[hAt + 1])
+        .replace(/[-_]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (slug) return slug.slice(0, MAX_FIRST_PROPERTY);
+    }
+    const roomsAt = segments.findIndex((part) => part.toLowerCase() === 'rooms');
+    if (roomsAt >= 0 && segments[roomsAt + 1]) {
+      const id = decodeURIComponent(segments[roomsAt + 1]).split(/[/?#]/)[0] ?? '';
+      if (id) return `Anúncio ${id}`.slice(0, MAX_FIRST_PROPERTY);
+    }
+  } catch {
+    /* ignore */
+  }
+  return 'A definir';
+}
+
 function isPilotWhatsapp(value: string): boolean {
   return value.length > 0 && value.length <= MAX_WHATSAPP && WHATSAPP_RE.test(value);
 }
@@ -151,11 +174,9 @@ export function parsePilotIntakeBody(
   const city = optionalTrim(body.city);
   const airbnbProfileUrl = typeof body.airbnbProfileUrl === 'string' ? body.airbnbProfileUrl.trim() : '';
   const listingsBand = typeof body.listingsBand === 'string' ? body.listingsBand.trim() : '';
-  const firstPropertyName =
-    typeof body.firstPropertyName === 'string' ? body.firstPropertyName.trim() : '';
   const consent = body.consent === true;
 
-  if (!name || !email || !airbnbProfileUrl || !listingsBand || !firstPropertyName) {
+  if (!name || !email || !airbnbProfileUrl || !listingsBand) {
     return { error: 'missing_fields' };
   }
   if (!consent) return { error: 'consent_required' };
@@ -163,11 +184,17 @@ export function parsePilotIntakeBody(
   if (email.length > MAX_EMAIL || !EMAIL_RE.test(email)) return { error: 'invalid_email' };
   if (whatsapp.length > 0 && !isPilotWhatsapp(whatsapp)) return { error: 'invalid_whatsapp' };
   if (city.length > MAX_CITY) return { error: 'field_too_long' };
+  if (!PILOT_LISTINGS_BANDS.has(listingsBand)) return { error: 'invalid_listings_band' };
+  if (!isAirbnbProfileUrl(airbnbProfileUrl)) return { error: 'invalid_airbnb_url' };
+
+  let firstPropertyName =
+    typeof body.firstPropertyName === 'string' ? body.firstPropertyName.trim() : '';
+  if (!firstPropertyName) {
+    firstPropertyName = listingTitleFromAirbnbUrl(airbnbProfileUrl);
+  }
   if (firstPropertyName.length < 1 || firstPropertyName.length > MAX_FIRST_PROPERTY) {
     return { error: 'invalid_first_property' };
   }
-  if (!PILOT_LISTINGS_BANDS.has(listingsBand)) return { error: 'invalid_listings_band' };
-  if (!isAirbnbProfileUrl(airbnbProfileUrl)) return { error: 'invalid_airbnb_url' };
 
   return {
     fields: { name, email, whatsapp, city, airbnbProfileUrl, listingsBand, firstPropertyName },
@@ -299,7 +326,7 @@ async function postAppIntake(
 }
 
 const CLIENT_ERROR_MESSAGE: Record<string, string> = {
-  missing_fields: 'Preencha nome, e-mail, o link do 1.º anúncio, a faixa de imóveis e o título do 1.º anúncio.',
+  missing_fields: 'Preencha nome, e-mail, o link do 1.º anúncio e a faixa de imóveis.',
   consent_required: 'Marque o consentimento para continuar.',
   invalid_name: 'Informe o nome completo (2 a 120 caracteres).',
   field_too_long: 'Algum campo ultrapassou o tamanho permitido.',
