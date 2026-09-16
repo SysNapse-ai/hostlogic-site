@@ -201,11 +201,29 @@ export function parsePilotIntakeBody(
   };
 }
 
+function canonicalAirbnbUrlForApp(raw: string): string {
+  try {
+    const url = new URL(raw);
+    const host = url.hostname.replace(/\.+$/, '').toLowerCase();
+    if (host === 'airbnb.com.br') {
+      url.hostname = 'airbnb.com';
+      return url.toString();
+    }
+    if (host.endsWith('.airbnb.com.br') && host !== '.airbnb.com.br') {
+      url.hostname = `${host.slice(0, -'.com.br'.length)}.com`;
+      return url.toString();
+    }
+    return url.toString();
+  } catch {
+    return raw;
+  }
+}
+
 function appIntakeBody(fields: PilotIntakeFields): Record<string, unknown> {
   const body: Record<string, unknown> = {
     name: fields.name,
     email: fields.email,
-    airbnbProfileUrl: fields.airbnbProfileUrl,
+    airbnbProfileUrl: canonicalAirbnbUrlForApp(fields.airbnbProfileUrl),
     listingsBand: fields.listingsBand,
     firstPropertyName: fields.firstPropertyName,
     consent: true,
