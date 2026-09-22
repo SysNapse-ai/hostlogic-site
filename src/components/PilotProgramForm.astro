@@ -3,6 +3,8 @@ import { LEGAL } from '../consts';
 
 const listingsOptions = [
   { value: '', label: 'Selecione…' },
+  { value: '1', label: '1 imóvel' },
+  { value: '2-5', label: '2 a 5 imóveis' },
   { value: '6-10', label: '6 a 10 imóveis' },
   { value: '11-20', label: '11 a 20 imóveis' },
   { value: '20+', label: 'Mais de 20 imóveis' },
@@ -11,8 +13,9 @@ const listingsOptions = [
 const offerBullets = [
   'Trinta dias de graça, sem cartão.',
   'Começa com 1 imóvel.',
-  'Depois dos 30 dias, 50% da mensalidade da tabela de /planos por 6 meses, se participar das revisões D7, D21 e D30.',
+  'Depois dos 30 dias, 50% da mensalidade da tabela de planos por 6 meses, se participar das conversas dos dias 7, 21 e 30.',
   'Sem cartão, sem contrato. Sai quando quiser.',
+  'Recomendado para quem tem mais de 5 imóveis. Quem tem menos também pode participar e ajudar.',
 ];
 
 const CONSENT_VERSION = 'piloto-site-2026-09';
@@ -23,7 +26,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
     <div class="early-access__intro">
       <span class="early-access__badge">Programa piloto</span>
       <h2 id="pilot-program-title" class="early-access__title">
-        Tem mais de 5 imóveis no Airbnb? Quer ser piloto e receber vantagens?
+        Quer ser piloto e receber vantagens?
       </h2>
       <ul class="early-access__list">
         {offerBullets.map((point) => (
@@ -35,7 +38,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
     <div class="early-access__panel">
       <p class="early-form__panel-title">Pedido de piloto</p>
       <p class="early-form__panel-sub">
-        Só para quem tem mais de 5 imóveis no Airbnb. Analisamos o perfil e respondemos por e-mail.
+        Recomendado para quem tem mais de 5 imóveis. Quem tem menos também pode participar. Analisamos o perfil e respondemos por e-mail.
       </p>
 
       <form class="early-form" id="pilot-program-form" novalidate>

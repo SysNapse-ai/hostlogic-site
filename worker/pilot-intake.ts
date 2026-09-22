@@ -25,7 +25,7 @@ const ALLOWED_HOSTS = new Set([
 
 export const PILOT_SITE_CONSENT_VERSION = 'piloto-site-2026-09';
 export const PILOT_REQUEST_SOURCE = 'site-piloto';
-export const PILOT_LISTINGS_BANDS = new Set(['6-10', '11-20', '20+']);
+export const PILOT_LISTINGS_BANDS = new Set(['1', '2-5', '6-10', '11-20', '20+']);
 export const SITE_PILOT_INTAKE_HEADER = 'X-HostLogic-Site-Key';
 
 const MAX_PAYLOAD_BYTES = 8192;
@@ -253,7 +253,7 @@ function buildInternalText(fields: PilotIntakeFields, notSaved: boolean): string
     `consentVersion: ${PILOT_SITE_CONSENT_VERSION}`,
     'source: site-piloto',
     '',
-    'Abrir o anúncio → anfitrião → confirmar mais de 5 imóveis antes de aprovar.',
+    'Abrir o anúncio e conferir a faixa. Mais de 5 imóveis é recomendação: quem tem menos também pode ajudar no piloto.',
   ];
   if (notSaved) {
     lines.push('', 'não gravado: o pedido NÃO foi gravado no app (erro ou timeout). Contactar o visitante à mão.');
@@ -350,7 +350,7 @@ const CLIENT_ERROR_MESSAGE: Record<string, string> = {
   field_too_long: 'Algum campo ultrapassou o tamanho permitido.',
   invalid_email: 'Informe um e-mail válido.',
   invalid_whatsapp: 'Informe um WhatsApp válido (só números, espaços, + e parênteses) ou deixe em branco.',
-  invalid_listings_band: 'Selecione a faixa de imóveis (mais de 5).',
+  invalid_listings_band: 'Selecione a faixa de imóveis.',
   invalid_airbnb_url: 'Informe a URL https do 1.º anúncio no Airbnb (não é o iCal).',
   invalid_first_property: 'Informe o título exacto do 1.º anúncio (até 200 caracteres).',
   invalid_body: 'Não foi possível ler o formulário. Tente novamente.',

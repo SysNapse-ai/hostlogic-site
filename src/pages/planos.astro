@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import EarlyAccessForm from '../components/EarlyAccessForm.astro';
 import PilotProgramForm from '../components/PilotProgramForm.astro';
 import { APP_URL } from '../consts';
 
 const description =
-  'HostLogic para anfitriões de curta temporada: reservas, check-in digital, dados dos hóspedes e pendências em um fluxo simples. Teste grátis de 15 dias com até 4 imóveis.';
+  'Programa piloto HostLogic: trinta dias de graça, começa com 1 imóvel, e depois a mensalidade segue a tabela — 50% por 6 meses para quem participa das conversas. Recomendado para quem tem mais de 5 imóveis; quem tem menos também pode participar.';
 
 const painPoints = [
   'Reservas espalhadas entre e-mail, conversas e planilha.',
@@ -35,13 +34,15 @@ const differentiators = [
   'Anfitri-IA como apoio operacional: pendências, próximos check-ins e o que exige atenção.',
   'Avisos no iPhone e no Android: reserva, portal, Anfitri-IA e faxina — sem ficar no painel.',
   'Visão por imóvel e por reserva, útil para quem administra várias unidades.',
-  'Implantação guiada: começa pequeno, valida e expande com critério.',
+  'Começa com 1 imóvel. A mensalidade depois segue a tabela, por faixa de imóveis ativos.',
 ];
 
 const pilotBullets = [
-  '15 dias grátis com até 4 imóveis, para testar o fluxo em operação real.',
-  'Sem compromisso longo no início.',
-  'Ao final, decidimos juntos: continuar, expandir ou encerrar.',
+  'Trinta dias de graça, sem cartão.',
+  'Começa com 1 imóvel.',
+  'Depois dos 30 dias, 50% da mensalidade da tabela por 6 meses, se participar das conversas dos dias 7, 21 e 30.',
+  'Sem contrato. Sai quando quiser.',
+  'Recomendado para quem tem mais de 5 imóveis. Quem tem menos também pode participar e ajudar.',
 ];
 
 const pricingTiers = [
@@ -62,9 +63,8 @@ const limitsIncluded = [
 ];
 
 const limitsDeferred = [
-  'WhatsApp nativo e captura por e-mail como produto maduro.',
-  'Processos específicos de condomínio ou portaria — módulo à parte, sob análise prévia.',
-  'Módulos avançados de limpeza e manutenção em segunda fase.',
+  'WhatsApp como canal principal do hóspede.',
+  'Envio automático à portaria do condomínio — combinado prédio a prédio.',
 ];
 
 const faq = [
@@ -86,17 +86,17 @@ const faq = [
   {
     question: 'Como funciona o preço por imóvel?',
     answer:
-      'Depois do teste grátis, a mensalidade segue por faixa de imóveis ativos, a partir de R$39/mês. Começamos com poucos imóveis para medir valor antes de expandir.',
+      'Depois dos 30 dias de graça, a mensalidade segue a tabela, a partir de R$39/mês. Quem participa das conversas dos dias 7, 21 e 30 paga 50% dessa mensalidade por 6 meses.',
   },
   {
     question: 'Como começo?',
     answer:
-      'O acesso é por convite. Solicite acesso, nossa equipe libera seu teste grátis de 15 dias e configura o primeiro imóvel com você.',
+      'Peça para entrar no programa piloto. Recomendamos para quem tem mais de 5 imóveis, e quem tem menos também pode participar. Respondemos por e-mail. Sem cartão e sem contrato.',
   },
 ];
 ---
 
-<BaseLayout title="Planos e teste grátis" description={description}>
+<BaseLayout title="Planos e programa piloto" description={description}>
   <section class="hero hero--compact">
     <div class="container page-head">
       <span class="badge">HostLogic para anfitriões</span>
@@ -110,7 +110,7 @@ const faq = [
         e status — tudo em um só lugar.
       </p>
       <div class="cta">
-        <a class="btn btn-primary" href="#inscreva-se">Começar teste grátis de 15 dias</a>
+        <a class="btn btn-primary" href="#programa-piloto">Quero ser piloto</a>
         <a class="btn btn-ghost" href={APP_URL}>Acessar o sistema</a>
       </div>
     </div>
@@ -159,15 +159,15 @@ const faq = [
   <section class="block">
     <div class="container commercial-grid">
       <article class="card commercial-card commercial-card--pilot">
-        <span class="value-band__eyebrow">Teste grátis</span>
-        <h2>15 dias grátis com até 4 imóveis</h2>
+        <span class="value-band__eyebrow">Programa piloto</span>
+        <h2>Quer ser piloto e receber vantagens?</h2>
         <ul class="portal-steps">
           {pilotBullets.map((bullet) => (
             <li>{bullet}</li>
           ))}
         </ul>
         <p class="portal-note commercial-pilot-cta">
-          Começamos pequeno, medimos valor e só então expandimos.
+          Mais de 5 imóveis é o perfil que mais aproveita. Com menos, o pedido também é bem-vindo.
         </p>
       </article>
 
@@ -190,8 +190,8 @@ const faq = [
       </article>
 
       <article class="card commercial-card commercial-card--wide">
-        <span class="value-band__eyebrow">Depois do teste</span>
-        <h2>Planos após o teste grátis</h2>
+        <span class="value-band__eyebrow">Depois dos 30 dias</span>
+        <h2>Mensalidade por faixa de imóveis</h2>
         <table class="commercial-pricing-table">
           <caption class="sr-only">Mensalidade por faixa de imóveis ativos</caption>
           <thead>
@@ -209,6 +209,10 @@ const faq = [
             ))}
           </tbody>
         </table>
+        <p class="portal-note">
+          Depois dos 30 dias, a mensalidade segue esta tabela. Quem participa das conversas dos dias 7, 21 e 30
+          paga 50% por 6 meses.
+        </p>
       </article>
     </div>
   </section>
@@ -232,7 +236,6 @@ const faq = [
   </section>
 
   <PilotProgramForm />
-  <EarlyAccessForm />
 </BaseLayout>
 
 <style>
