@@ -1,24 +1,13 @@
 ---
 import { LEGAL } from '../consts';
+import { pilotOffer } from '../data/pilot-offer';
 
 const listingsOptions = [
   { value: '', label: 'Selecione…' },
-  { value: '1', label: '1 imóvel' },
-  { value: '2-5', label: '2 a 5 imóveis' },
-  { value: '6-10', label: '6 a 10 imóveis' },
-  { value: '11-20', label: '11 a 20 imóveis' },
-  { value: '20+', label: 'Mais de 20 imóveis' },
+  ...pilotOffer.listingsBands.map((band) => ({ value: band.id, label: band.label })),
 ];
 
-const offerBullets = [
-  'Trinta dias de graça, sem cartão.',
-  'Começa com 1 imóvel.',
-  'Depois dos 30 dias, 50% da mensalidade da tabela de planos por 6 meses, se participar das conversas dos dias 7, 21 e 30.',
-  'Sem cartão, sem contrato. Sai quando quiser.',
-  'Recomendado para quem tem mais de 5 imóveis. Quem tem menos também pode participar e ajudar.',
-];
-
-const CONSENT_VERSION = 'piloto-site-2026-09';
+const offerBullets = pilotOffer.pilotBullets;
 ---
 
 <section class="early-access" id="programa-piloto" aria-labelledby="pilot-program-title">
@@ -26,7 +15,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
     <div class="early-access__intro">
       <span class="early-access__badge">Programa piloto</span>
       <h2 id="pilot-program-title" class="early-access__title">
-        Quer ser piloto e receber vantagens?
+        {pilotOffer.pilotTitle}
       </h2>
       <ul class="early-access__list">
         {offerBullets.map((point) => (
@@ -36,10 +25,8 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
     </div>
 
     <div class="early-access__panel">
-      <p class="early-form__panel-title">Pedido de piloto</p>
-      <p class="early-form__panel-sub">
-        Recomendado para quem tem mais de 5 imóveis. Quem tem menos também pode participar. Analisamos o perfil e respondemos por e-mail.
-      </p>
+      <p class="early-form__panel-title">{pilotOffer.formTitle}</p>
+      <p class="early-form__panel-sub">{pilotOffer.formSub}</p>
 
       <form class="early-form" id="pilot-program-form" novalidate>
         <div class="early-form__hp" aria-hidden="true">
@@ -118,6 +105,20 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
             <p class="early-form__hint">O link do anúncio no browser. Não é o iCal nem o perfil.</p>
           </div>
           <div class="early-form__field">
+            <label for="pp-title">
+              Título do anúncio (como aparece no Airbnb)
+              <span class="early-form__optional">opcional</span>
+            </label>
+            <input
+              id="pp-title"
+              name="firstPropertyName"
+              type="text"
+              maxlength="200"
+              placeholder="Ex.: Loft Centro"
+            />
+            <p class="early-form__hint">Se deixar em branco, buscamos pelo link</p>
+          </div>
+          <div class="early-form__field">
             <label for="pp-band">Faixa de imóveis no Airbnb</label>
             <select id="pp-band" name="listingsBand" required>
               {listingsOptions.map((opt) => (
@@ -133,7 +134,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
           <input type="checkbox" name="consent" required />
           <span>
             Autorizo a HostLogic a usar estes dados para avaliar o meu pedido de piloto e a
-            contactar-me só para essa finalidade. Li o aviso da lei de proteção de dados em{' '}
+            entrar em contato comigo só para essa finalidade. Li o aviso da lei de proteção de dados em{' '}
             <a href={LEGAL.privacy} target="_blank" rel="noopener noreferrer">/privacidade</a>.
             Posso pedir correção ou exclusão em suporte@hostlogic.com.br.
           </span>
@@ -147,8 +148,8 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
       <div class="early-form__success" id="pilot-form-success" hidden>
         <p class="early-form__success-title">Pedido enviado</p>
         <p class="early-form__success-lead">
-          Recebemos o teu pedido para o programa piloto. Vamos analisar o teu anúncio no Airbnb e
-          respondemos por e-mail. Enquanto isso, não precisas de fazer mais nada.
+          Recebemos o seu pedido para o programa piloto. Vamos analisar o seu anúncio no Airbnb e
+          respondemos por e-mail. Enquanto isso, você não precisa fazer mais nada.
         </p>
       </div>
     </div>
@@ -189,6 +190,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
       const city = String(fd.get('city') || '').trim();
       const airbnbProfileUrl = String(fd.get('airbnbProfileUrl') || '').trim();
       const listingsBand = String(fd.get('listingsBand') || '').trim();
+      const firstPropertyName = String(fd.get('firstPropertyName') || '').trim();
       const website = String(fd.get('website') || '').trim();
       const consent = fd.get('consent');
 
@@ -215,6 +217,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
             city,
             airbnbProfileUrl,
             listingsBand,
+            firstPropertyName,
             website,
             consent: true,
             consentVersion: CONSENT_VERSION,
@@ -233,7 +236,7 @@ const CONSENT_VERSION = 'piloto-site-2026-09';
         form.hidden = true;
         success.hidden = false;
       } catch {
-        showError('Sem ligação ao servidor. Verifique a internet e tente de novo.');
+        showError('Sem conexão com o servidor. Verifique a internet e tente de novo.');
       } finally {
         if (!form.hidden) {
           submitBtn.disabled = false;

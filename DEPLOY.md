@@ -100,7 +100,7 @@ Teste após deploy: preencher a lista de espera com um e-mail real → deve cheg
 
 O formulário em `/#programa-piloto` (home e `/planos`) chama `POST /api/pilot-intake` **no mesmo origin**. O browser **não** chama o app. O Worker:
 
-1. Valida o corpo (faixa só `6-10` / `11-20` / `20+`, URL `https` Airbnb, consentimento).
+1. Valida o corpo (faixas `1`, `2-5`, `6-10`, `11-20`, `20+`, URL `https` Airbnb, consentimento; título do anúncio opcional).
 2. `POST` para o app (`APP_PILOT_INTAKE_URL`) com o header `X-HostLogic-Site-Key` = `APP_PILOT_INTAKE_SECRET`.
 3. Envia aviso a `adm@hostlogic.com.br` e confirmação ao visitante (Resend). Se o app falhar ou der timeout, o aviso interno vai **mesmo assim**, com a flag **não gravado**.
 
@@ -121,7 +121,7 @@ npx wrangler secret put APP_PILOT_INTAKE_SECRET
 # Local: acrescentar as duas linhas em .dev.vars (já no .gitignore)
 ```
 
-A oferta pública em `/planos` (15 dias, 4 imóveis, tabela R$39–249) **não muda**. O programa piloto é uma secção à parte.
+Fonte da oferta: `src/content/pilotOffer.ts` no app, copiada para `src/data/pilot-offer.ts`. `/planos` e o programa piloto leem essa fonte.
 
 ## Passo C — Domínios customizados (Pages)
 
@@ -177,7 +177,7 @@ No browser:
 - Privacidade/Termos → app `/privacidade` e `/termos`
 - **Anfitri-IA (demonstração):** na home (`/#anfitri-ia`) e em `/demo`, faça uma pergunta ao widget. Resposta esperada dentro de alguns segundos. Sem `GEMINI_API_KEY` no ambiente, o widget mostra "Demonstração indisponível no momento" (503) — não é erro, é a guarda de falta de chave.
 - **Lista de espera:** em `/#inscreva-se`, «Enviar interesse» deve mostrar «Pedido enviado» (sem copiar mensagem). Sem `RESEND_API_KEY`, o botão mostra indisponível (503).
-- **Programa piloto:** em `/#programa-piloto` (home e `/planos`), a pergunta canónica e o formulário (faixa só 6–10 / 11–20 / 20+). Sem `APP_PILOT_INTAKE_SECRET`, o envio devolve 503 (fail-closed). `/planos` continua com 15 dias, 4 imóveis e a tabela R$39–249.
+- **Programa piloto:** em `/#programa-piloto` (home e `/planos`), o formulário (faixas `1`, `2-5`, `6-10`, `11-20`, `20+`; título do anúncio opcional). Sem `APP_PILOT_INTAKE_SECRET`, o envio devolve 503 (fail-closed). A oferta de `/planos` vem de `src/data/pilot-offer.ts`.
 
 ## Passo F — UptimeRobot (opcional, Fase 5)
 

@@ -253,7 +253,7 @@ function buildInternalText(fields: PilotIntakeFields, notSaved: boolean): string
     `consentVersion: ${PILOT_SITE_CONSENT_VERSION}`,
     'source: site-piloto',
     '',
-    'Abrir o anúncio e conferir a faixa. Mais de 5 imóveis é recomendação: quem tem menos também pode ajudar no piloto.',
+    'Abrir o anúncio e conferir o título e a faixa.',
   ];
   if (notSaved) {
     lines.push('', 'não gravado: o pedido NÃO foi gravado no app (erro ou timeout). Contactar o visitante à mão.');
@@ -265,11 +265,11 @@ function buildConfirmText(name: string): string {
   return [
     `Olá, ${name}!`,
     '',
-    'Recebemos o teu pedido para o programa piloto.',
+    'Recebemos o seu pedido para o programa piloto.',
     '',
-    'Vamos analisar o teu anúncio no Airbnb e respondemos por e-mail.',
+    'Vamos analisar o seu anúncio no Airbnb e respondemos por e-mail.',
     '',
-    'Enquanto isso, não precisas de fazer mais nada.',
+    'Enquanto isso, você não precisa fazer mais nada.',
     '',
     'HostLogic',
   ].join('\n');
@@ -352,7 +352,7 @@ const CLIENT_ERROR_MESSAGE: Record<string, string> = {
   invalid_whatsapp: 'Informe um WhatsApp válido (só números, espaços, + e parênteses) ou deixe em branco.',
   invalid_listings_band: 'Selecione a faixa de imóveis.',
   invalid_airbnb_url: 'Informe a URL https do 1.º anúncio no Airbnb (não é o iCal).',
-  invalid_first_property: 'Informe o título exacto do 1.º anúncio (até 200 caracteres).',
+  invalid_first_property: 'Informe o título exato do 1.º anúncio (até 200 caracteres).',
   invalid_body: 'Não foi possível ler o formulário. Tente novamente.',
 };
 
@@ -410,7 +410,7 @@ async function sendVisitorConfirmation(env: PilotIntakeEnv, fields: PilotIntakeF
       from: mailFrom(env),
       to: [fields.email],
       reply_to: CONTACT.email,
-      subject: 'Recebemos o teu pedido de piloto HostLogic',
+      subject: 'Recebemos o seu pedido de piloto HostLogic',
       text,
       html: textToHtml(text),
       tags: [

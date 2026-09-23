@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PilotProgramForm from '../components/PilotProgramForm.astro';
 import { APP_URL } from '../consts';
+import { pilotOffer } from '../data/pilot-offer';
 
-const description =
-  'Programa piloto HostLogic: trinta dias de graça, começa com 1 imóvel, e depois a mensalidade segue a tabela — 50% por 6 meses para quem participa das conversas. Recomendado para quem tem mais de 5 imóveis; quem tem menos também pode participar.';
+const description = pilotOffer.pilotBullets.join(' ');
 
 const painPoints = [
   'Reservas espalhadas entre e-mail, conversas e planilha.',
@@ -34,25 +34,11 @@ const differentiators = [
   'Anfitri-IA como apoio operacional: pendências, próximos check-ins e o que exige atenção.',
   'Avisos no iPhone e no Android: reserva, portal, Anfitri-IA e faxina — sem ficar no painel.',
   'Visão por imóvel e por reserva, útil para quem administra várias unidades.',
-  'Começa com 1 imóvel. A mensalidade depois segue a tabela, por faixa de imóveis ativos.',
+  pilotOffer.pilotBullets[3],
 ];
 
-const pilotBullets = [
-  'Trinta dias de graça, sem cartão.',
-  'Começa com 1 imóvel.',
-  'Depois dos 30 dias, 50% da mensalidade da tabela por 6 meses, se participar das conversas dos dias 7, 21 e 30.',
-  'Sem contrato. Sai quando quiser.',
-  'Recomendado para quem tem mais de 5 imóveis. Quem tem menos também pode participar e ajudar.',
-];
-
-const pricingTiers = [
-  { range: '1 imóvel', price: 'R$39/mês' },
-  { range: '2 imóveis', price: 'R$69/mês' },
-  { range: '3 a 5 imóveis', price: 'R$99/mês' },
-  { range: '6 a 8 imóveis', price: 'R$159/mês' },
-  { range: '9 a 15 imóveis', price: 'R$249/mês' },
-  { range: 'Mais de 15 imóveis', price: 'Fale com a gente' },
-];
+const pilotBullets = pilotOffer.pilotBullets;
+const pricingTiers = pilotOffer.tiers;
 
 const limitsIncluded = [
   'Reservas organizadas no painel.',
@@ -67,33 +53,7 @@ const limitsDeferred = [
   'Envio automático à portaria do condomínio — combinado prédio a prédio.',
 ];
 
-const faq = [
-  {
-    question: 'Preciso instalar ou configurar algo na Airbnb?',
-    answer:
-      'Não. Você só informa o endereço do calendário do seu anúncio (a Airbnb fornece) e as reservas passam a entrar sozinhas no HostLogic.',
-  },
-  {
-    question: 'Funciona em condomínio?',
-    answer:
-      'O app padrão organiza check-in, dados dos hóspedes e status da estadia. Envio automático ao aplicativo da portaria é um módulo à parte, combinado prédio a prédio — não faz parte do produto padrão.',
-  },
-  {
-    question: 'Funciona no iPhone e no Android?',
-    answer:
-      'Sim. O HostLogic manda avisos no celular: reserva nova, alteração, cancelamento, cadastro no portal, pergunta na Anfitri-IA e faxina iniciada. Ative os avisos uma vez nas configurações. Não é um app da loja — é o HostLogic no celular.',
-  },
-  {
-    question: 'Como funciona o preço por imóvel?',
-    answer:
-      'Depois dos 30 dias de graça, a mensalidade segue a tabela, a partir de R$39/mês. Quem participa das conversas dos dias 7, 21 e 30 paga 50% dessa mensalidade por 6 meses.',
-  },
-  {
-    question: 'Como começo?',
-    answer:
-      'Peça para entrar no programa piloto. Recomendamos para quem tem mais de 5 imóveis, e quem tem menos também pode participar. Respondemos por e-mail. Sem cartão e sem contrato.',
-  },
-];
+const faq = pilotOffer.faq;
 ---
 
 <BaseLayout title="Planos e programa piloto" description={description}>
@@ -159,16 +119,13 @@ const faq = [
   <section class="block">
     <div class="container commercial-grid">
       <article class="card commercial-card commercial-card--pilot">
-        <span class="value-band__eyebrow">Programa piloto</span>
-        <h2>Quer ser piloto e receber vantagens?</h2>
+        <span class="value-band__eyebrow">{pilotOffer.pilotEyebrow}</span>
+        <h2>{pilotOffer.pilotTitle}</h2>
         <ul class="portal-steps">
           {pilotBullets.map((bullet) => (
             <li>{bullet}</li>
           ))}
         </ul>
-        <p class="portal-note commercial-pilot-cta">
-          Mais de 5 imóveis é o perfil que mais aproveita. Com menos, o pedido também é bem-vindo.
-        </p>
       </article>
 
       <article class="card commercial-card">
@@ -191,7 +148,7 @@ const faq = [
 
       <article class="card commercial-card commercial-card--wide">
         <span class="value-band__eyebrow">Depois dos 30 dias</span>
-        <h2>Mensalidade por faixa de imóveis</h2>
+        <h2>{pilotOffer.plansTitle}</h2>
         <table class="commercial-pricing-table">
           <caption class="sr-only">Mensalidade por faixa de imóveis ativos</caption>
           <thead>
@@ -209,10 +166,7 @@ const faq = [
             ))}
           </tbody>
         </table>
-        <p class="portal-note">
-          Depois dos 30 dias, a mensalidade segue esta tabela. Quem participa das conversas dos dias 7, 21 e 30
-          paga 50% por 6 meses.
-        </p>
+        <p class="portal-note">{pilotOffer.priceContext}</p>
       </article>
     </div>
   </section>
