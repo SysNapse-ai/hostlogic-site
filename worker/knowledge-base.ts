@@ -24,6 +24,7 @@ const PRODUCT_SUMMARY = [
   `Relatório do mês em um clique: reservas, custos e lucro por imóvel, sem montar planilha.`,
   `Anfitri-IA: no portal do hóspede (texto que o anfitrião cadastrou). A conversa fica na visão anfitrião para consultar e esclarecer se preferir. No painel, por texto ou por voz — aperta para falar e ouve a resposta.`,
   `Avisos no celular (iPhone e Android): reserva confirmada, alterada ou cancelada; cadastro do hóspede no portal; hóspede na Anfitri-IA; faxina iniciada. O anfitrião escolhe quais avisos receber. Não é app da loja: é o HostLogic no celular.`,
+  `Faxina com fotos: no fim de cada faxina, a faxineira tira pelo app, na hora, as fotos dos itens sorteados (o anfitrião define os itens de cada imóvel ou usa a lista padrão). O anfitrião vê como ficou cada limpeza antes do hóspede entrar e guarda a prova de que estava tudo em ordem, contra reclamação indevida ou fraude. As fotos também protegem a faxineira, porque comprovam o trabalho dela; não é desconfiança.`,
   `Fora do produto padrão: WhatsApp nativo, Gmail OAuth e envio automático de cadastro ao aplicativo da portaria (módulo à parte, por condomínio).`,
   `Tom comercial: o HostLogic transforma reserva, check-in, faxina, atendimento e financeiro numa operação acompanhável.`,
 ].join('\n');

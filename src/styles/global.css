@@ -1456,7 +1456,8 @@ section.block p.sub,
   width: clamp(190px, 19vw, 250px);
   justify-self: end;
 }
-.value-band__shot img {
+.value-band__shot img,
+.cleaning-shot img {
   display: block;
   width: 100%;
   height: auto;
@@ -1465,11 +1466,17 @@ section.block p.sub,
   background: var(--hl-surface);
   box-shadow: 0 16px 36px rgba(58, 42, 20, 0.22);
 }
-.value-band__shot figcaption {
+.value-band__shot figcaption,
+.cleaning-shot figcaption {
   margin: 10px 0 0;
   color: var(--hl-text-muted);
   font-size: var(--fs-sm);
   text-align: center;
+}
+/* Seção Faxina: print do celular centrado na coluna lateral. */
+.cleaning-shot {
+  margin: 0 auto;
+  width: clamp(200px, 22vw, 260px);
 }
 @media (max-width: 719px) {
   .value-band__head {

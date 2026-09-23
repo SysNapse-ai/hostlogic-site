@@ -187,7 +187,7 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
     id: 'limpeza',
     title: 'Limpeza e faxinas',
     blurb:
-      'Cada check-out gera uma ordem de serviço. A faxineira entra com senha própria, avisa a chegada e tira fotos — prova da faxina e do estado do imóvel.',
+      'Cada check-out gera uma ordem de serviço. A faxineira tira fotos pelo app e você vê como ficou cada limpeza antes do hóspede entrar.',
     features: [
       {
         title: 'Ordem de serviço automática por check-out',
@@ -202,12 +202,20 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
         desc: 'Ela entra no app com o próprio acesso, vê só as tarefas dela e avisa a chegada ao imóvel.',
       },
       {
-        title: 'Fotos de itens sorteados',
-        desc: 'O sistema sorteia itens ou cômodos e exige as fotos antes de liberar a unidade.',
+        title: 'Veja cada limpeza antes do check-in',
+        desc: 'Abra a faxina concluída e veja as fotos de como o imóvel ficou, de onde estiver.',
       },
       {
-        title: 'Prova do estado do imóvel',
-        desc: 'As fotos comprovam a faxina e como o imóvel estava antes da próxima reserva.',
+        title: 'Fotos de itens sorteados',
+        desc: 'Você define os itens de cada imóvel (ou usa a lista padrão). A cada faxina, o app sorteia quais fotografar e exige as fotos, tiradas na hora, para concluir.',
+      },
+      {
+        title: 'Prova antes da entrada do hóspede',
+        desc: 'Se o hóspede disser que encontrou sujeira ou algo quebrado, as fotos mostram como o imóvel estava antes da entrada dele — defesa contra reclamação indevida e fraude.',
+      },
+      {
+        title: 'Fotos que protegem também a faxineira',
+        desc: 'As fotos comprovam o trabalho dela quando um hóspede reclama. Você explica que quer acompanhar cada limpeza — não é desconfiança.',
       },
       {
         title: 'Alertas de faxina crítica',

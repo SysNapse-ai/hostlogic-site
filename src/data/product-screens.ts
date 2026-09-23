@@ -151,10 +151,10 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     id: 'limpeza-fotos',
     image: '/screenshots/limpeza-fotos.webp',
     area: 'Limpeza',
-    title: 'Prova por fotos sorteadas',
+    title: 'Fotos da faxina antes do check-in',
     bullets: [
-      'O sistema sorteia os itens a fotografar (chão da sala, cama arrumada…).',
-      'As fotos comprovam a faxina e o estado do imóvel antes da próxima reserva.',
+      'O app sorteia os itens a fotografar entre os que você definiu (chão da sala, cama arrumada…).',
+      'Você vê como ficou cada limpeza e guarda a prova de que estava tudo em ordem antes do hóspede entrar.',
     ],
     alt: 'Tela de fotos sorteadas para comprovar a faxina',
     width: 408,
