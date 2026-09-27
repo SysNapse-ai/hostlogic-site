@@ -8,7 +8,7 @@ export const pilotOffer = {
   trialDays: 30,
   noCard: true,
   discountPct: 50,
-  discountMonths: 6,
+  discountMonths: 3,
   conversationDays: [7, 21, 30],
   tiers: [
     { range: '1 imóvel', price: 'R$39/mês' },
@@ -22,7 +22,7 @@ export const pilotOffer = {
   pilotTitle: 'Quer ser piloto e receber vantagens?',
   pilotBullets: [
     'Trinta dias grátis para todo o seu portfólio, sem cartão.',
-    'Depois dos 30 dias, 50% da mensalidade da tabela por 6 meses, se participar das conversas dos dias 7, 21 e 30.',
+    'Depois dos 30 dias, 50% da mensalidade da tabela por 3 meses, se participar das conversas dos dias 7, 21 e 30.',
     'Sem contrato. Sai quando quiser.',
     'Quanto mais imóveis no seu portfólio, mais você vê o valor do HostLogic.',
   ],
@@ -31,7 +31,7 @@ export const pilotOffer = {
   accessCtaHref: 'https://hostlogic.com.br/planos#programa-piloto',
   fromPriceLabel: 'a partir de R$39/mês',
   priceContext:
-    'Depois dos 30 dias, a mensalidade segue esta tabela. Quem participa das conversas dos dias 7, 21 e 30 paga 50% por 6 meses.',
+    'Depois dos 30 dias, a mensalidade segue esta tabela. Quem participa das conversas dos dias 7, 21 e 30 paga 50% por 3 meses.',
   plansTitle: 'Mensalidade por faixa de imóveis',
   formTitle: 'Quero participar do programa piloto',
   formSub:
@@ -45,7 +45,7 @@ export const pilotOffer = {
     {
       question: 'Como funciona o preço por imóvel?',
       answer:
-        'Trinta dias grátis para todo o seu portfólio, sem cartão. Depois dos 30 dias, 50% da mensalidade da tabela por 6 meses, se participar das conversas dos dias 7, 21 e 30.',
+        'Trinta dias grátis para todo o seu portfólio, sem cartão. Depois dos 30 dias, 50% da mensalidade da tabela por 3 meses, se participar das conversas dos dias 7, 21 e 30.',
     },
     {
       question: 'Como começo?',
