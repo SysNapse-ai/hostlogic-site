@@ -1,7 +1,7 @@
 /**
  * Slides do carrossel de prints reais (dados de demonstração).
  * Copy alinhada ao plano do site — não anunciar módulos fora do lançamento
- * (envio automático à portaria, Gmail OAuth, WhatsApp nativo).
+ * (envio automático à portaria, Gmail OAuth, WhatsApp automático — o HostLogic não envia mensagens ao hóspede).
  */
 
 export interface ProductScreen {
@@ -61,7 +61,7 @@ export const PRODUCT_SCREENS: ProductScreen[] = [
     area: 'Portal do hóspede',
     title: 'Um link resolve a chegada',
     bullets: [
-      'O hóspede recebe o link exclusivo na mensagem automática do Airbnb.',
+      'O hóspede recebe o link exclusivo na mensagem automática do Airbnb — ou você envia o mesmo link pelo WhatsApp com um botão na reserva.',
       'Vê confirmação, datas, endereço com mapa e regras, sem instalar app.',
     ],
     alt: 'Portal do hóspede no celular com confirmação da estadia, datas e mapa',

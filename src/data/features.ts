@@ -5,7 +5,8 @@
  * Itens "Em breve" (soon) são roadmap real, não wishlist.
  *
  * Tom da copy: verbo + resultado concreto. Sem adjetivos vazios.
- * Não anunciar no catálogo público: WhatsApp nativo, Gmail OAuth, envio automático à portaria.
+ * Não anunciar no catálogo público: WhatsApp automático (o HostLogic não envia mensagens ao hóspede;
+ * o botão da reserva só prepara a mensagem para o anfitrião enviar), Gmail OAuth, envio automático à portaria.
  */
 
 export interface Feature {
@@ -116,6 +117,10 @@ export const FEATURE_CATEGORIES: FeatureCategory[] = [
       {
         title: 'Link do imóvel na mensagem do Airbnb',
         desc: 'Mantenha o link exclusivo na mensagem automática do Airbnb: o hóspede acessa a estadia, regras e instruções.',
+      },
+      {
+        title: 'Mensagem pronta com o mesmo link',
+        desc: 'Na reserva, um botão prepara a mensagem com o link exclusivo da estadia. Envie pelo WhatsApp com o telefone que você vê no app do Airbnb, ou na conversa que o hóspede já abriu.',
       },
       {
         title: 'Guia do imóvel após o check-in',
