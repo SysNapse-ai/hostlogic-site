@@ -97,7 +97,10 @@ const offerBullets = pilotOffer.pilotBullets;
             <input
               id="pp-airbnb"
               name="airbnbProfileUrl"
-              type="url"
+              type="text"
+              inputmode="url"
+              autocapitalize="off"
+              spellcheck="false"
               required
               maxlength="2000"
               placeholder="https://www.airbnb.com.br/h/…"
@@ -177,18 +180,43 @@ const offerBullets = pilotOffer.pilotBullets;
       .trim();
   }
 
+  /** Acrescenta https:// se o visitante colou o anúncio sem protocolo. Não duplica se já houver esquema. */
+  function ensureHttps(raw) {
+    const value = String(raw || '').trim();
+    if (!value) return '';
+    if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return value;
+    if (value.startsWith('//')) return `https:${value}`;
+    return `https://${value}`;
+  }
+
+  const airbnbInput = document.getElementById('pp-airbnb');
+  if (airbnbInput instanceof HTMLInputElement) {
+    const applyHttps = () => {
+      const next = ensureHttps(airbnbInput.value);
+      if (next !== airbnbInput.value) airbnbInput.value = next;
+    };
+    airbnbInput.addEventListener('blur', applyHttps);
+    airbnbInput.addEventListener('paste', () => {
+      setTimeout(applyHttps, 0);
+    });
+  }
+
   if (form && success && errorEl && submitBtn instanceof HTMLButtonElement) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorEl.hidden = true;
       errorEl.textContent = '';
 
+      if (airbnbInput instanceof HTMLInputElement) {
+        airbnbInput.value = ensureHttps(airbnbInput.value);
+      }
+
       const fd = new FormData(form);
       const name = String(fd.get('name') || '').trim();
       const email = String(fd.get('email') || '').trim();
       const whatsapp = cleanWhatsapp(fd.get('whatsapp'));
       const city = String(fd.get('city') || '').trim();
-      const airbnbProfileUrl = String(fd.get('airbnbProfileUrl') || '').trim();
+      const airbnbProfileUrl = ensureHttps(fd.get('airbnbProfileUrl'));
       const listingsBand = String(fd.get('listingsBand') || '').trim();
       const firstPropertyName = String(fd.get('firstPropertyName') || '').trim();
       const website = String(fd.get('website') || '').trim();

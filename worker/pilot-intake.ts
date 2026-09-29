@@ -127,6 +127,18 @@ export function isAirbnbProfileUrl(raw: unknown): boolean {
   return parseAirbnbProfileHostname(raw) !== null;
 }
 
+/**
+ * Cola sem protocolo (`airbnb.com.br/h/…`) vira `https://…`.
+ * Se já houver esquema (`https://`, `http://`, outro), devolve o texto trimado sem duplicar.
+ */
+export function ensureHttpsUrl(raw: string): string {
+  const value = raw.trim();
+  if (!value) return '';
+  if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return value;
+  if (value.startsWith('//')) return `https:${value}`;
+  return `https://${value}`;
+}
+
 function listingTitleFromAirbnbUrl(raw: string): string {
   try {
     const url = new URL(raw.trim());
@@ -172,7 +184,9 @@ export function parsePilotIntakeBody(
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
   const whatsapp = optionalTrim(body.whatsapp);
   const city = optionalTrim(body.city);
-  const airbnbProfileUrl = typeof body.airbnbProfileUrl === 'string' ? body.airbnbProfileUrl.trim() : '';
+  const airbnbProfileUrl = ensureHttpsUrl(
+    typeof body.airbnbProfileUrl === 'string' ? body.airbnbProfileUrl : '',
+  );
   const listingsBand = typeof body.listingsBand === 'string' ? body.listingsBand.trim() : '';
   const consent = body.consent === true;
 
