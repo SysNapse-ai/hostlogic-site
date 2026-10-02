@@ -1354,52 +1354,89 @@ section.block p.sub {
   object-fit: cover;
 }
 
-/* Faixa editorial de citação sobre foto de ambiente. */
+/* Atração principal: proposta de valor e demonstração em vídeo, sem competir com outra imagem. */
 .quote-band {
   position: relative;
-  padding: clamp(1.25rem, 0.8rem + 1.5vw, 2rem) 0 clamp(1.5rem, 1rem + 2vw, 2.4rem);
-  background-image: url('/images/ambiente-mesa.webp');
-  background-size: cover;
-  background-position: center 28%;
+  overflow: hidden;
+  padding: clamp(2rem, 1.2rem + 3vw, 4rem) 0;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(42, 157, 143, 0.2), transparent 34%),
+    radial-gradient(circle at 8% 92%, rgba(180, 85, 45, 0.2), transparent 34%),
+    linear-gradient(145deg, #07162d 0%, #102746 58%, #07162d 100%);
 }
 .quote-band__stage {
   display: grid;
   align-items: center;
-  gap: clamp(1.25rem, 2vw, 2.5rem);
+  gap: clamp(2rem, 5vw, 5rem);
 }
 @media (min-width: 920px) {
   .quote-band__stage {
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);
   }
 }
 .quote-band::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(42, 34, 22, 0.62) 0%, rgba(42, 34, 22, 0.28) 60%, rgba(42, 34, 22, 0.12) 100%);
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 72px 72px;
 }
 .quote-band .container {
   position: relative;
   z-index: 1;
 }
-.quote-band blockquote {
+.quote-band__copy {
+  max-width: 650px;
+}
+.quote-band__badge {
+  display: inline-flex;
+  margin: 0 0 20px;
+  padding: 9px 13px;
+  border: 1px solid rgba(200, 251, 247, 0.28);
+  border-radius: 999px;
+  background: rgba(7, 22, 45, 0.48);
+  color: #c8fbf7;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.quote-band h1 {
   margin: 0;
-  max-width: 30ch;
+  max-width: 15ch;
   color: #fdf9f1;
   font-family: var(--hl-serif);
-  font-size: clamp(1.5rem, 1.15rem + 1.8vw, 2.4rem);
-  font-weight: var(--fw-semibold);
-  line-height: 1.25;
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
   text-wrap: balance;
   text-shadow: 0 2px 14px rgba(30, 22, 10, 0.35);
 }
-.quote-band p.quote-band__note {
-  position: relative;
-  z-index: 1;
-  margin: 18px 0 0;
-  color: rgba(253, 249, 241, 0.85);
+.quote-band__lead {
+  margin: 24px 0 0;
+  max-width: 54ch;
+  color: rgba(248, 251, 255, 0.88);
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+}
+.quote-band__cta {
+  justify-content: flex-start;
+  margin-top: 30px;
+}
+.quote-band .btn-ghost {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.quote-band__promise {
+  margin: 24px 0 0;
+  color: #c8fbf7;
   font-size: var(--fs-sm);
-  max-width: 46ch;
+  font-weight: var(--fw-semibold);
 }
 
 section.block {
@@ -1630,6 +1667,17 @@ section.block p.sub,
   }
   .hero-reel__video {
     max-height: 62vh;
+  }
+  .quote-band__copy {
+    text-align: center;
+  }
+  .quote-band h1,
+  .quote-band__lead {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .quote-band__cta {
+    justify-content: center;
   }
 }
 @media (max-width: 620px) {

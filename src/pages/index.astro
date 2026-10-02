@@ -15,10 +15,17 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
   <section class="quote-band" aria-label="HostLogic — gestão de imóveis de temporada">
     <div class="container quote-band__stage">
       <div class="quote-band__copy">
-        <blockquote>Receber bem é o seu trabalho. Manter tudo em ordem é o nosso.</blockquote>
-        <p class="quote-band__note">
-          HostLogic — do calendário de reservas à foto da faxina, sem complicação.
+        <span class="quote-band__badge">Para anfitriões com vários imóveis</span>
+        <h1>Administre mais imóveis sem multiplicar o trabalho.</h1>
+        <p class="quote-band__lead">
+          Reservas do Airbnb, check-in, faxina e financeiro no mesmo lugar — com o relatório do mês
+          pronto em um clique.
         </p>
+        <div class="cta quote-band__cta">
+          <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
+          <a class="btn btn-ghost" href="/funcionalidades">Ver funcionalidades</a>
+        </div>
+        <p class="quote-band__promise">Receber bem é o seu trabalho. Manter tudo em ordem é o nosso.</p>
       </div>
       <figure class="hero-reel">
         <video
@@ -40,29 +47,6 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
         </button>
         <figcaption>30 segundos para quem administra mais de um imóvel</figcaption>
       </figure>
-    </div>
-  </section>
-
-  <section class="hero">
-    <div class="container hero-shell">
-      <div class="hero-copy">
-        <span class="badge">Para quem recebe hóspedes pelo Airbnb</span>
-        <h1>Administre mais imóveis sem multiplicar o trabalho.</h1>
-        <p class="lead">
-          As reservas do Airbnb entram sozinhas no calendário. Check-in do hóspede, faxina e
-          financeiro ficam no mesmo lugar — e o relatório do mês sai com um clique.
-        </p>
-        <div class="cta">
-          <a class="btn btn-primary" href={APP_URL}>Acessar o sistema</a>
-          <a class="btn btn-ghost" href="/funcionalidades">Ver funcionalidades</a>
-        </div>
-        <div class="hero-proof">
-          <span><a href="#plano-pago">O que o HostLogic faz</a></span>
-          <span><a href="#portal-hospede">Portal do hóspede</a></span>
-          <span><a href="#anfitri-ia">Anfitri-IA</a></span>
-          <span><a href="#faxina">Faxina com fotos</a></span>
-        </div>
-      </div>
     </div>
   </section>
   <script is:inline>
