@@ -2028,3 +2028,57 @@ section.block,
     width: 100%;
   }
 }
+
+/* Ícone flutuante do WhatsApp: fixo no canto, sem sair do ecrã. */
+.wa-float {
+  position: fixed;
+  z-index: 40;
+  left: max(0.75rem, env(safe-area-inset-left, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  text-decoration: none;
+}
+
+.wa-float__bubble {
+  max-width: min(16.5rem, calc(100vw - 6.75rem));
+  padding: 0.7rem 0.9rem;
+  border-radius: 1rem 1rem 0.25rem 1rem;
+  background: #fffdf8;
+  color: var(--hl-ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  box-shadow: 0 8px 24px rgba(42, 38, 32, 0.18);
+}
+
+.wa-float__btn {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  background: #25d366;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45);
+}
+
+.wa-float:hover .wa-float__btn {
+  background: #1ebe5a;
+}
+
+.wa-float:focus-visible {
+  outline: 2px solid var(--hl-navy);
+  outline-offset: 3px;
+  border-radius: 1rem;
+}
+
+.wa-float__btn svg {
+  width: 1.85rem;
+  height: 1.85rem;
+}

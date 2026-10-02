@@ -28,10 +28,16 @@ export const LEGAL = {
  */
 export const CONTACT = {
   email: 'adm@hostlogic.com.br',
-  /** Formato E.164 para o link tel: (ajustar ao número real). */
-  phoneHref: '+5500000000000',
-  /** Texto exibido do telefone (ajustar ao número real). */
-  phoneDisplay: '+55 (00) 00000-0000',
+  /** Formato E.164 para o link tel:. */
+  phoneHref: '+5541995233638',
+  /** Texto exibido do telefone. */
+  phoneDisplay: '(41) 99523-3638',
+  /** Número wa.me, com código do Brasil e sem sinais. */
+  whatsappE164: '5541995233638',
+  /** Texto ao lado do ícone flutuante. */
+  whatsappPrompt: 'Tire suas dúvidas, responderemos o mais breve possível',
+  /** Rascunho enviado à HostLogic ao abrir o chat. */
+  whatsappPrefill: 'Olá, HostLogic! Gostaria de tirar uma dúvida.',
 } as const;
 
 /** Navegação simples (stubs preparados para evolução). */
