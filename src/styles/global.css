@@ -1173,11 +1173,6 @@ section.block p.sub {
   gap: clamp(2rem, 4vw, 4rem);
   align-items: center;
 }
-@media (min-width: 920px) {
-  .hero-shell {
-    grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.62fr);
-  }
-}
 .hero-copy {
   max-width: 660px;
 }
@@ -1258,6 +1253,46 @@ section.block p.sub {
   text-align: center;
 }
 
+.hero-reel {
+  position: relative;
+  width: min(100%, 390px);
+  margin: 0 auto;
+  justify-self: center;
+}
+.hero-reel__video {
+  display: block;
+  width: 100%;
+  max-height: min(68vh, 640px);
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border: 7px solid #ffffff;
+  border-radius: 28px;
+  background: #07162d;
+  box-shadow: 0 28px 70px rgba(35, 53, 92, 0.28);
+}
+.hero-reel__sound {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  z-index: 2;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: #ffffff;
+  color: var(--hl-text-strong);
+  font: var(--fw-semibold) 0.92rem/1 var(--hl-sans, Arial, sans-serif);
+  box-shadow: 0 10px 28px rgba(35, 53, 92, 0.28);
+  cursor: pointer;
+}
+.hero-reel figcaption {
+  margin: 14px 0 0;
+  color: #fdf9f1;
+  font-size: var(--fs-sm);
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(20, 14, 8, 0.45);
+}
+
 /* Hero editorial: foto de ambiente com o print do app a flutuar por cima. */
 .hero-visual {
   position: relative;
@@ -1322,11 +1357,20 @@ section.block p.sub {
 /* Faixa editorial de citação sobre foto de ambiente. */
 .quote-band {
   position: relative;
-  padding: clamp(4.5rem, 3.4rem + 6vw, 8rem) 0;
+  padding: clamp(1.25rem, 0.8rem + 1.5vw, 2rem) 0 clamp(1.5rem, 1rem + 2vw, 2.4rem);
   background-image: url('/images/ambiente-mesa.webp');
   background-size: cover;
   background-position: center 28%;
-  min-height: clamp(18rem, 42vw, 28rem);
+}
+.quote-band__stage {
+  display: grid;
+  align-items: center;
+  gap: clamp(1.25rem, 2vw, 2.5rem);
+}
+@media (min-width: 920px) {
+  .quote-band__stage {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+  }
 }
 .quote-band::before {
   content: '';
@@ -1575,6 +1619,17 @@ section.block p.sub,
   .hero-product {
     max-width: 18.5rem;
     margin: 0 auto;
+  }
+  .quote-band__stage {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-reel {
+    order: -1;
+    width: min(100%, 320px);
+  }
+  .hero-reel__video {
+    max-height: 62vh;
   }
 }
 @media (max-width: 620px) {

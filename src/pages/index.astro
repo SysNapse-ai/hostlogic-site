@@ -13,11 +13,33 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
 
 <BaseLayout>
   <section class="quote-band" aria-label="HostLogic — gestão de imóveis de temporada">
-    <div class="container">
-      <blockquote>Receber bem é o seu trabalho. Manter tudo em ordem é o nosso.</blockquote>
-      <p class="quote-band__note">
-        HostLogic — do calendário de reservas à foto da faxina, sem complicação.
-      </p>
+    <div class="container quote-band__stage">
+      <div class="quote-band__copy">
+        <blockquote>Receber bem é o seu trabalho. Manter tudo em ordem é o nosso.</blockquote>
+        <p class="quote-band__note">
+          HostLogic — do calendário de reservas à foto da faxina, sem complicação.
+        </p>
+      </div>
+      <figure class="hero-reel">
+        <video
+          class="hero-reel__video"
+          src="/videos/hostlogic-reels-anfitriao.mp4"
+          poster="/videos/hostlogic-reels-anfitriao-poster.webp"
+          width="1080"
+          height="1920"
+          autoplay
+          muted
+          loop
+          playsinline
+          controls
+          preload="metadata"
+          aria-label="Vídeo de 30 segundos: como o HostLogic organiza vários imóveis do anfitrião"
+        ></video>
+        <button class="hero-reel__sound" type="button" data-sound-toggle aria-pressed="false">
+          Ouvir narração
+        </button>
+        <figcaption>30 segundos para quem administra mais de um imóvel</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -41,30 +63,26 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
           <span><a href="#faxina">Faxina com fotos</a></span>
         </div>
       </div>
-
-      <div class="hero-product hero-visual">
-        <figure class="hero-photo">
-          <img
-            src="/images/ambiente-sala.webp"
-            alt="Anfitrião administra vários imóveis pelo HostLogic no celular"
-            width="1600"
-            height="900"
-            decoding="async"
-          />
-        </figure>
-        <figure class="hero-shot hero-shot--float">
-          <img
-            src="/screenshots/reserva-cartao.webp"
-            alt="Tela do HostLogic com o cartão da reserva: datas, hóspedes e status da estadia"
-            width="591"
-            height="1280"
-            decoding="async"
-          />
-        </figure>
-        <p class="hero-visual__caption">Tela real · dados de demonstração</p>
-      </div>
     </div>
   </section>
+  <script is:inline>
+    const soundToggle = document.querySelector('[data-sound-toggle]');
+    const heroVideo = document.querySelector('.hero-reel__video');
+    soundToggle?.addEventListener('click', async () => {
+      if (!(heroVideo instanceof HTMLVideoElement)) return;
+      heroVideo.muted = !heroVideo.muted;
+      if (!heroVideo.muted) {
+        try {
+          await heroVideo.play();
+        } catch {
+          heroVideo.muted = true;
+        }
+      }
+      const muted = heroVideo.muted;
+      soundToggle.textContent = muted ? 'Ouvir narração' : 'Silenciar';
+      soundToggle.setAttribute('aria-pressed', String(!muted));
+    });
+  </script>
 
   <section class="block value-band" id="plano-pago">
     <div class="container">
@@ -432,3 +450,4 @@ import { FEATURE_CATEGORIES, FEATURE_COUNT, FEATURE_CATEGORY_COUNT } from '../da
   <PilotProgramForm />
   <EarlyAccessForm />
 </BaseLayout>
+
