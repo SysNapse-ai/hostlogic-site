@@ -11,12 +11,12 @@ export const pilotOffer = {
   discountMonths: 3,
   conversationDays: [7, 21, 30],
   tiers: [
-    { range: '1 imóvel', price: 'R$39/mês' },
-    { range: '2 imóveis', price: 'R$69/mês' },
-    { range: '3 a 5 imóveis', price: 'R$99/mês' },
-    { range: '6 a 8 imóveis', price: 'R$159/mês' },
-    { range: '9 a 15 imóveis', price: 'R$249/mês' },
-    { range: 'Mais de 15 imóveis', price: 'Fale com a gente' },
+    { id: 'faixa_1', min: 1, max: 1, priceCents: 3900, range: '1 imóvel', price: 'R$39/mês' },
+    { id: 'faixa_2', min: 2, max: 2, priceCents: 6900, range: '2 imóveis', price: 'R$69/mês' },
+    { id: 'faixa_3_5', min: 3, max: 5, priceCents: 9900, range: '3 a 5 imóveis', price: 'R$99/mês' },
+    { id: 'faixa_6_8', min: 6, max: 8, priceCents: 15900, range: '6 a 8 imóveis', price: 'R$159/mês' },
+    { id: 'faixa_9_15', min: 9, max: 15, priceCents: 24900, range: '9 a 15 imóveis', price: 'R$249/mês' },
+    { id: 'faixa_16_mais', min: 16, max: null, priceCents: null, range: 'Mais de 15 imóveis', price: 'Fale com a gente' },
   ],
   pilotEyebrow: 'Programa piloto',
   pilotTitle: 'Quer ser piloto e receber vantagens?',
@@ -45,7 +45,7 @@ export const pilotOffer = {
     {
       question: 'Como funciona o preço por imóvel?',
       answer:
-        'Trinta dias grátis para todo o seu portfólio, sem cartão. Depois dos 30 dias, 50% da mensalidade da tabela por 3 meses, em troca de seu feedback.',
+        'Conta-se o número de imóveis ativos na sua conta. A mensalidade é a da faixa onde esse número cai: 1 imóvel, 2, 3 a 5, 6 a 8 ou 9 a 15. Se você adicionar ou remover imóveis e mudar de faixa, o valor muda no mês seguinte. Acima de 15 imóveis, combinamos caso a caso.',
     },
     {
       question: 'Como começo?',
